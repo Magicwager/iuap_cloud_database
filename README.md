@@ -3,8 +3,8 @@
 ## 开发
 
 ```
-npm start
-npm run dev
+npm install
+npm run start
 ```
 
 然后访问[http://127.0.0.1:5001/](http://127.0.0.1:5001/)进行开发。
