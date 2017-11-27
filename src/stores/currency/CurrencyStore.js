@@ -13,6 +13,8 @@ class CurrencyStore {
   currencys = [];
   @observable
   currency = { };
+  @observable
+  tableDataTitle='暂无数据！'
 
 
 

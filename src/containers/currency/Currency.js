@@ -10,14 +10,14 @@ import GlobalStore from '../../stores/GlobalStore';
 import CurrencyCard from './CurrencyCard';
 import CurrencyStore from '../../stores/currency/CurrencyStore';
 
-
 @observer
 class Currency extends React.Component {
   constructor(props) {
     super(props);
     this.store = new CurrencyStore();
     this.state = {
-      isEdit: true  // 操作列是否显示
+      isEdit: true,  // 操作列是否显示
+      isHasData: this.store.tableDataTitle
     }
   }
 
@@ -58,7 +58,7 @@ class Currency extends React.Component {
             </div>
           </div>
           <div className="head-r fr noprint">
-            <button className="btn btn-primary mr10" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
+            <button className="btn btn-primary" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
           </div>
         </div>
 
@@ -78,6 +78,8 @@ class Currency extends React.Component {
             </thead>
             <tbody>
             {
+              this.store.currencys.length > 0 ?
+
               this.store.currencys.map((value, index) =>
                 (<tr key={index}>
                   <td>{numeral(value.code).format('0,0.00')}</td>
@@ -100,6 +102,7 @@ class Currency extends React.Component {
                   }
                 </tr>)
               )
+            : (<tr><td colSpan="8" style={{textAlign:"center"}}>{this.state.isHasData}</td></tr>)
             }
             </tbody>
           </table>
