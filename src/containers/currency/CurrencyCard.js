@@ -8,6 +8,7 @@ import { observer } from 'mobx-react';
 
 import { Refers } from 'ssc-refer';
 import GlobalStore from '../../stores/GlobalStore';
+import Config from '../../config';
 
 let title = {'add': '添加新数据', 'edit': '编辑'}
 
@@ -126,40 +127,22 @@ export default class CurrencyCard extends Component {
           </Modal.Header>
           <Modal.Body>
             <Form horizontal>
-              <FormGroup controlId="code" validationState={this.state.validation.code}>
+              <FormGroup controlId="code">
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
                   币种
                 </Col>
                 <Col sm={6}>
                   <Refers
                     className="noprint"
-                    labelKey="code"
+                    labelKey="name"
                     onChange={this.changeCurrency.bind(this)}
                     placeholder="请选择..."
-                    referConditions={{"refCode":" ","refType":"list","displayFields":["name"]}}
-                    referDataUrl={'http://127.0.0.1/webCurrency/getRefData'}
+                    referConditions={{"refCode":" ","refType":"list","displayFields":["name","code"]}}
+                    referDataUrl={Config.currency.currencyRef}
                     referType="list"
                     ref={"ref-currency"}
                     defaultSelected={[currency]}
                   />
-                  {
-                    /*{
-                     (this.state.flag === 'detail') ?
-                     <FormControl type="text" placeholder="币种"
-                     value={currency.code}
-                     onChange={this.handleChange.bind(this, "code")}
-                     onBlur={this.doValidate.bind(this, 'code')}
-                     readOnly={true}
-                     />    :
-                     <FormControl type="text" placeholder="币种"
-                     value={currency.code}
-                     onChange={this.handleChange.bind(this, "code")}
-                     onBlur={this.doValidate.bind(this, 'code')}
-                     />
-                     }
-                     */
-                  }
-                  <FormControl.Feedback />
                 </Col>
               </FormGroup>
               <FormGroup controlId="category">
@@ -167,37 +150,21 @@ export default class CurrencyCard extends Component {
                   币种简称
                 </Col>
                 <Col sm={6}>
-                  {
-                    (this.state.flag === 'add') ?
-                      <FormControl type="text" placeholder="币种简称"
-                                   value={currency.name}
-                                   readOnly={true}
-                      /> :
-                      <FormControl type="text" placeholder="币种简称"
-                                   value={currency.name}
-                      />
-                  }
-                  
-                  <FormControl.Feedback />
+                  <FormControl type="text" placeholder="币种简称"
+                               value={currency.name}
+                               readOnly={true}
+                  />
                 </Col>
               </FormGroup>
-              <FormGroup controlId="symbol">
+              <FormGroup controlId="sign">
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
                   币种符号
                 </Col>
                 <Col sm={6}>
-                  {
-                    (this.state.flag === 'add') ?
-                      <FormControl type="text" placeholder="币种符号"
-                                   value={currency.sign}
-                                   readOnly={true}
-                      /> :
-                      <FormControl type="text" placeholder="币种符号"
-                                   value={currency.sign}
-                      />
-                  }
-                  
-                  <FormControl.Feedback />
+                  <FormControl type="text" placeholder="币种符号"
+                               value={currency.sign}
+                               readOnly={true}
+                  />
                 </Col>
               </FormGroup>
               <FormGroup controlId="code" validationState={this.state.validation.pricedigit}>
@@ -205,21 +172,11 @@ export default class CurrencyCard extends Component {
                   单价精度
                 </Col>
                 <Col sm={6}>
-                  {
-                    (this.state.flag === 'detail') ?
-                      <FormControl type="text" placeholder="单价精度"
-                                   value={currency.pricedigit}
-                                   onChange={this.handleChange.bind(this, "pricedigit")}
-                                   onBlur={this.doValidate.bind(this, 'pricedigit')}
-                                   readOnly={true}
-                      />    :
-                      <FormControl type="text" placeholder="单价精度"
-                                   value={currency.pricedigit}
-                                   onChange={this.handleChange.bind(this, "pricedigit")}
-                                   onBlur={this.doValidate.bind(this, 'pricedigit')}
-                      />
-                  }
-
+                  <FormControl type="text" placeholder="单价精度"
+                               value={currency.pricedigit}
+                               onChange={this.handleChange.bind(this, "pricedigit")}
+                               onBlur={this.doValidate.bind(this, 'pricedigit')}
+                  />
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
@@ -228,21 +185,11 @@ export default class CurrencyCard extends Component {
                   金额精度
                 </Col>
                 <Col sm={6}>
-                  {
-                    (this.state.flag === 'detail') ?
-                      <FormControl type="text" placeholder="金额精度"
-                                   value={currency.moneydigit}
-                                   onChange={this.handleChange.bind(this, "moneydigit")}
-                                   onBlur={this.doValidate.bind(this, 'moneydigit')}
-                                   readOnly={true}
-                      />    :
-                      <FormControl type="text" placeholder="金额精度"
-                                   value={currency.moneydigit}
-                                   onChange={this.handleChange.bind(this, "moneydigit")}
-                                   onBlur={this.doValidate.bind(this, 'moneydigit')}
-                      />
-                  }
-
+                  <FormControl type="text" placeholder="金额精度"
+                               value={currency.moneydigit}
+                               onChange={this.handleChange.bind(this, "moneydigit")}
+                               onBlur={this.doValidate.bind(this, 'moneydigit')}
+                  />
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
@@ -251,21 +198,11 @@ export default class CurrencyCard extends Component {
                   单位进价
                 </Col>
                 <Col sm={6}>
-                  {
-                    (this.state.flag === 'detail') ?
-                      <FormControl type="text" placeholder="单位进价"
-                                   value={currency.pricerount}
-                                   onChange={this.handleChange.bind(this, "pricerount")}
-                                   onBlur={this.doValidate.bind(this, 'pricerount')}
-                                   readOnly={true}
-                      />    :
-                      <FormControl type="text" placeholder="单位进价"
-                                   value={currency.pricerount}
-                                   onChange={this.handleChange.bind(this, "pricerount")}
-                                   onBlur={this.doValidate.bind(this, 'pricerount')}
-                      />
-                  }
-
+                  <FormControl type="text" placeholder="单位进价"
+                               value={currency.pricerount}
+                               onChange={this.handleChange.bind(this, "pricerount")}
+                               onBlur={this.doValidate.bind(this, 'pricerount')}
+                  />
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
@@ -274,43 +211,23 @@ export default class CurrencyCard extends Component {
                   金额进价
                 </Col>
                 <Col sm={6}>
-                  {
-                    (this.state.flag === 'detail') ?
-                      <FormControl type="text" placeholder="金额进价"
-                                   value={currency.moneyrount}
-                                   onChange={this.handleChange.bind(this, "moneyrount")}
-                                   onBlur={this.doValidate.bind(this, 'moneyrount')}
-                                   readOnly={true}
-                      />    :
-                      <FormControl type="text" placeholder="金额进价"
-                                   value={currency.moneyrount}
-                                   onChange={this.handleChange.bind(this, "moneyrount")}
-                                   onBlur={this.doValidate.bind(this, 'moneyrount')}
-                      />
-                  }
-
+                  <FormControl type="text" placeholder="金额进价"
+                               value={currency.moneyrount}
+                               onChange={this.handleChange.bind(this, "moneyrount")}
+                               onBlur={this.doValidate.bind(this, 'moneyrount')}
+                  />
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
-
-
               <FormGroup>
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
                   备注
                 </Col>
                 <Col sm={6}>
-                  {
-                    (this.state.flag === 'detail') ?
-                      <FormControl onChange={this.handleChange.bind(this, "description")}
-                                   value={currency.description}
-                                   componentClass="textarea" readOnly={true}
-                      /> :
-                      <FormControl onChange={this.handleChange.bind(this, "description")}
-                                   value={currency.description}
-                                   componentClass="textarea"
-                      />
-                  }
-
+                  <FormControl onChange={this.handleChange.bind(this, "description")}
+                               value={currency.description}
+                               componentClass="textarea"
+                  />
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>

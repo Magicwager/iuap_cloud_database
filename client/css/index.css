@@ -677,6 +677,9 @@ a:focus {
   font-size: 14px;
   font-size: 1.4rem;
 }
+.currency-grid table thead tr th:not(:last-child) {
+  text-align: center;
+}
 .currency-grid table tbody > tr:nth-of-type(even) {
   background-color: #FAFAFA;
 }
@@ -698,6 +701,9 @@ a:focus {
   font-size: 12px;
   font-size: 1.2rem;
   color: #333333;
+}
+.currency-grid table tbody tr td:not(:last-child) {
+  text-align: center;
 }
 .currency-grid table tbody tr:hover {
   background-color: rgba(0, 179, 158, 0.1);
@@ -748,7 +754,6 @@ a:focus {
   font-size: 12px;
   font-size: 1.2rem;
   padding: 6px 20px;
-  line-height: 18px;
 }
 .btn:active {
   -webkit-box-shadow: none;

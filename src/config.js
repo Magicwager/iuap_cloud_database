@@ -20,12 +20,13 @@ let Config = {
     serverUrl,
     // 币种
     currency: {
-        query: `${serverUrl}/bd/currencys/list`,            // 查询
-        add: `${serverUrl}/bd/currencys/save`,              // 新增
-        edit: `${serverUrl}/bd/currencys/update`,           // 编辑
-        delete: `${serverUrl}/bd/currencys/delete`,         // 删除
-        search: `${serverUrl}/bd/currencys/search`,         // 模糊搜索
-        setDefault: `${serverUrl}/bd/currencys/setDefault`  // 设为默认
+        query: `${serverUrl}/bd/currencys/list`,             // 查询
+        add: `${serverUrl}/bd/currencys/save`,               // 新增
+        edit: `${serverUrl}/bd/currencys/update`,            // 编辑
+        delete: `${serverUrl}/bd/currencys/delete`,          // 删除
+        search: `${serverUrl}/bd/currencys/search`,          // 模糊搜索
+        setDefault: `${serverUrl}/bd/currencys/setDefault`,  // 设为默认
+        currencyRef: `${serverUrl}/bd/currencys/refData`     // 币种参照
     }
 };
 

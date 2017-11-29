@@ -128,6 +128,9 @@ a {  color: @mainGreen;
           line-height: 48px;
           font-weight: 700;
           .f14;
+          &:not(:last-child) {
+            .tc;
+          }
         }
       }
     }
@@ -145,6 +148,9 @@ a {  color: @mainGreen;
           line-height: 40px;
           .f12;
           color: @fontColorLevel1;
+          &:not(:last-child) {
+            .tc;
+          }
         }
         /*td:last-child > a, td:last-child span {
           color: transparent;
@@ -209,7 +215,7 @@ a {  color: @mainGreen;
 .btn {
   .f12;
   padding: 6px 20px;
-  line-height: 18px;
+  //line-height: 18px;
   &:active {
     -webkit-box-shadow: none;
     box-shadow: none;
