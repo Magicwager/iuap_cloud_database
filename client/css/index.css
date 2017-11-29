@@ -826,7 +826,8 @@ select {
 .btn:focus,
 .btn:active:focus,
 input:focus,
-select:focus {
+select:focus,
+.close:focus {
   outline: 0;
   outline-offset: 0;
 }

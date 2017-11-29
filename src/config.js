@@ -12,7 +12,7 @@ let dotest = GetQueryString('dotest');
 dotest = dotest == null ? '' : `&dotest=${dotest}`;
 
 
-const serverUrl = '127.0.0.1:80'
+const serverUrl = 'http://127.0.0.1:8080';
 
 //  iuap
 let Config = {
@@ -20,10 +20,11 @@ let Config = {
     serverUrl,
     // 币种
     currency: {
-        query: `${serverUrl}/webCurrency/getBillType`,  // 查询
-        add: `${serverUrl}/webCurrency/getAddType`,     // 新增
-        edit: `${serverUrl}/webCurrency/getEditType`,   // 编辑
-        delete: `${serverUrl}/webCurrency/getDelType`  // 删除
+        query: `${serverUrl}/bd/currencys/list`,          // 查询
+        add: `${serverUrl}/bd/currencys/save`,            // 新增
+        edit: `${serverUrl}/bd/currencys/update`,         // 编辑
+        delete: `${serverUrl}/bd/currencys/delete`,       // 删除
+        search: `${serverUrl}/bd/currencys/search`,       // 模糊搜索
     }
 };
 
