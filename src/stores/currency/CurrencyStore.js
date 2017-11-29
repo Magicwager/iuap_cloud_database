@@ -156,6 +156,41 @@ class CurrencyStore {
       })
     )
   }
+  
+  // 设为默认接口
+  @action
+  hdDefault(index, callback) {
+    let _this = this;
+
+    let option = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(_this.currency),
+      //credentials: "include"
+    }
+
+    _this.globalStore.showWait();
+    //return fetch('http://127.0.0.1/webCurrency/getDelType', option)
+    return fetch(Config.currency.setDefault, option)
+      .then(response => {
+        _this.globalStore.hideWait();
+        return response.ok ? response.json() : {}
+      })
+      .then(data => {
+        if(data.status){
+          callback();
+          console.log('aaa, 设为默认成功！')
+          GlobalStore.showInfo("设为默认成功")
+        }else{
+          GlobalStore.showError(data.msg)
+        }
+      })
+
+
+  }
+  
 
 }
 

@@ -665,20 +665,26 @@ a:focus {
 }
 .currency-grid table thead tr {
   color: #333333;
-  background-color: #F2F2F2;
+  background-color: #F4F4F4;
 }
 .currency-grid table thead tr th {
   border-width: 1px;
   white-space: nowrap;
   padding: 0 12px;
-  height: 56px;
-  line-height: 56px;
+  height: 48px;
+  line-height: 48px;
   font-weight: 700;
   font-size: 14px;
   font-size: 1.4rem;
 }
 .currency-grid table tbody > tr:nth-of-type(even) {
   background-color: #FAFAFA;
+}
+.currency-grid table tbody tr {
+  /*td:last-child > a, td:last-child span {
+          color: transparent;
+          .mr15;
+        }*/
 }
 .currency-grid table tbody tr td {
   border: 0;
@@ -687,40 +693,25 @@ a:focus {
   text-overflow: ellipsis;
   max-width: 150px;
   padding: 0 12px;
-  height: 35px;
-  line-height: 35px;
+  height: 40px;
+  line-height: 40px;
   font-size: 12px;
   font-size: 1.2rem;
   color: #333333;
 }
-.currency-grid table tbody tr td:last-child > a,
-.currency-grid table tbody tr td:last-child span {
-  color: transparent;
-  margin-right: 15px;
-}
 .currency-grid table tbody tr:hover {
-  background-color: #F0F0F0;
+  background-color: rgba(0, 179, 158, 0.1);
+  /*  td:last-child > a, td:last-child > span, td:last-child > i,td:last-child >div> span ,td:last-child >div> a,td:last-child >div> i{
+            color: @mainGreen;
+            .clearfix;
+            .pointer;
+            &:hover {
+              color: @btnPrimaryHover;
+            }
+          }*/
 }
 .currency-grid table tbody tr:hover td {
   border: 0;
-}
-.currency-grid table tbody tr:hover td:last-child > a,
-.currency-grid table tbody tr:hover td:last-child > span,
-.currency-grid table tbody tr:hover td:last-child > i,
-.currency-grid table tbody tr:hover td:last-child > div > span,
-.currency-grid table tbody tr:hover td:last-child > div > a,
-.currency-grid table tbody tr:hover td:last-child > div > i {
-  color: #00B39E;
-  display: inline-block;
-  cursor: pointer;
-}
-.currency-grid table tbody tr:hover td:last-child > a:hover,
-.currency-grid table tbody tr:hover td:last-child > span:hover,
-.currency-grid table tbody tr:hover td:last-child > i:hover,
-.currency-grid table tbody tr:hover td:last-child > div > span:hover,
-.currency-grid table tbody tr:hover td:last-child > div > a:hover,
-.currency-grid table tbody tr:hover td:last-child > div > i:hover {
-  color: #009886;
 }
 .ledger .head {
   height: 34px;
@@ -786,6 +777,24 @@ a:focus {
   border-color: #009886;
 }
 .btn.btn-default:focus {
+  color: #008676;
+  border-color: #008676;
+  background-color: #F9F9F9;
+}
+.btn.btn-operate {
+  background: #FFFFFF;
+  border: 1px solid #D1D1D1;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-size: 1.2rem;
+  color: #5E6670;
+  padding: 4px 21px;
+}
+.btn.btn-operate:hover {
+  color: #009886;
+  border-color: #009886;
+}
+.btn.btn-operate:focus {
   color: #008676;
   border-color: #008676;
   background-color: #F9F9F9;

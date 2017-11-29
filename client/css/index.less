@@ -48,9 +48,9 @@
 @listHoverBackColor: #00B39E;       // 列表 drop-menu等 列表项hover时背景色
 
 // 表格
-@gridHeaderBackColor: #F2F2F2;      // 表头背景色
+@gridHeaderBackColor: #F4F4F4;      // 表头背景色
 @girdBodyTrEvenColor: #FAFAFA;      // 表格各行变色
-@gridHoverBackColor: #F0F0F0;       // 表格列表hover背景色
+@gridHoverBackColor:  #F0F0F0;       // 表格列表hover背景色
 
 // 重置部分bootstrap主题的色值 Level等级越高色值越浅
 @infoColorLevel1: #108EE9;
@@ -124,8 +124,8 @@ a {  color: @mainGreen;
           border-width: 1px;
           .ws;
           padding: 0 12px;
-          height: 56px;
-          line-height: 56px;
+          height: 48px;
+          line-height: 48px;
           font-weight: 700;
           .f14;
         }
@@ -141,26 +141,26 @@ a {  color: @mainGreen;
           .ellipsis;
           max-width: 150px;
           padding: 0 12px;
-          height: 35px;
-          line-height: 35px;
+          height: 40px;
+          line-height: 40px;
           .f12;
           color: @fontColorLevel1;
         }
-        td:last-child > a, td:last-child span {
+        /*td:last-child > a, td:last-child span {
           color: transparent;
           .mr15;
-        }
+        }*/
         &:hover {
           td {.b0;}
-          background-color: @gridHoverBackColor;
-          td:last-child > a, td:last-child > span, td:last-child > i,td:last-child >div> span ,td:last-child >div> a,td:last-child >div> i{
+          background-color: rgba(0,179,158,0.10);
+        /*  td:last-child > a, td:last-child > span, td:last-child > i,td:last-child >div> span ,td:last-child >div> a,td:last-child >div> i{
             color: @mainGreen;
             .clearfix;
             .pointer;
             &:hover {
               color: @btnPrimaryHover;
             }
-          }
+          }*/
         }
       }
     }
@@ -242,6 +242,25 @@ a {  color: @mainGreen;
     background-color: @backColor;
   }
 }
+.btn.btn-operate {
+  background: #FFFFFF;
+  border: 1px solid #D1D1D1;
+  box-sizing: border-box;
+  .f12;
+  color: #5E6670;
+  padding: 4px 21px;
+  &:hover {
+    color: @btnPrimaryHover;
+    border-color: @btnPrimaryHover;
+  }
+  &:focus {
+    color: @btnPrimaryFocus;
+    border-color: @btnPrimaryFocus;
+    background-color: @backColor;
+  }
+}
+
+
 
 // 重置 btn input input.form-control 样式
 .btn-toolbar {  margin-left: 0;  }

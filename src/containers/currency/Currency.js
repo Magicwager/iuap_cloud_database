@@ -45,6 +45,16 @@ class Currency extends React.Component {
     }));
   }
 
+  // 设为默认
+  handleDefault(index, e) {
+    e.preventDefault();
+    let _this = this;
+    Object.assign(this.store.currency, this.store.currencys[index]);
+    GlobalStore.showCancelModel('确定要设为默认？', () => {}, _this.store.hdDefault.bind(_this.store,index, () => {
+      _this.store.getCurrencyLst();
+    }));
+  }
+
   // 模糊搜索
   handleChange(e) {
     e.preventDefault();
@@ -132,12 +142,17 @@ class Currency extends React.Component {
                   <td>{value.pricerount}</td>
                   <td>{value.moneyrount}</td>
                   <td>
-                    <button className="btn btn-default" onClick={this.handleAdd.bind(this, index, 'edit')}>删除</button>
-                    <button className="btn btn-default" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
-                    <button className="btn btn-default" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
-                    <span title="编辑" className="iconfont icon-edit" onClick={this.handleAdd.bind(this, index, 'edit')} aria-hidden="true" />
-                    <span title="删除" className="iconfont icon-delete" onClick={this.handleDelete.bind(this, index)} aria-hidden="true" />
-                    <span title="设为默认" className="iconfont icon-copy"onClick={this.handleDelete.bind(this, index)} aria-hidden="true" />
+                    <button className="btn btn-operate mr10" onClick={this.handleDelete.bind(this, index)}>删除</button>
+                    <button className="btn btn-operate mr10" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
+                    {
+                      value.isdefault==1 ? '': <button className="btn btn-operate" onClick={this.handleDefault.bind(this, index)}>设为默认</button>
+                    }
+
+                    {
+                      /* <span title="编辑" className="iconfont icon-edit" onClick={this.handleAdd.bind(this, index, 'edit')} aria-hidden="true" />
+                       <span title="删除" className="iconfont icon-delete" onClick={this.handleDelete.bind(this, index)} aria-hidden="true" />
+                       <span title="设为默认" className="iconfont icon-copy"onClick={this.handleDelete.bind(this, index)} aria-hidden="true" />*/
+                    }
                   </td>
                 </tr>)
               )

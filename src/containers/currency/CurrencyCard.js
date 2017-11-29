@@ -26,7 +26,11 @@ export default class CurrencyCard extends Component {
       validation: {
         name: null,
         code: null,
-        symbol:null
+        sign: null,
+        pricedigit: null,
+        moneydigit: null,
+        pricerount: null,
+        moneyrount: null
       }
     }
 
@@ -119,20 +123,20 @@ export default class CurrencyCard extends Component {
                   币种
                 </Col>
                 <Col sm={6}>
-                  {
-                    (this.state.flag === 'detail') ?
-                      <FormControl type="text" placeholder="币种"
-                                   value={currency.code}
-                                   onChange={this.handleChange.bind(this, "code")}
-                                   onBlur={this.doValidate.bind(this, 'code')}
-                                   readOnly={true}
-                      />    :
-                      <FormControl type="text" placeholder="币种"
-                                   value={currency.code}
-                                   onChange={this.handleChange.bind(this, "code")}
-                                   onBlur={this.doValidate.bind(this, 'code')}
-                      />
-                  }
+                {
+                     (this.state.flag === 'detail') ?
+                     <FormControl type="text" placeholder="币种"
+                     value={currency.code}
+                     onChange={this.handleChange.bind(this, "code")}
+                     onBlur={this.doValidate.bind(this, 'code')}
+                     readOnly={true}
+                     />    :
+                     <FormControl type="text" placeholder="币种"
+                     value={currency.code}
+                     onChange={this.handleChange.bind(this, "code")}
+                     onBlur={this.doValidate.bind(this, 'code')}
+                     />
+                     }
 
                   <FormControl.Feedback />
                 </Col>
