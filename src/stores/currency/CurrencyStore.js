@@ -13,7 +13,7 @@ class CurrencyStore {
   @observable
   currencys = [];
   @observable
-  currency = {code:'',name:'',sign:'',pricedigit:'',moneydigit:'',pricerount:'',moneyrount:'',description:'',isdefault:0};
+  currency = {code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0};
   @observable
   tableDataTitle='暂无数据！'
 
@@ -39,7 +39,6 @@ class CurrencyStore {
         })
         .then(data => {
           if (data.status) {
-            console.log('查询成功', data.data);
             this.currencys.replace(data.data);
           } else {
             this.globalStore.showError(!data.msg ? "币种列表数据查询失败" : data.msg);
@@ -64,7 +63,6 @@ class CurrencyStore {
       body: JSON.stringify(this.currency),
       //credentials: "include"
     }
-    console.log('新增1111', this.currency);
     if(flag === 'add'){
       //return fetch('http://127.0.0.1/webCurrency/getAddType', option)
       return fetch(Config.currency.add, option)

@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import {observer} from 'mobx-react';
-//import numeral  from 'numeraljs';
+
 import GlobalStore from '../../stores/GlobalStore';
 
 import CurrencyCard from './CurrencyCard';
@@ -33,7 +33,7 @@ class Currency extends React.Component {
 
   // 新增、编辑
   handleAdd(index, flag) {
-    if (flag === 'add') { Object.assign(this.store.currency, {code:'',name:'',sign:'',pricedigit:'',moneydigit:'',pricerount:'',moneyrount:'',description:'',isdefault:0}) }
+    if (flag === 'add') { Object.assign(this.store.currency, {code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0}) }
     if (flag === 'edit') { Object.assign(this.store.currency, this.store.currencys[index]) }
     this.refs.card.show({ index, store: this.store, flag });
   }
@@ -53,8 +53,13 @@ class Currency extends React.Component {
     that.setState({
       value: val
     }, () => {
-      if($.trim(val) !== ' ')
+      let str = val.toString();
+      if($.trim(str) == '') {
+        return false;
+      }
+      else {
         that.store.handleSearch(val);
+      }
     });
   }
 
@@ -100,7 +105,7 @@ class Currency extends React.Component {
           </div>
         </div>
 
-        <div className="ssc-grid">
+        <div className="currency-grid">
           <table className="table">
             <thead>
             <tr>
@@ -111,7 +116,7 @@ class Currency extends React.Component {
               <th>金额精度</th>
               <th>单位进价</th>
               <th>金额进价</th>
-              <th className="noprint" >操作</th>
+              <th>操作</th>
             </tr>
             </thead>
             <tbody>
@@ -127,6 +132,9 @@ class Currency extends React.Component {
                   <td>{value.pricerount}</td>
                   <td>{value.moneyrount}</td>
                   <td>
+                    <button className="btn btn-default" onClick={this.handleAdd.bind(this, index, 'edit')}>删除</button>
+                    <button className="btn btn-default" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
+                    <button className="btn btn-default" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
                     <span title="编辑" className="iconfont icon-edit" onClick={this.handleAdd.bind(this, index, 'edit')} aria-hidden="true" />
                     <span title="删除" className="iconfont icon-delete" onClick={this.handleDelete.bind(this, index)} aria-hidden="true" />
                     <span title="设为默认" className="iconfont icon-copy"onClick={this.handleDelete.bind(this, index)} aria-hidden="true" />

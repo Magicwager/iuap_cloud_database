@@ -40,7 +40,11 @@ export default class CurrencyCard extends Component {
     this.setState({flag, show: true, index: index, validation: {
       name: null,
       code: null,
-      symbol: null
+      sign: null,
+      pricedigit: null,
+      moneydigit: null,
+      pricerount: null,
+      moneyrount: null
     }})
   }
 
@@ -65,7 +69,11 @@ export default class CurrencyCard extends Component {
       case 'code':
       case 'name':
       case 'sign':
-        val = val.trim()
+      case 'pricedigit':
+      case 'moneydigit':
+      case 'pricerount':
+      case 'moneyrount':
+        val = $.trim(val)
         break
       default:
         validate = null
@@ -86,7 +94,6 @@ export default class CurrencyCard extends Component {
       .then(data => {
         if(data.status) {
           GlobalStore.showInfo("保存成功")
-          console.log('保存成功',data)
           this.store.getCurrencyLst();
           this.close();
         }else{
@@ -176,6 +183,99 @@ export default class CurrencyCard extends Component {
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
+              <FormGroup controlId="code" validationState={this.state.validation.pricedigit}>
+                <Col sm={2} componentClass={ControlLabel} smOffset={1}>
+                  单价精度
+                </Col>
+                <Col sm={6}>
+                  {
+                    (this.state.flag === 'detail') ?
+                      <FormControl type="text" placeholder="单价精度"
+                                   value={currency.pricedigit}
+                                   onChange={this.handleChange.bind(this, "pricedigit")}
+                                   onBlur={this.doValidate.bind(this, 'pricedigit')}
+                                   readOnly={true}
+                      />    :
+                      <FormControl type="text" placeholder="单价精度"
+                                   value={currency.pricedigit}
+                                   onChange={this.handleChange.bind(this, "pricedigit")}
+                                   onBlur={this.doValidate.bind(this, 'pricedigit')}
+                      />
+                  }
+
+                  <FormControl.Feedback />
+                </Col>
+              </FormGroup>
+              <FormGroup controlId="code" validationState={this.state.validation.moneydigit}>
+                <Col sm={2} componentClass={ControlLabel} smOffset={1}>
+                  金额精度
+                </Col>
+                <Col sm={6}>
+                  {
+                    (this.state.flag === 'detail') ?
+                      <FormControl type="text" placeholder="金额精度"
+                                   value={currency.moneydigit}
+                                   onChange={this.handleChange.bind(this, "moneydigit")}
+                                   onBlur={this.doValidate.bind(this, 'moneydigit')}
+                                   readOnly={true}
+                      />    :
+                      <FormControl type="text" placeholder="金额精度"
+                                   value={currency.moneydigit}
+                                   onChange={this.handleChange.bind(this, "moneydigit")}
+                                   onBlur={this.doValidate.bind(this, 'moneydigit')}
+                      />
+                  }
+
+                  <FormControl.Feedback />
+                </Col>
+              </FormGroup>
+              <FormGroup controlId="code" validationState={this.state.validation.pricerount}>
+                <Col sm={2} componentClass={ControlLabel} smOffset={1}>
+                  单位进价
+                </Col>
+                <Col sm={6}>
+                  {
+                    (this.state.flag === 'detail') ?
+                      <FormControl type="text" placeholder="单位进价"
+                                   value={currency.pricerount}
+                                   onChange={this.handleChange.bind(this, "pricerount")}
+                                   onBlur={this.doValidate.bind(this, 'pricerount')}
+                                   readOnly={true}
+                      />    :
+                      <FormControl type="text" placeholder="单位进价"
+                                   value={currency.pricerount}
+                                   onChange={this.handleChange.bind(this, "pricerount")}
+                                   onBlur={this.doValidate.bind(this, 'pricerount')}
+                      />
+                  }
+
+                  <FormControl.Feedback />
+                </Col>
+              </FormGroup>
+              <FormGroup controlId="code" validationState={this.state.validation.moneyrount}>
+                <Col sm={2} componentClass={ControlLabel} smOffset={1}>
+                  金额进价
+                </Col>
+                <Col sm={6}>
+                  {
+                    (this.state.flag === 'detail') ?
+                      <FormControl type="text" placeholder="金额进价"
+                                   value={currency.moneyrount}
+                                   onChange={this.handleChange.bind(this, "moneyrount")}
+                                   onBlur={this.doValidate.bind(this, 'moneyrount')}
+                                   readOnly={true}
+                      />    :
+                      <FormControl type="text" placeholder="金额进价"
+                                   value={currency.moneyrount}
+                                   onChange={this.handleChange.bind(this, "moneyrount")}
+                                   onBlur={this.doValidate.bind(this, 'moneyrount')}
+                      />
+                  }
+
+                  <FormControl.Feedback />
+                </Col>
+              </FormGroup>
+
 
               <FormGroup>
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>

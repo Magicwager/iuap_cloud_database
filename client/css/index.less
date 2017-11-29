@@ -53,9 +53,6 @@
 @gridHoverBackColor: #F0F0F0;       // 表格列表hover背景色
 
 // 重置部分bootstrap主题的色值 Level等级越高色值越浅
-//@primaryColorLevel1:;               // 深
-//@primaryColorLevel2:;               // 中
-//@primaryColorLevel3:;               // 浅
 @infoColorLevel1: #108EE9;
 @infoColorLevel2: #ADD8F7;
 @infoColorLevel3: #ECF6FD;
@@ -110,18 +107,8 @@ a {  color: @mainGreen;
   &:focus { color: @btnPrimaryFocus; }
 }
 
-// 打印 适配不同屏幕分辨率
-@media print {
-  .noprint {
-    display: none;
-  }
-  .print {
-    display: block;
-  }
-}
-
-// 公共表格
-.ssc-grid {
+// 表格
+.currency-grid {
   position: relative;
   table {
     .mb0;
@@ -165,7 +152,6 @@ a {  color: @mainGreen;
         }
         &:hover {
           td {.b0;}
-          //border: 1px solid @borderHoverColor;
           background-color: @gridHoverBackColor;
           td:last-child > a, td:last-child > span, td:last-child > i,td:last-child >div> span ,td:last-child >div> a,td:last-child >div> i{
             color: @mainGreen;
@@ -180,27 +166,10 @@ a {  color: @mainGreen;
     }
   }
 }
-.ssc-grid table tbody tr.edit-tr td {  // 有参照的表格 td不能hidden
-  overflow: visible;
-}
-.ssc-grid.fixed{
-  margin-top: 180px;
-  table thead{
-    position: fixed;
-    top: 144px;
-  }
-}
-.ssc-grid.stick-tab-header{
-  top: 142px;
-  z-index: 2;
-}
-.ssc-grid.pointer table tbody tr{
-  .pointer
-}
+
 
 
 // 币种
-
 .ledger {
   .head {
     height: 34px;
@@ -246,7 +215,7 @@ a {  color: @mainGreen;
     box-shadow: none;
   }
 }
-.btn.btn-primary {        // 重要按钮 主题色
+.btn.btn-primary {
   background-color: @btnPrimaryColor;
   border-color: @btnPrimaryColor;
   box-sizing: border-box;
@@ -259,14 +228,13 @@ a {  color: @mainGreen;
     background-color: @btnPrimaryFocus;
   }
 }
-.btn.btn-default {        // 一般按钮
+.btn.btn-default {
   border-color: @btnDefaultBorder;
   background-color: @backColor;
   box-sizing: border-box;
   &:hover {
     color: @btnPrimaryHover;
     border-color: @btnPrimaryHover;
-    //background-color: @btnPrimaryHover;
   }
   &:focus {
     color: @btnPrimaryFocus;

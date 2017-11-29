@@ -653,29 +653,21 @@ a:hover {
 a:focus {
   color: #008676;
 }
-@media print {
-  .noprint {
-    display: none;
-  }
-  .print {
-    display: block;
-  }
-}
-.ssc-grid {
+.currency-grid {
   position: relative;
 }
-.ssc-grid table {
+.currency-grid table {
   margin-bottom: 0;
   color: #333333;
   background-color: #fff;
   border: 1px solid #E6E6E6;
   border-collapse: inherit;
 }
-.ssc-grid table thead tr {
+.currency-grid table thead tr {
   color: #333333;
   background-color: #F2F2F2;
 }
-.ssc-grid table thead tr th {
+.currency-grid table thead tr th {
   border-width: 1px;
   white-space: nowrap;
   padding: 0 12px;
@@ -685,10 +677,10 @@ a:focus {
   font-size: 14px;
   font-size: 1.4rem;
 }
-.ssc-grid table tbody > tr:nth-of-type(even) {
+.currency-grid table tbody > tr:nth-of-type(even) {
   background-color: #FAFAFA;
 }
-.ssc-grid table tbody tr td {
+.currency-grid table tbody tr td {
   border: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -701,51 +693,34 @@ a:focus {
   font-size: 1.2rem;
   color: #333333;
 }
-.ssc-grid table tbody tr td:last-child > a,
-.ssc-grid table tbody tr td:last-child span {
+.currency-grid table tbody tr td:last-child > a,
+.currency-grid table tbody tr td:last-child span {
   color: transparent;
   margin-right: 15px;
 }
-.ssc-grid table tbody tr:hover {
+.currency-grid table tbody tr:hover {
   background-color: #F0F0F0;
 }
-.ssc-grid table tbody tr:hover td {
+.currency-grid table tbody tr:hover td {
   border: 0;
 }
-.ssc-grid table tbody tr:hover td:last-child > a,
-.ssc-grid table tbody tr:hover td:last-child > span,
-.ssc-grid table tbody tr:hover td:last-child > i,
-.ssc-grid table tbody tr:hover td:last-child > div > span,
-.ssc-grid table tbody tr:hover td:last-child > div > a,
-.ssc-grid table tbody tr:hover td:last-child > div > i {
+.currency-grid table tbody tr:hover td:last-child > a,
+.currency-grid table tbody tr:hover td:last-child > span,
+.currency-grid table tbody tr:hover td:last-child > i,
+.currency-grid table tbody tr:hover td:last-child > div > span,
+.currency-grid table tbody tr:hover td:last-child > div > a,
+.currency-grid table tbody tr:hover td:last-child > div > i {
   color: #00B39E;
   display: inline-block;
   cursor: pointer;
 }
-.ssc-grid table tbody tr:hover td:last-child > a:hover,
-.ssc-grid table tbody tr:hover td:last-child > span:hover,
-.ssc-grid table tbody tr:hover td:last-child > i:hover,
-.ssc-grid table tbody tr:hover td:last-child > div > span:hover,
-.ssc-grid table tbody tr:hover td:last-child > div > a:hover,
-.ssc-grid table tbody tr:hover td:last-child > div > i:hover {
+.currency-grid table tbody tr:hover td:last-child > a:hover,
+.currency-grid table tbody tr:hover td:last-child > span:hover,
+.currency-grid table tbody tr:hover td:last-child > i:hover,
+.currency-grid table tbody tr:hover td:last-child > div > span:hover,
+.currency-grid table tbody tr:hover td:last-child > div > a:hover,
+.currency-grid table tbody tr:hover td:last-child > div > i:hover {
   color: #009886;
-}
-.ssc-grid table tbody tr.edit-tr td {
-  overflow: visible;
-}
-.ssc-grid.fixed {
-  margin-top: 180px;
-}
-.ssc-grid.fixed table thead {
-  position: fixed;
-  top: 144px;
-}
-.ssc-grid.stick-tab-header {
-  top: 142px;
-  z-index: 2;
-}
-.ssc-grid.pointer table tbody tr {
-  cursor: pointer;
 }
 .ledger .head {
   height: 34px;
