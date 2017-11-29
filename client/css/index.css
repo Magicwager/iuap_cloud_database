@@ -909,3 +909,55 @@ select:focus {
   z-index: 9999;
   color: #999;
 }
+.bootstrap-typeahead input.bootstrap-typeahead-input-main {
+  padding: 6px 30px 6px 12px;
+}
+.tw-popup {
+  z-index: 6100;
+}
+.refer-search-icon {
+  font-family: "iconfont" !important;
+}
+.refer-search-icon::before {
+  content: "\e69b";
+  font-size: 16px;
+  font-size: 1.6rem;
+}
+.bootstrap-typeahead .input-group {
+  display: block;
+}
+.bootstrap-typeahead .input-group .form-control {
+  float: none;
+  border-radius: 4px;
+}
+.bootstrap-typeahead .input-group span.input-group-addon {
+  position: absolute;
+  top: 2px;
+  right: 13px;
+  border: none;
+  background-color: transparent;
+}
+.dropdown-menu {
+  width: 100%;
+}
+.dropdown-menu li a {
+  font-size: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666666;
+}
+.dropdown-menu li a:hover {
+  background-color: #00B39E;
+  color: #FFF;
+}
+.dropdown-menu .active > a {
+  background-color: #00B39E;
+}
+.dropdown-menu .active > a:hover {
+  background-color: #009886;
+}
+.dropdown-menu-list {
+  padding: 0;
+  min-width: 90px;
+  border-radius: 0;
+}

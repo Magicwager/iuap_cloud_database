@@ -31,8 +31,8 @@ class CurrencyStore {
     }
 
     return (
-      //fetch('http://127.0.0.1/webCurrency/getBillType', opt)
-      fetch(Config.currency.query, opt)
+      fetch('http://127.0.0.1/webCurrency/getBillType', opt)
+      //fetch(Config.currency.query, opt)
         .then(response => {
           this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -64,8 +64,8 @@ class CurrencyStore {
       //credentials: "include"
     }
     if(flag === 'add'){
-      //return fetch('http://127.0.0.1/webCurrency/getAddType', option)
-      return fetch(Config.currency.add, option)
+      return fetch('http://127.0.0.1/webCurrency/getAddType', option)
+      //return fetch(Config.currency.add, option)
         .then(response => {
           this.globalStore.hideWait();
           return  response.ok ? response.json() : {}
@@ -73,8 +73,8 @@ class CurrencyStore {
         .then(data => data)
     }
     if(flag==='edit') {
-      //return fetch('http://127.0.0.1/webCurrency/getEditType', option)
-      return fetch(Config.currency.edit, option)
+      return fetch('http://127.0.0.1/webCurrency/getEditType', option)
+      //return fetch(Config.currency.edit, option)
         .then(response => {
           this.globalStore.hideWait();
           return  response.ok ? response.json() : {}
@@ -102,8 +102,8 @@ class CurrencyStore {
     }
 
     _this.globalStore.showWait();
-    //return fetch('http://127.0.0.1/webCurrency/getDelType', option)
-    return fetch(Config.currency.delete, option)
+    return fetch('http://127.0.0.1/webCurrency/getDelType', option)
+    //return fetch(Config.currency.delete, option)
       .then(response => {
         _this.globalStore.hideWait();
         return response.ok ? response.json() : {}
@@ -130,8 +130,8 @@ class CurrencyStore {
       //credentials: "include"
     }
 
-    //let url = encodeURI('http://127.0.0.1/webCurrency/getSearch?keyword='+param);
-    let url = encodeURI(Config.currency.search+'?keyword='+param);
+    let url = encodeURI('http://127.0.0.1/webCurrency/getSearch?keyword='+param);
+    //let url = encodeURI(Config.currency.search+'?keyword='+param);
     url = encodeURI(url);
 
     return (
@@ -172,8 +172,8 @@ class CurrencyStore {
     }
 
     _this.globalStore.showWait();
-    //return fetch('http://127.0.0.1/webCurrency/getDelType', option)
-    return fetch(Config.currency.setDefault, option)
+    return fetch('http://127.0.0.1/webCurrency/getDelType', option)
+    //return fetch(Config.currency.setDefault, option)
       .then(response => {
         _this.globalStore.hideWait();
         return response.ok ? response.json() : {}
@@ -181,7 +181,6 @@ class CurrencyStore {
       .then(data => {
         if(data.status){
           callback();
-          console.log('aaa, 设为默认成功！')
           GlobalStore.showInfo("设为默认成功")
         }else{
           GlobalStore.showError(data.msg)

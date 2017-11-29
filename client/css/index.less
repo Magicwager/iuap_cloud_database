@@ -362,3 +362,61 @@ input:focus, select:focus {
   }
 }
 
+// 参照
+.bootstrap-typeahead input.bootstrap-typeahead-input-main {
+  padding: 6px 30px 6px 12px;
+}
+// 参照 input-dropdown 下拉组件 会计期间/凭证状态/科目/科目级次/辅助项目 等
+.tw-popup {
+  z-index: 6100;
+}
+.refer-search-icon {
+  font-family: "iconfont" !important;
+}
+.refer-search-icon::before {
+  content: "\e69b";
+  .f16;
+}
+// 清楚参照中的右侧input-group-addon按钮样式
+.bootstrap-typeahead .input-group {
+  .Clearfix;
+  .form-control {
+    float: none;
+    .br4;
+  }
+  span.input-group-addon {
+    .pa;
+    top: 2px;
+    right: 13px;
+    border: none;
+    .transparent;
+  }
+}
+
+// 下拉列表
+.dropdown-menu {
+  width: 100%;
+  li {
+    a {
+      .f12;
+      .pointer;
+      color: @fontColorLevel2;
+      &:hover {
+        background-color: @listHoverBackColor;
+        color: #FFF;
+      }
+    }
+  }
+  .active >a {
+    background-color: @mainGreen;
+    &:hover {
+      background-color: @mainGreenHover;
+    }
+  }
+}
+.dropdown-menu-list {
+  .p0;
+  min-width: 90px;
+  border-radius: 0;
+}
+

@@ -6,7 +6,7 @@ import React, { Component, PropTypes } from 'react';
 import { Modal, Form , FormGroup, FormControl, ControlLabel, Col, Button, Checkbox} from 'react-bootstrap';
 import { observer } from 'mobx-react';
 
-//import { Refers } from 'ssc-refer';
+import { Refers } from 'ssc-refer';
 import GlobalStore from '../../stores/GlobalStore';
 
 let title = {'add': '添加新数据', 'edit': '编辑'}
@@ -106,6 +106,14 @@ export default class CurrencyCard extends Component {
       });
   }
 
+  // 币种参照
+  changeCurrency(select) {
+    if(select.length<=0)
+      return
+    let value = select[0];
+    Object.assign(this.store.currency, {id:value.id, name:value.name, code: value.code});
+  }
+
 
   render() {
     let currency = this.store.currency;
@@ -123,7 +131,19 @@ export default class CurrencyCard extends Component {
                   币种
                 </Col>
                 <Col sm={6}>
-                {
+                  <Refers
+                    className="noprint"
+                    labelKey="code"
+                    onChange={this.changeCurrency.bind(this)}
+                    placeholder="请选择..."
+                    referConditions={{"refCode":" ","refType":"list","displayFields":["name"]}}
+                    referDataUrl={'http://127.0.0.1/webCurrency/getRefData'}
+                    referType="list"
+                    ref={"ref-currency"}
+                    defaultSelected={[currency]}
+                  />
+                  {
+                    /*{
                      (this.state.flag === 'detail') ?
                      <FormControl type="text" placeholder="币种"
                      value={currency.code}
@@ -137,50 +157,43 @@ export default class CurrencyCard extends Component {
                      onBlur={this.doValidate.bind(this, 'code')}
                      />
                      }
-
+                     */
+                  }
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
-              <FormGroup controlId="category" validationState={this.state.validation.name} >
+              <FormGroup controlId="category">
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
                   币种简称
                 </Col>
                 <Col sm={6}>
                   {
-                    (this.state.flag === 'detail') ?
+                    (this.state.flag === 'add') ?
                       <FormControl type="text" placeholder="币种简称"
                                    value={currency.name}
-                                   onChange={this.handleChange.bind(this, "name")}
-                                   onBlur={this.doValidate.bind(this, 'name')}
                                    readOnly={true}
                       /> :
                       <FormControl type="text" placeholder="币种简称"
                                    value={currency.name}
-                                   onChange={this.handleChange.bind(this, "name")}
-                                   onBlur={this.doValidate.bind(this, 'name')}
                       />
                   }
                   
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
-              <FormGroup controlId="symbol" validationState={this.state.validation.sign}>
+              <FormGroup controlId="symbol">
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
                   币种符号
                 </Col>
                 <Col sm={6}>
                   {
-                    (this.state.flag === 'detail') ?
+                    (this.state.flag === 'add') ?
                       <FormControl type="text" placeholder="币种符号"
                                    value={currency.sign}
-                                   onChange={this.handleChange.bind(this, "sign")}
-                                   onBlur={this.doValidate.bind(this, 'sign')}
                                    readOnly={true}
                       /> :
                       <FormControl type="text" placeholder="币种符号"
                                    value={currency.sign}
-                                   onChange={this.handleChange.bind(this, "sign")}
-                                   onBlur={this.doValidate.bind(this, 'sign')}
                       />
                   }
                   

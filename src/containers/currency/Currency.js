@@ -50,7 +50,7 @@ class Currency extends React.Component {
     e.preventDefault();
     let _this = this;
     Object.assign(this.store.currency, this.store.currencys[index]);
-    GlobalStore.showCancelModel('确定要设为默认？', () => {}, _this.store.hdDefault.bind(_this.store,index, () => {
+    GlobalStore.showCancelModel('确定设为默认？', () => {}, _this.store.hdDefault.bind(_this.store,index, () => {
       _this.store.getCurrencyLst();
     }));
   }
