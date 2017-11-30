@@ -23,6 +23,7 @@ class Currency extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
+    this.handleRule = this.handleRule.bind(this);
   }
 
   componentDidMount() {
@@ -68,7 +69,7 @@ class Currency extends React.Component {
         return false;
       }
       else {
-        that.store.handleSearch(val);
+        that.store.handleSearch($.trim(str));
       }
     });
   }
@@ -87,6 +88,20 @@ class Currency extends React.Component {
       this.setState({
         value: '请输入搜索内容'
       });
+  }
+
+  // 前端转换规则
+  handleRule(param) {
+    switch(param){
+      case 0:
+       return  param = '全部舍位';
+        break;
+      case 1:
+        return param = '全部进位'
+        break;
+      default:
+        return param = '四舍五入';
+    }
   }
 
 
@@ -124,7 +139,7 @@ class Currency extends React.Component {
               <th>币种符号</th>
               <th>单价精度</th>
               <th>金额精度</th>
-              <th>单位进价</th>
+              <th>单价进价</th>
               <th>金额进价</th>
               <th>操作</th>
             </tr>
@@ -139,13 +154,13 @@ class Currency extends React.Component {
                   <td>{value.sign}</td>
                   <td>{value.pricedigit}</td>
                   <td>{value.moneydigit}</td>
-                  <td>{value.pricerount}</td>
-                  <td>{value.moneyrount}</td>
+                  <td>{this.handleRule(value.pricerount)}</td>
+                  <td>{this.handleRule(value.moneyrount)}</td>
                   <td>
                     <button className="btn btn-operate mr10" onClick={this.handleDelete.bind(this, index)}>删除</button>
                     <button className="btn btn-operate mr10" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
                     {
-                      value.isdefault==1 ? '': <button className="btn btn-operate" onClick={this.handleDefault.bind(this, index)}>设为默认</button>
+                      /*value.isdefault==1 ? '': <button className="btn btn-operate" onClick={this.handleDefault.bind(this, index)}>设为默认</button>*/
                     }
 
                     {

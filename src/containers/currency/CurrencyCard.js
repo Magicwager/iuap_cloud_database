@@ -25,13 +25,8 @@ export default class CurrencyCard extends Component {
       currency: {},
       index: -1,
       validation: {
-        name: null,
-        code: null,
-        sign: null,
         pricedigit: null,
-        moneydigit: null,
-        pricerount: null,
-        moneyrount: null
+        moneydigit: null
       }
     }
 
@@ -43,13 +38,8 @@ export default class CurrencyCard extends Component {
   show(param) {
     let { index, flag } = param;
     this.setState({flag, show: true, index: index, validation: {
-      name: null,
-      code: null,
-      sign: null,
       pricedigit: null,
       moneydigit: null,
-      pricerount: null,
-      moneyrount: null
     }})
   }
 
@@ -71,13 +61,8 @@ export default class CurrencyCard extends Component {
     let validate = null
     let val = this.store.currency[field];
     switch (field){
-      case 'code':
-      case 'name':
-      case 'sign':
       case 'pricedigit':
       case 'moneydigit':
-      case 'pricerount':
-      case 'moneyrount':
         val = $.trim(val)
         break
       default:
@@ -112,12 +97,20 @@ export default class CurrencyCard extends Component {
     if(select.length<=0)
       return
     let value = select[0];
-    Object.assign(this.store.currency, {id:value.id, name:value.name, code: value.code});
+    Object.assign(this.store.currency, {id:value.id, name:value.name, code:value.code, sign:value.sign});
   }
 
+  // 改变进位规则
+  changeRule(field, e) {
+    let value = e.target.value;
+    console.log('1111',value)
+    this.store.currency[field] = value;
+    console.log(this.store.currency)
+  }
 
   render() {
     let currency = this.store.currency;
+    const filterByFields = ['name', 'code'];
 
     return (
       <div>
@@ -132,17 +125,39 @@ export default class CurrencyCard extends Component {
                   币种
                 </Col>
                 <Col sm={6}>
-                  <Refers
-                    className="noprint"
-                    labelKey="name"
-                    onChange={this.changeCurrency.bind(this)}
-                    placeholder="请选择..."
-                    referConditions={{"refCode":" ","refType":"list","displayFields":["name","code"]}}
-                    referDataUrl={Config.currency.currencyRef}
-                    referType="list"
-                    ref={"ref-currency"}
-                    defaultSelected={[currency]}
-                  />
+                  {
+                    (this.state.flag === 'edit') ?
+                      <Refers
+                      className="noprint"
+                      filterBy={filterByFields}
+                      labelKey="code"
+                      emptyLabel=""
+                      onChange={this.changeCurrency.bind(this)}
+                      placeholder="请选择..."
+                      referConditions={{"refCode":" ","refType":"list","displayFields":["code","name"]}}
+                      referDataUrl={Config.currency.currencyRef}
+                      referType="list"
+                      ref={"ref-currency"}
+                      defaultSelected={[currency]}
+                      disabled={true}
+                    />
+                      :
+                      <Refers
+                        className="noprint"
+                        filterBy={filterByFields}
+                        labelKey="code"
+                        emptyLabel=""
+                        onChange={this.changeCurrency.bind(this)}
+                        placeholder="请选择..."
+                        referConditions={{"refCode":" ","refType":"list","displayFields":["code","name"]}}
+                        referDataUrl={Config.currency.currencyRef}
+                        referType="list"
+                        ref={"ref-currency"}
+                        defaultSelected={[currency]}
+                        renderMenuItemChildren={this._renderMenuItemChildren}
+                      />
+                  }
+
                 </Col>
               </FormGroup>
               <FormGroup controlId="category">
@@ -167,7 +182,7 @@ export default class CurrencyCard extends Component {
                   />
                 </Col>
               </FormGroup>
-              <FormGroup controlId="code" validationState={this.state.validation.pricedigit}>
+              <FormGroup controlId="pricedigit" validationState={this.state.validation.pricedigit}>
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
                   单价精度
                 </Col>
@@ -180,7 +195,7 @@ export default class CurrencyCard extends Component {
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
-              <FormGroup controlId="code" validationState={this.state.validation.moneydigit}>
+              <FormGroup controlId="moneydigit" validationState={this.state.validation.moneydigit}>
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
                   金额精度
                 </Col>
@@ -193,30 +208,28 @@ export default class CurrencyCard extends Component {
                   <FormControl.Feedback />
                 </Col>
               </FormGroup>
-              <FormGroup controlId="code" validationState={this.state.validation.pricerount}>
+              <FormGroup controlId="pricerount">
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
-                  单位进价
+                  单价进价
                 </Col>
                 <Col sm={6}>
-                  <FormControl type="text" placeholder="单位进价"
-                               value={currency.pricerount}
-                               onChange={this.handleChange.bind(this, "pricerount")}
-                               onBlur={this.doValidate.bind(this, 'pricerount')}
-                  />
-                  <FormControl.Feedback />
+                  <select className="pricerount-select noprint" defaultValue={currency.pricerount} value={currency.pricerount} onChange={this.changeRule.bind(this, "pricerount")}>
+                    {this.store.pricerounts.map((item,index)=>{
+                      return(<option key={ 'pricerount' + index } value={item.price}>{item.name}</option>)
+                    })}
+                  </select>
                 </Col>
               </FormGroup>
-              <FormGroup controlId="code" validationState={this.state.validation.moneyrount}>
+              <FormGroup controlId="moneyrount">
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
                   金额进价
                 </Col>
                 <Col sm={6}>
-                  <FormControl type="text" placeholder="金额进价"
-                               value={currency.moneyrount}
-                               onChange={this.handleChange.bind(this, "moneyrount")}
-                               onBlur={this.doValidate.bind(this, 'moneyrount')}
-                  />
-                  <FormControl.Feedback />
+                  <select className="pricerount-select noprint" defaultValue={currency.moneyrount} value={currency.moneyrount} onChange={this.changeRule.bind(this, "moneyrount")}>
+                    {this.store.pricerounts.map((item,index)=>{
+                      return(<option key={ 'moneyrount' + index } value={item.price}>{item.name}</option>)
+                    })}
+                  </select>
                 </Col>
               </FormGroup>
               <FormGroup>
@@ -247,5 +260,14 @@ export default class CurrencyCard extends Component {
         </Modal>
       </div>
     )
+  }
+
+  _renderMenuItemChildren(option, props, index) {
+    return [
+      <span key="code">
+        {option.code+" "}
+      </span>,
+      <strong key="name">{option.name} </strong>
+    ];
   }
 }

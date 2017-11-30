@@ -15,7 +15,9 @@ class CurrencyStore {
   @observable
   currency = {code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0};
   @observable
-  tableDataTitle='暂无数据！'
+  tableDataTitle='暂无数据！';
+  @observable
+  pricerounts=[{'price':"5",name:"四舍五入"},{'price':"0",name:"全部舍位"},{'price':"1",name:"全部进位"}]; // 单价舍入规则
 
 
   // 查询接口
