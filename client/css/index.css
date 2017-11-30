@@ -754,6 +754,7 @@ a:focus {
   font-size: 12px;
   font-size: 1.2rem;
   padding: 6px 20px;
+  line-height: 18px;
 }
 .btn:active {
   -webkit-box-shadow: none;
@@ -974,4 +975,13 @@ select:focus {
   font-size: 1.2rem;
   color: #666666;
   box-sizing: border-box;
+}
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #fff!important;
+}
+.form-control[disabled],
+fieldset[disabled] .form-control {
+  cursor: default!important;
 }

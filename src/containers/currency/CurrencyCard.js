@@ -80,6 +80,16 @@ export default class CurrencyCard extends Component {
     this.state.validation[item] === 'success')
     if(!flag)
       return
+
+    // 数据校验
+    for(var i = 0,len = this.store.ListData.length;i < len ; i++ ) {
+      var val = this.store.currency.code;
+      if(this.store.ListData[i].code == val) {
+        this.refs.message.innerHTML = "币种已存在！";
+        return false;
+      }
+    }
+
     this.store.handleSubmit(this.state.flag)
       .then(data => {
         if(data.status) {
@@ -90,6 +100,7 @@ export default class CurrencyCard extends Component {
           GlobalStore.showError(data.msg)
         }
       });
+
   }
 
   // 币种参照
@@ -98,14 +109,32 @@ export default class CurrencyCard extends Component {
       return
     let value = select[0];
     Object.assign(this.store.currency, {id:value.id, name:value.name, code:value.code, sign:value.sign});
+    this.refs.message.innerHTML = " ";
+
+    // 数据校验
+    this.store.ListData.map((value, index) => {
+      let val = this.store.currency.code;
+      if(value.code == val) {
+        this.refs.message.innerHTML = "币种已存在！";
+        return;
+      }
+    });
   }
 
   // 改变进位规则
   changeRule(field, e) {
     let value = e.target.value;
-    console.log('1111',value)
     this.store.currency[field] = value;
-    console.log(this.store.currency)
+  }
+
+  // 币种参照的code name展示
+  _renderMenuItemChildren(option, props, index) {
+    return [
+      <span key="code">
+        {option.code+" "}
+      </span>,
+      <strong key="name">{option.name} </strong>
+    ];
   }
 
   render() {
@@ -140,6 +169,7 @@ export default class CurrencyCard extends Component {
                       ref={"ref-currency"}
                       defaultSelected={[currency]}
                       disabled={true}
+                      renderMenuItemChildren={this._renderMenuItemChildren.bind(this)}
                     />
                       :
                       <Refers
@@ -154,10 +184,13 @@ export default class CurrencyCard extends Component {
                         referType="list"
                         ref={"ref-currency"}
                         defaultSelected={[currency]}
-                        renderMenuItemChildren={this._renderMenuItemChildren}
+                        renderMenuItemChildren={this._renderMenuItemChildren.bind(this)}
                       />
                   }
 
+                </Col>
+                <Col sm={3}>
+                  <div ref="message" style={{'color': 'red','position':'absolute','top':'8px'}}></div>
                 </Col>
               </FormGroup>
               <FormGroup controlId="category">
@@ -245,11 +278,6 @@ export default class CurrencyCard extends Component {
                 </Col>
               </FormGroup>
             </Form>
-            <FormGroup>
-              <Col sm={6} smOffset={3}>
-                <div ref="message" style={{color: 'red'}}></div>
-              </Col>
-            </FormGroup>
           </Modal.Body>
           <Modal.Footer>
             <div className="pull-right">
@@ -260,14 +288,5 @@ export default class CurrencyCard extends Component {
         </Modal>
       </div>
     )
-  }
-
-  _renderMenuItemChildren(option, props, index) {
-    return [
-      <span key="code">
-        {option.code+" "}
-      </span>,
-      <strong key="name">{option.name} </strong>
-    ];
   }
 }

@@ -97,7 +97,7 @@ class Currency extends React.Component {
        return  param = '全部舍位';
         break;
       case 1:
-        return param = '全部进位'
+        return param = '全部进位';
         break;
       default:
         return param = '四舍五入';
