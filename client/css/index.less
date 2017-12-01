@@ -92,8 +92,9 @@
 /**************************** UI基础设计规范 end ***************************/
 
 
-body { color: @fontColorLevel1;
-       background-color: @backColor;
+body {
+  color: @fontColorLevel1;
+  background-color: @backColor;
 }
 
 .content {
@@ -211,6 +212,33 @@ a {  color: @mainGreen;
   }
 }
 
+// 重置 btn input input.form-control 样式
+.btn-toolbar {  margin-left: 0;  }
+.btn, input, select {  .br4;  }
+.btn:focus, .btn:active:focus, input:focus, select:focus, .close:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+select {
+  border-color: @inputBorderColor;
+}
+input:focus, select:focus {
+  border-color: @inputBorderFocus;
+}
+.form-control {
+  .f12;
+  height: 32px;
+  border-color: @inputBorderColor;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  &:focus {
+    border-color: @inputBorderFocus;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
 // 按钮统一样式
 .btn {
   .f12;
@@ -248,7 +276,7 @@ a {  color: @mainGreen;
     background-color: @backColor;
   }
 }
-.btn.btn-operate {
+.btn.btn-operate {   // 表格操作列按钮
   background-color: #fff;
   border: 1px solid #D1D1D1;
   box-sizing: border-box;
@@ -267,32 +295,6 @@ a {  color: @mainGreen;
 
 
 
-// 重置 btn input input.form-control 样式
-.btn-toolbar {  margin-left: 0;  }
-.btn, input, select {  .br4;  }
-.btn:focus, .btn:active:focus, input:focus, select:focus, .close:focus {
-  outline: 0;
-  outline-offset: 0;
-}
-select {
-  border-color: @inputBorderColor;
-}
-input:focus, select:focus {
-  border-color: @inputBorderFocus;
-}
-.form-control {
-  .f12;
-  height: 32px;
-  border-color: @inputBorderColor;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  &:focus {
-    border-color: @inputBorderFocus;
-    outline: 0;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-}
 
 
 /*静态模态框，提示类模态框*/
@@ -337,7 +339,6 @@ input:focus, select:focus {
   color: @fontColorLevel1;
 }
 .modal-dialog {
-  //margin-top: 10%;
   .modal-body {
     .container {
       margin-left: -15px;
@@ -368,7 +369,7 @@ input:focus, select:focus {
     width: 600px
   }
 }
-  .currency-input {
+.currency-input {
   width: 180px;
   height: 30px;
   .pr;
@@ -482,6 +483,13 @@ input[type="number"]{-moz-appearance:textfield;} // firefox
   position: relative;
   top: 2px;
   left: -1px;
+}
+
+// 错误提示
+.currency-error {
+  color: red;
+  position: absolute;
+  top: 8px;
 }
 
 

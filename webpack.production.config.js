@@ -21,7 +21,7 @@ module.exports = {
         // publicPath: '/',
         filename: '[name].js'
     },
-    // devtool: 'cheap-module-source-map',
+    //devtool: 'cheap-module-source-map',
     module: {
         loaders: [{
             test: /\.js$/,

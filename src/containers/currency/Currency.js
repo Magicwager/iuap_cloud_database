@@ -65,12 +65,6 @@ class Currency extends React.Component {
     let val = this.state.value;
     const str = val.toString();
     this.store.handleSearch($.trim(str));
-    /*if($.trim(str) == '') {
-      return false;
-    }
-    else {
-      this.store.handleSearch($.trim(str));
-    }*/
   }
 
   // 获得焦点

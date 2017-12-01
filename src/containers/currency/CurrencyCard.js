@@ -39,7 +39,7 @@ export default class CurrencyCard extends Component {
     let { index, flag } = param;
     this.setState({flag, show: true, index: index, validation: {
       pricedigit: null,
-      moneydigit: null,
+      moneydigit: null
     }})
   }
 
@@ -78,7 +78,7 @@ export default class CurrencyCard extends Component {
   handleSubmit() {
 
     if(this.state.flag == 'add') {
-      // 数据校验
+      // 币种数据校验
       for(var i = 0,len = this.store.ListData.length;i < len ; i++ ) {
         var val = this.store.currency.code;
         if(this.store.ListData[i].code == val) {
@@ -90,7 +90,6 @@ export default class CurrencyCard extends Component {
 
     if(this.store.currency.code == '') {
       this.refs.message.innerHTML = '币种不能为空！';
-      //this.setState(Object.assign(this.state.validation, {pricedigit: 'error'}))
     }
     if(this.store.currency.pricedigit == '') {
       this.refs.pricedigit.innerHTML = '单价精度不能为空！';
@@ -104,8 +103,7 @@ export default class CurrencyCard extends Component {
       return false;
     }
 
-
-
+    
     this.store.handleSubmit(this.state.flag)
       .then(data => {
         if(data.status) {
@@ -203,10 +201,9 @@ export default class CurrencyCard extends Component {
                         renderMenuItemChildren={this._renderMenuItemChildren.bind(this)}
                       />
                   }
-
                 </Col>
                 <Col sm={3}>
-                  <div ref="message" style={{'color': 'red','position':'absolute','top':'8px'}}></div>
+                  <div ref="message" className="currency-error"></div>
                 </Col>
               </FormGroup>
               <FormGroup controlId="category">
@@ -236,13 +233,20 @@ export default class CurrencyCard extends Component {
                   <span className="currency-bishu">*</span>单价精度
                 </Col>
                 <Col sm={6}>
-                  <FormControl type="number" placeholder="单价精度"
-                               value={currency.pricedigit}
-                               onChange={this.handleChange.bind(this, "pricedigit")}
+                  <input type="number"
+                         placeholder="单价精度"
+                         value={currency.pricedigit}
+                         className="form-control"
+                         autocomplete="off"
+                         onChange={this.handleChange.bind(this, "pricedigit")}
                   />
+                  {/*<FormControl type="number" placeholder="单价精度"
+                   value={currency.pricedigit}
+                   onChange={this.handleChange.bind(this, "pricedigit")}
+                   />*/}
                 </Col>
                 <Col sm={3}>
-                  <div ref="pricedigit" style={{'color': 'red','position':'absolute','top':'8px'}}></div>
+                  <div ref="pricedigit" className="currency-error"></div>
                 </Col>
               </FormGroup>
               <FormGroup controlId="moneydigit" validationState={this.state.validation.moneydigit}>
@@ -250,13 +254,20 @@ export default class CurrencyCard extends Component {
                   <span className="currency-bishu">*</span>金额精度
                 </Col>
                 <Col sm={6}>
-                  <FormControl type="number" placeholder="金额精度"
-                               value={currency.moneydigit}
-                               onChange={this.handleChange.bind(this, "moneydigit")}
+                  <input type="number"
+                         placeholder="金额精度"
+                         value={currency.moneydigit}
+                         className="form-control"
+                         autocomplete="off"
+                         onChange={this.handleChange.bind(this, "moneydigit")}
                   />
+                  {/*<FormControl type="number" placeholder="金额精度"
+                   value={currency.moneydigit}
+                   onChange={this.handleChange.bind(this, "moneydigit")}
+                   />*/}
                 </Col>
                 <Col sm={3}>
-                  <div ref="moneydigit" style={{'color': 'red','position':'absolute','top':'8px'}}></div>
+                  <div ref="moneydigit" className="currency-error"></div>
                 </Col>
               </FormGroup>
               <FormGroup controlId="pricerount">

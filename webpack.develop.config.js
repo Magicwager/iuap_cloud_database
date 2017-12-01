@@ -4,7 +4,7 @@ var autoprefixer = require('autoprefixer');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
-  //devtool: 'source-map',
+  devtool: 'source-map',
 
   //可以配置多个入口模块
   entry: {
