@@ -886,12 +886,28 @@ select:focus {
   display: inline;
   color: #333333;
 }
-.modal-dialog {
-  margin-top: 10%;
-}
 .modal-dialog .modal-body .container {
   margin-left: -15px;
   margin-right: -15px;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+.modal-dialog {
+  position: absolute;
+  width: auto;
+  margin: 10px auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+}
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+  }
 }
 .currency-input {
   width: 180px;

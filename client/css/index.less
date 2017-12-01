@@ -337,7 +337,7 @@ input:focus, select:focus {
   color: @fontColorLevel1;
 }
 .modal-dialog {
-  margin-top: 10%;
+  //margin-top: 10%;
   .modal-body {
     .container {
       margin-left: -15px;
@@ -345,7 +345,30 @@ input:focus, select:focus {
     }
   }
 }
-.currency-input {
+
+// 模态框垂直水平居中
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0,-50%);
+  -ms-transform: translate(0,-50%);
+  -o-transform: translate(0,-50%);
+  transform: translate(0,-50%)
+}
+
+.modal-dialog {
+  position: absolute;
+  width: auto;
+  margin: 10px auto;
+  left: 0;
+  right: 0;
+  top: 50%
+}
+
+@media (min-width:768px) {
+  .modal-dialog {
+    width: 600px
+  }
+}
+  .currency-input {
   width: 180px;
   height: 30px;
   .pr;
