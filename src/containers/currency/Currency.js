@@ -17,13 +17,16 @@ class Currency extends React.Component {
     this.store = new CurrencyStore();
     this.state = {
       isHasData: this.store.tableDataTitle,   // 列表没有数据时显示内容
-      value: '请输入搜索内容',   // 模糊搜索value
+      value: '',   // 模糊搜索value
+      focus: false
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
-    this.handleFocus = this.handleFocus.bind(this);
+    this.inputOnBlur = this.inputOnBlur.bind(this);
+    this.inputOnFocus = this.inputOnFocus.bind(this);
     this.handleRule = this.handleRule.bind(this);
+    this.handleKeydown = this.handleKeydown.bind(this);
+    this.handleChangeSearch = this.handleChangeSearch.bind(this);
   }
 
   componentDidMount() {
@@ -57,37 +60,40 @@ class Currency extends React.Component {
   }
 
   // 模糊搜索
-  handleChange(e) {
+  handleChangeSearch(e) {
     e.preventDefault();
-    let that = this;
-    let val = e.target.value;
-    that.setState({
-      value: val
-    }, () => {
-      let str = val.toString();
-      if($.trim(str) == '') {
-        return false;
-      }
-      else {
-        that.store.handleSearch($.trim(str));
-      }
-    });
+    let val = this.state.value;
+    const str = val.toString();
+    this.store.handleSearch($.trim(str));
+    /*if($.trim(str) == '') {
+      return false;
+    }
+    else {
+      this.store.handleSearch($.trim(str));
+    }*/
   }
 
   // 获得焦点
-  handleFocus(e) {
-    e.preventDefault();
-    this.setState({value: ' '})
+  inputOnFocus(){
+    this.setState({ focus: true });
   }
 
   // 失去焦点
-  handleBlur(e) {
+  inputOnBlur(){
+    this.setState({ focus: false });
+  }
+
+  // 文本框变化事件
+  handleChange(e) {
     e.preventDefault();
-    let val = this.state.value;
-    if(val === ' ')
-      this.setState({
-        value: '请输入搜索内容'
-      });
+    this.setState({value:e.target.value});
+  }
+
+  // 回车事件
+  handleKeydown(event) {
+    if(event.keyCode==13) {
+      this.handleChangeSearch(event);
+    }
   }
 
   // 前端转换规则
@@ -108,21 +114,25 @@ class Currency extends React.Component {
   render() {
     return(
       <div className="ledger">
-        <div className="header">
-          <div className="header-title">
-            <span>币种</span>
-          </div>
-        </div>
+        {
+          // <div className="header">
+          //   <div className="header-title">
+          //     <span>币种</span>
+          //   </div>
+          // </div>
+        }
         <div className="head">
           <div className="head-l fl">
             <div className="currency-input">
               <input type="text"
                      className="form-control"
+                     placeholder={"请输入搜索内容"}
+                     onBlur={ ::this.inputOnBlur }
+                     onFocus={ ::this.inputOnFocus }
                      onChange={this.handleChange}
-                     onFocus={this.handleFocus}
-                     onBlur={this.handleBlur}
+                     onKeyDown={this.handleKeydown}
                      value={this.state.value}/>
-              <span className="search-icon"></span>
+              <span className="search-icon" onClick={this.handleChangeSearch}></span>
             </div>
           </div>
           <div className="head-r fr noprint">
@@ -179,7 +189,7 @@ class Currency extends React.Component {
 
         <CurrencyCard ref="card" store={this.store} />
 
-       </div>
+      </div>
     )
   }
 }

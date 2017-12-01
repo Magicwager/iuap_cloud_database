@@ -12,21 +12,20 @@ let dotest = GetQueryString('dotest');
 dotest = dotest == null ? '' : `&dotest=${dotest}`;
 
 
-const serverUrl = 'http://127.0.0.1:8080';
+//const serverUrl = 'http://127.0.0.1:8080';
 
 //  iuap
 let Config = {
     VERSION,
-    serverUrl,
     // 币种
     currency: {
-        query: `${serverUrl}/bd/currencys/list`,             // 查询
-        add: `${serverUrl}/bd/currencys/save`,               // 新增
-        edit: `${serverUrl}/bd/currencys/update`,            // 编辑
-        delete: `${serverUrl}/bd/currencys/delete`,          // 删除
-        search: `${serverUrl}/bd/currencys/search`,          // 模糊搜索
-        setDefault: `${serverUrl}/bd/currencys/setDefault`,  // 设为默认
-        currencyRef: `${serverUrl}/bd/currencys/refData`     // 币种参照
+        query: '/bd/currencys/list',             // 查询
+        add: '/bd/currencys/save',               // 新增
+        edit: '/bd/currencys/update',            // 编辑
+        delete: '/bd/currencys/delete',          // 删除
+        search: '/bd/currencys/search',          // 模糊搜索
+        setDefault: '/bd/currencys/setDefault',  // 设为默认
+        currencyRef: '/bd/currencys/refData'     // 币种参照
     }
 };
 

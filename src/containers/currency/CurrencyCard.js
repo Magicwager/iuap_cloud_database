@@ -52,6 +52,7 @@ export default class CurrencyCard extends Component {
   handleChange(field, e) {
     let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
     this.store.currency[field] = val;
+    this.refs[field].innerHTML= '';
     if(field !== 'description') {
       this.doValidate(field, val);
     }
@@ -69,26 +70,41 @@ export default class CurrencyCard extends Component {
         validate = null
         break
     }
-    validate = val === '' ? 'error' : 'success'
+    validate = val === '' ? '' : ''
     this.setState(Object.assign(this.state.validation, {[field]: validate}))
   }
 
   // 保存提交
   handleSubmit() {
-    Object.keys(this.state.validation).forEach((item) => this.doValidate(item))
-    let flag = Object.keys(this.state.validation).every((item, index) =>
-    this.state.validation[item] === 'success')
-    if(!flag)
-      return
 
-    // 数据校验
-    for(var i = 0,len = this.store.ListData.length;i < len ; i++ ) {
-      var val = this.store.currency.code;
-      if(this.store.ListData[i].code == val) {
-        this.refs.message.innerHTML = "币种已存在！";
-        return false;
+    if(this.state.flag == 'add') {
+      // 数据校验
+      for(var i = 0,len = this.store.ListData.length;i < len ; i++ ) {
+        var val = this.store.currency.code;
+        if(this.store.ListData[i].code == val) {
+          this.refs.message.innerHTML = "币种已存在！";
+          return false;
+        }
       }
     }
+
+    if(this.store.currency.code == '') {
+      this.refs.message.innerHTML = '币种不能为空！';
+      //this.setState(Object.assign(this.state.validation, {pricedigit: 'error'}))
+    }
+    if(this.store.currency.pricedigit == '') {
+      this.refs.pricedigit.innerHTML = '单价精度不能为空！';
+      this.setState(Object.assign(this.state.validation, {pricedigit: 'error'}))
+    }
+    if(this.store.currency.moneydigit == '') {
+      this.refs.moneydigit.innerHTML = '金额精度不能为空！';
+      this.setState(Object.assign(this.state.validation, {moneydigit: 'error'}))
+    }
+    if(this.store.currency.moneydigit == '' || this.store.currency.pricedigit == '' || this.store.currency.code == '' ) {
+      return false;
+    }
+
+
 
     this.store.handleSubmit(this.state.flag)
       .then(data => {
@@ -151,7 +167,7 @@ export default class CurrencyCard extends Component {
             <Form horizontal>
               <FormGroup controlId="code">
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
-                  币种
+                  <span className="currency-bishu">*</span>币种
                 </Col>
                 <Col sm={6}>
                   {
@@ -200,7 +216,7 @@ export default class CurrencyCard extends Component {
                 <Col sm={6}>
                   <FormControl type="text" placeholder="币种简称"
                                value={currency.name}
-                               readOnly={true}
+                               disabled={true}
                   />
                 </Col>
               </FormGroup>
@@ -211,34 +227,36 @@ export default class CurrencyCard extends Component {
                 <Col sm={6}>
                   <FormControl type="text" placeholder="币种符号"
                                value={currency.sign}
-                               readOnly={true}
+                               disabled={true}
                   />
                 </Col>
               </FormGroup>
               <FormGroup controlId="pricedigit" validationState={this.state.validation.pricedigit}>
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
-                  单价精度
+                  <span className="currency-bishu">*</span>单价精度
                 </Col>
                 <Col sm={6}>
-                  <FormControl type="text" placeholder="单价精度"
+                  <FormControl type="number" placeholder="单价精度"
                                value={currency.pricedigit}
                                onChange={this.handleChange.bind(this, "pricedigit")}
-                               onBlur={this.doValidate.bind(this, 'pricedigit')}
                   />
-                  <FormControl.Feedback />
+                </Col>
+                <Col sm={3}>
+                  <div ref="pricedigit" style={{'color': 'red','position':'absolute','top':'8px'}}></div>
                 </Col>
               </FormGroup>
               <FormGroup controlId="moneydigit" validationState={this.state.validation.moneydigit}>
                 <Col sm={2} componentClass={ControlLabel} smOffset={1}>
-                  金额精度
+                  <span className="currency-bishu">*</span>金额精度
                 </Col>
                 <Col sm={6}>
-                  <FormControl type="text" placeholder="金额精度"
+                  <FormControl type="number" placeholder="金额精度"
                                value={currency.moneydigit}
                                onChange={this.handleChange.bind(this, "moneydigit")}
-                               onBlur={this.doValidate.bind(this, 'moneydigit')}
                   />
-                  <FormControl.Feedback />
+                </Col>
+                <Col sm={3}>
+                  <div ref="moneydigit" style={{'color': 'red','position':'absolute','top':'8px'}}></div>
                 </Col>
               </FormGroup>
               <FormGroup controlId="pricerount">
@@ -282,7 +300,7 @@ export default class CurrencyCard extends Component {
           <Modal.Footer>
             <div className="pull-right">
               <Button className="mr15" onClick={this.close}>取消</Button>
-              <Button className="primary mr20" bsStyle="primary" onClick={this.handleSubmit.bind(this)}>添加</Button>
+              <Button className="primary mr20" bsStyle="primary" onClick={this.handleSubmit.bind(this)}>保存</Button>
             </div>
           </Modal.Footer>
         </Modal>

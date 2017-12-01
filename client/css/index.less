@@ -12,7 +12,7 @@
 @mainGreenHover: #009886;
 @mainGreenFocus: #008676;
 @mainGreenLight: #D9F3F4;
-@backColor: #F9F9F9;                // 主内容区大背景色
+@backColor: #E6E9E9;                // 主内容区大背景色
 @lightBackColor:#FAFBFC;            // 首页财务桌面应用方块背景色
 
 // 文字
@@ -236,7 +236,7 @@ a {  color: @mainGreen;
 }
 .btn.btn-default {
   border-color: @btnDefaultBorder;
-  background-color: @backColor;
+  background-color: #fff;
   box-sizing: border-box;
   &:hover {
     color: @btnPrimaryHover;
@@ -249,7 +249,7 @@ a {  color: @mainGreen;
   }
 }
 .btn.btn-operate {
-  background: #FFFFFF;
+  background-color: #fff;
   border: 1px solid #D1D1D1;
   box-sizing: border-box;
   .f12;
@@ -260,9 +260,8 @@ a {  color: @mainGreen;
     border-color: @btnPrimaryHover;
   }
   &:focus {
-    color: @btnPrimaryFocus;
-    border-color: @btnPrimaryFocus;
-    background-color: @backColor;
+    color: #5E6670;
+    border-color: #D1D1D1;
   }
 }
 
@@ -444,5 +443,23 @@ input:focus, select:focus {
 .form-control[disabled], fieldset[disabled] .form-control {
   cursor: default!important;
 }
+
+
+// input[type=number] 隐藏上下箭头
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{   // chrome
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+input[type="number"]{-moz-appearance:textfield;} // firefox
+
+// 红星
+.currency-bishu {
+  color: red;
+  position: relative;
+  top: 2px;
+  left: -1px;
+}
+
 
 

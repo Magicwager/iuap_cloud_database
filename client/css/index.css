@@ -637,11 +637,11 @@ p.error {
 /**************************** UI基础设计规范 end ***************************/
 body {
   color: #333333;
-  background-color: #F9F9F9;
+  background-color: #E6E9E9;
 }
 .content {
   height: 100%;
-  background-color: #F9F9F9;
+  background-color: #E6E9E9;
   padding: 20px;
 }
 a {
@@ -775,7 +775,7 @@ a:focus {
 }
 .btn.btn-default {
   border-color: #D9D9D9;
-  background-color: #F9F9F9;
+  background-color: #fff;
   box-sizing: border-box;
 }
 .btn.btn-default:hover {
@@ -785,10 +785,10 @@ a:focus {
 .btn.btn-default:focus {
   color: #008676;
   border-color: #008676;
-  background-color: #F9F9F9;
+  background-color: #E6E9E9;
 }
 .btn.btn-operate {
-  background: #FFFFFF;
+  background-color: #fff;
   border: 1px solid #D1D1D1;
   box-sizing: border-box;
   font-size: 12px;
@@ -801,9 +801,8 @@ a:focus {
   border-color: #009886;
 }
 .btn.btn-operate:focus {
-  color: #008676;
-  border-color: #008676;
-  background-color: #F9F9F9;
+  color: #5E6670;
+  border-color: #D1D1D1;
 }
 .btn-toolbar {
   margin-left: 0;
@@ -984,4 +983,18 @@ fieldset[disabled] .form-control {
 .form-control[disabled],
 fieldset[disabled] .form-control {
   cursor: default!important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.currency-bishu {
+  color: red;
+  position: relative;
+  top: 2px;
+  left: -1px;
 }
