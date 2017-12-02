@@ -826,25 +826,6 @@ select:focus {
   color: #5E6670;
   border-color: #D1D1D1;
 }
-/*静态模态框，提示类模态框*/
-.static-modal {
-  z-index: 999999999;
-}
-.static-modal .modal-dialog {
-  width: 418px;
-}
-.static-modal .modal-body {
-  padding-top: 30px ;
-  padding-left: 50px ;
-}
-.static-modal .modal-body .iconfont {
-  font-size: 2.4rem;
-  color: #FFBF00;
-}
-.static-modal .modal-footer {
-  border-top: 0;
-  padding: 30px;
-}
 .ssc-alert {
   position: fixed;
   top: 50px;
@@ -858,23 +839,6 @@ select:focus {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.modal-backdrop {
-  z-index: 10400;
-}
-.modal {
-  z-index: 10500;
-}
-.modal-title {
-  font-size: 14px;
-  font-size: 1.4rem;
-  font-weight: normal;
-  display: inline;
-  color: #333333;
-}
-.modal-dialog .modal-body .container {
-  margin-left: -15px;
-  margin-right: -15px;
-}
 .modal.in .modal-dialog {
   -webkit-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);
@@ -884,7 +848,7 @@ select:focus {
 .modal-dialog {
   position: absolute;
   width: auto;
-  margin: 10px auto;
+  margin: 0 auto;
   left: 0;
   right: 0;
   top: 50%;
@@ -893,6 +857,40 @@ select:focus {
   .modal-dialog {
     width: 600px;
   }
+}
+.modal-title {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: normal;
+  display: inline;
+  color: #333333;
+}
+.modal-body .container {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+/*静态模态框，提示类模态框*/
+.static-modal {
+  z-index: 999999999;
+}
+.static-modal .modal-dialog {
+  width: 418px;
+  -webkit-transform: translate(0, -80%) !important;
+  -ms-transform: translate(0, -80%) !important;
+  -o-transform: translate(0, -80%) !important;
+  transform: translate(0, -80%) !important;
+}
+.static-modal .modal-body {
+  padding-top: 30px ;
+  padding-left: 50px ;
+}
+.static-modal .modal-body .iconfont {
+  font-size: 2.4rem;
+  color: #FFBF00;
+}
+.static-modal .modal-footer {
+  border-top: 0;
+  padding: 30px;
 }
 .currency-input {
   width: 180px;

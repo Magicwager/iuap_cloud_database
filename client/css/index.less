@@ -293,29 +293,6 @@ input:focus, select:focus {
   }
 }
 
-
-
-
-
-/*静态模态框，提示类模态框*/
-.static-modal {
-  z-index: 999999999;
-  .modal-dialog{
-    width: 418px;
-  }
-  .modal-body{
-    padding-top:30px ;
-    padding-left:50px ;
-    .iconfont{
-      font-size: 2.4rem;
-      color:@warningColorLevel1
-    }
-  }
-  .modal-footer{
-    border-top:0;
-    padding: 30px;
-  }
-}
 // alert弹框组件
 .ssc-alert {
   position: fixed;
@@ -330,22 +307,22 @@ input:focus, select:focus {
 }
 
 // 模态框
-.modal-backdrop { z-index: 10400; }
-.modal { z-index: 10500; }
-.modal-title {
-  .f14;
-  .fn;
-  display: inline;
-  color: @fontColorLevel1;
-}
-.modal-dialog {
-  .modal-body {
-    .container {
-      margin-left: -15px;
-      margin-right: -15px;
-    }
-  }
-}
+//.modal-backdrop { z-index: 10400; }
+//.modal { z-index: 10500; }
+//.modal-title {
+//  .f14;
+//  .fn;
+//  display: inline;
+//  color: @fontColorLevel1;
+//}
+//.modal-dialog {
+//  .modal-body {
+//    .container {
+//      margin-left: -15px;
+//      margin-right: -15px;
+//    }
+//  }
+//}
 
 // 模态框垂直水平居中
 .modal.in .modal-dialog {
@@ -358,7 +335,7 @@ input:focus, select:focus {
 .modal-dialog {
   position: absolute;
   width: auto;
-  margin: 10px auto;
+  margin: 0 auto;
   left: 0;
   right: 0;
   top: 50%
@@ -369,6 +346,46 @@ input:focus, select:focus {
     width: 600px
   }
 }
+
+.modal-title {
+  .f14;
+  .fn;
+  display: inline;
+  color: @fontColorLevel1;
+}
+
+.modal-body {
+    .container {
+      margin-left: -15px;
+      margin-right: -15px;
+    }
+}
+
+/*静态模态框，提示类模态框*/
+.static-modal {
+  z-index: 999999999;
+  .modal-dialog{
+    width: 418px;
+    -webkit-transform: translate(0,-80%)!important;
+    -ms-transform: translate(0,-80%)!important;
+    -o-transform: translate(0,-80%)!important;
+    transform: translate(0,-80%)!important;
+  }
+  .modal-body{
+    padding-top:30px ;
+    padding-left:50px ;
+    .iconfont{
+      font-size: 2.4rem;
+      color:@warningColorLevel1
+    }
+  }
+  .modal-footer{
+    border-top:0;
+    padding: 30px;
+  }
+}
+
+// 币种搜索
 .currency-input {
   width: 180px;
   height: 30px;
