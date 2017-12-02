@@ -11,10 +11,7 @@ const VERSION = `0.1.107${__webpack_hash__}` ? __webpack_hash__ : '';
 let dotest = GetQueryString('dotest');
 dotest = dotest == null ? '' : `&dotest=${dotest}`;
 
-
-//const serverUrl = 'http://127.0.0.1:8080';
-
-//  iuap
+// 基础数据
 let Config = {
     VERSION,
     // 币种
