@@ -120,7 +120,7 @@ class Currency extends React.Component {
             <div className="currency-input">
               <input type="text"
                      className="form-control"
-                     placeholder={"请输入搜索内容"}
+                     placeholder="请输入搜索内容"
                      onBlur={ ::this.inputOnBlur }
                      onFocus={ ::this.inputOnFocus }
                      onChange={this.handleChange}
