@@ -30,7 +30,7 @@ class Currency extends React.Component {
   }
 
   componentDidMount() {
-    //document.title="币种";
+    document.title="币种";
     // 初始化查询列表
     this.store.getCurrencyLst();
   }
