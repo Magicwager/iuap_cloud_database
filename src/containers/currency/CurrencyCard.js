@@ -53,27 +53,8 @@ export default class CurrencyCard extends Component {
     let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
     this.store.currency[field] = val;
     this.refs[field].innerHTML= '';
-    if(field !== 'description') {
-      this.doValidate(field, val);
-    }
   }
-
-  doValidate(field){
-    let validate = null
-    let val = this.store.currency[field];
-    switch (field){
-      case 'pricedigit':
-      case 'moneydigit':
-        val = $.trim(val)
-        break
-      default:
-        validate = null
-        break
-    }
-    validate = val === '' ? '' : ''
-    this.setState(Object.assign(this.state.validation, {[field]: validate}))
-  }
-
+  
   // 保存提交
   handleSubmit() {
 

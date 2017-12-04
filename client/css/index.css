@@ -776,7 +776,6 @@ select:focus {
   font-size: 12px;
   font-size: 1.2rem;
   padding: 6px 20px;
-  line-height: 18px;
 }
 .btn:active {
   -webkit-box-shadow: none;
@@ -813,8 +812,6 @@ select:focus {
   background-color: #fff;
   border: 1px solid #D1D1D1;
   box-sizing: border-box;
-  font-size: 12px;
-  font-size: 1.2rem;
   color: #5E6670;
   padding: 4px 21px;
 }
