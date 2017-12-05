@@ -28,9 +28,10 @@ class CurrencyStore {
     let opt = {
       method: 'get',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      //credentials: "include"
+      credentials: "include"
     }
 
     return (
@@ -62,10 +63,11 @@ class CurrencyStore {
     let option = {
       method: 'post',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify(this.currency),
-      //credentials: "include"
+      credentials: "include"
     }
     if(flag === 'add'){
       //return fetch('http://127.0.0.1/webCurrency/getAddType', option)
@@ -99,10 +101,11 @@ class CurrencyStore {
     let option = {
       method: 'post',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify(params),
-      //credentials: "include"
+      credentials: "include"
     }
 
     _this.globalStore.showWait();
@@ -129,9 +132,10 @@ class CurrencyStore {
     let opt = {
       method: 'get',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      //credentials: "include"
+      credentials: "include"
     }
 
     //let url = encodeURI('http://127.0.0.1/webCurrency/getSearch?keyword='+param);
@@ -169,10 +173,11 @@ class CurrencyStore {
     let option = {
       method: 'post',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify(_this.currency),
-      //credentials: "include"
+      credentials: "include"
     }
 
     _this.globalStore.showWait();
