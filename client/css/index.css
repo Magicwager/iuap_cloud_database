@@ -836,25 +836,6 @@ select:focus {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.modal.in .modal-dialog {
-  -webkit-transform: translate(0, -50%);
-  -ms-transform: translate(0, -50%);
-  -o-transform: translate(0, -50%);
-  transform: translate(0, -50%);
-}
-.modal-dialog {
-  position: absolute;
-  width: auto;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  top: 50%;
-}
-@media (min-width: 768px) {
-  .modal-dialog {
-    width: 600px;
-  }
-}
 .modal-title {
   font-size: 14px;
   font-size: 1.4rem;
@@ -866,16 +847,20 @@ select:focus {
   margin-left: -15px;
   margin-right: -15px;
 }
+@media (min-width: 768px) {
+  .form-inline .input-group .form-control,
+  .form-inline .input-group .input-group-addon,
+  .form-inline .input-group .input-group-btn {
+    width: 0;
+  }
+}
 /*静态模态框，提示类模态框*/
 .static-modal {
   z-index: 999999999;
 }
 .static-modal .modal-dialog {
   width: 418px;
-  -webkit-transform: translate(0, -80%) !important;
-  -ms-transform: translate(0, -80%) !important;
-  -o-transform: translate(0, -80%) !important;
-  transform: translate(0, -80%) !important;
+  margin: 10% auto;
 }
 .static-modal .modal-body {
   padding-top: 30px ;
@@ -907,11 +892,12 @@ select:focus {
   position: absolute;
   right: 7px;
   top: 7px;
-  z-index: 9999;
+  z-index: 1;
   color: #999;
 }
 .bootstrap-typeahead input.bootstrap-typeahead-input-main {
   padding: 6px 30px 6px 12px;
+  width: 100%!important;
 }
 .tw-popup {
   z-index: 6100;
@@ -963,8 +949,8 @@ select:focus {
   border-radius: 0;
 }
 .pricerount-select {
-  width: 100%;
-  height: 30px;
+  width: 260px;
+  height: 33px;
   padding-left: 7px;
   font-size: 12px;
   font-size: 1.2rem;
@@ -998,4 +984,29 @@ input[type="number"] {
   color: red;
   position: absolute;
   top: 8px;
+}
+.currency-content {
+  background: #FFFFFF;
+  border: 1px solid #D3D3D3;
+  min-height: 600px;
+}
+.currency-title {
+  font-size: 14px;
+  color: #333333;
+  text-align: center;
+  margin: 30px auto;
+}
+.currency-form {
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+.currency-border {
+  border-bottom: 1px dashed #E4E4E4;
+  border-top: 1px dashed #E4E4E4;
+}
+.currency-ref {
+  width: 260px;
+}
+.currency-lh {
+  line-height: 30px;
 }

@@ -20,6 +20,8 @@ class CurrencyStore {
   pricerounts=[{'price':"5",name:"四舍五入"},{'price':"0",name:"全部舍位"},{'price':"1",name:"全部进位"}]; // 单价舍入规则
   @observable
   ListData = [];
+  @observable
+  page = 1;   // 页面切换
 
   // 查询接口
   @action

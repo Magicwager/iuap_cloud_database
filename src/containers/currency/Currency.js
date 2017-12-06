@@ -8,6 +8,7 @@ import {observer} from 'mobx-react';
 import GlobalStore from '../../stores/GlobalStore';
 
 import CurrencyCard from './CurrencyCard';
+import CurrencyList from './CurrencyList';
 import CurrencyStore from '../../stores/currency/CurrencyStore';
 
 @observer
@@ -17,8 +18,9 @@ class Currency extends React.Component {
     this.store = new CurrencyStore();
     this.state = {
       isHasData: this.store.tableDataTitle,   // 列表没有数据时显示内容
-      value: '',   // 模糊搜索value
-      focus: false
+      value: '',     // 模糊搜索value
+      focus: false,
+      page: this.store.page,       // 显示当前的页面
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,7 +32,7 @@ class Currency extends React.Component {
   }
 
   componentDidMount() {
-    document.title="币种";
+    //document.title="币种";
     // 初始化查询列表
     this.store.getCurrencyLst();
   }
@@ -40,6 +42,7 @@ class Currency extends React.Component {
     if (flag === 'add') { Object.assign(this.store.currency, {code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0}) }
     if (flag === 'edit') { Object.assign(this.store.currency, this.store.currencys[index]) }
     this.refs.card.show({ index, store: this.store, flag });
+    this.store.page = 2;
   }
 
   // 删除
@@ -107,14 +110,10 @@ class Currency extends React.Component {
 
   render() {
     return(
-      <div className="ledger">
-        {
-          // <div className="header">
-          //   <div className="header-title">
-          //     <span>币种</span>
-          //   </div>
-          // </div>
-        }
+        <div>
+
+
+      <div className={this.store.page == 1 ? 'ledger' :'hidden'}>
         <div className="head">
           <div className="head-l fl">
             <div className="currency-input">
@@ -181,9 +180,15 @@ class Currency extends React.Component {
           </table>
         </div>
 
-        <CurrencyCard ref="card" store={this.store} />
+        {
+          // <CurrencyCard ref="card" store={this.store} />
+        }
 
       </div>
+      <div className={this.store.page == 2 ? '':'hidden'}>
+         <CurrencyList  ref="card" store={this.store} />
+      </div>
+        </div>
     )
   }
 }

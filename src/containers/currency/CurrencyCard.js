@@ -23,6 +23,7 @@ export default class CurrencyCard extends Component {
     this.state = {
       show : false,
       currency: {},
+      value: '',
       index: -1,
       validation: {
         pricedigit: null,
@@ -32,6 +33,9 @@ export default class CurrencyCard extends Component {
 
     this.show = this.show.bind(this);
     this.close = this.close.bind(this);
+  }
+
+  componentDidMount() {
   }
 
   // 卡片展示
@@ -51,8 +55,26 @@ export default class CurrencyCard extends Component {
   // 文本框改变
   handleChange(field, e) {
     let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
-    this.store.currency[field] = val;
     this.refs[field].innerHTML= '';
+    var _val = ""; /*保存上次的值*/
+    if(isNaN(val)){
+      val = _val;
+      this.refs[field].innerHTML= '只能输入数字!';
+      setTimeout(function(){
+        this.refs[field].innerHTML= '';
+      }.bind(this),1000);
+    }else{
+      val=val.replace(/\s+/g,'');
+      _val = val;
+    }
+    this.store.currency[field] = val;
+
+    if(field == 'pricedigit') {
+      this.setState(Object.assign(this.state.validation, {pricedigit: null}))
+    }
+    else {
+      this.setState(Object.assign(this.state.validation, {moneydigit: null}))
+    }
   }
   
   // 保存提交
@@ -214,17 +236,13 @@ export default class CurrencyCard extends Component {
                   <span className="currency-bishu">*</span>单价精度
                 </Col>
                 <Col sm={6}>
-                  <input type="number"
+                  <input type="text"
                          placeholder="单价精度"
                          value={currency.pricedigit}
                          className="form-control"
                          autocomplete="off"
                          onChange={this.handleChange.bind(this, "pricedigit")}
                   />
-                  {/*<FormControl type="number" placeholder="单价精度"
-                   value={currency.pricedigit}
-                   onChange={this.handleChange.bind(this, "pricedigit")}
-                   />*/}
                 </Col>
                 <Col sm={3}>
                   <div ref="pricedigit" className="currency-error"></div>
@@ -235,17 +253,13 @@ export default class CurrencyCard extends Component {
                   <span className="currency-bishu">*</span>金额精度
                 </Col>
                 <Col sm={6}>
-                  <input type="number"
+                  <input type="text"
                          placeholder="金额精度"
                          value={currency.moneydigit}
                          className="form-control"
                          autocomplete="off"
                          onChange={this.handleChange.bind(this, "moneydigit")}
                   />
-                  {/*<FormControl type="number" placeholder="金额精度"
-                   value={currency.moneydigit}
-                   onChange={this.handleChange.bind(this, "moneydigit")}
-                   />*/}
                 </Col>
                 <Col sm={3}>
                   <div ref="moneydigit" className="currency-error"></div>
