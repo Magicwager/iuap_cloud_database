@@ -34,7 +34,7 @@ class MessageModel extends React.Component{
         return (
             <Modal show ={globalStore.modelMsg.modelVisible} onHide={_this.close} className ="static-modal">
                 <Modal.Body>
-                    {globalStore.modelMsg.hasCancel === true ? <i className="iconfont icon-warn-sign mr20"></i> : ''}
+                    {globalStore.modelMsg.hasCancel === true ? <i className="cl cl-mark mr20"></i> : ''}
                         {globalStore.modelMsg.message}
                 </Modal.Body>
                 <Modal.Footer>

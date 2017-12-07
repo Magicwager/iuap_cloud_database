@@ -6,8 +6,6 @@ import React from 'react';
 import {observer} from 'mobx-react';
 
 import GlobalStore from '../../stores/GlobalStore';
-
-import CurrencyCard from './CurrencyCard';
 import CurrencyList from './CurrencyList';
 import CurrencyStore from '../../stores/currency/CurrencyStore';
 
@@ -19,8 +17,7 @@ class Currency extends React.Component {
     this.state = {
       isHasData: this.store.tableDataTitle,   // 列表没有数据时显示内容
       value: '',     // 模糊搜索value
-      focus: false,
-      page: this.store.page,       // 显示当前的页面
+      focus: false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,7 +44,7 @@ class Currency extends React.Component {
 
   // 删除
   handleDelete(index) {
-    GlobalStore.showCancelModel('确定删除？', () => {}, this.store.hdDelete.bind(this.store,index, () => {
+    GlobalStore.showCancelModel('确定要删除这条信息吗？', () => {}, this.store.hdDelete.bind(this.store,index, () => {
       this.store.getCurrencyLst();
     }));
   }
@@ -125,7 +122,7 @@ class Currency extends React.Component {
                      onChange={this.handleChange}
                      onKeyDown={this.handleKeydown}
                      value={this.state.value}/>
-              <span className="search-icon" onClick={this.handleChangeSearch}></span>
+              <span className="cl cl-search search-icon" onClick={this.handleChangeSearch}></span>
             </div>
           </div>
           <div className="head-r fr noprint">

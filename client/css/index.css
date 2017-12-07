@@ -638,6 +638,96 @@ a:hover {
 a:focus {
   color: #008676;
 }
+.btn-toolbar {
+  margin-left: 0;
+}
+.btn,
+input,
+select {
+  border-radius: 4px;
+}
+.btn:focus,
+.btn:active:focus,
+input:focus,
+select:focus,
+.close:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+select {
+  border-color: #D9D9D9;
+}
+input:focus,
+select:focus {
+  border-color: #00B39E;
+}
+.form-control {
+  font-size: 12px;
+  font-size: 1.2rem;
+  height: 32px;
+  border-color: #D9D9D9;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.form-control:focus {
+  border-color: #00B39E;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.btn {
+  font-size: 12px;
+  font-size: 1.2rem;
+  padding: 5px 16px;
+  vertical-align: initial;
+}
+.btn:active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.btn.btn-primary {
+  border-color: #00B39E;
+  background-color: #00B39E;
+  box-sizing: border-box;
+}
+.btn.btn-primary:hover {
+  border-color: #009886;
+  background-color: #009886;
+}
+.btn.btn-primary:focus {
+  border-color: #008676;
+  background-color: #008676;
+}
+.btn.btn-default {
+  border-color: #D9D9D9;
+  background-color: #fff;
+  box-sizing: border-box;
+  color: #666666;
+}
+.btn.btn-default:hover {
+  color: #00B39E;
+  border-color: #00B39E;
+}
+.btn.btn-default:focus {
+  color: #008676;
+  border-color: #008676;
+  background-color: #fff;
+}
+.btn.btn-operate {
+  color: #5E6670;
+  border: 1px solid #D1D1D1;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 4px 21px;
+}
+.btn.btn-operate:hover {
+  color: #009886;
+  border-color: #009886;
+}
+.btn.btn-operate:focus {
+  color: #5E6670;
+  border-color: #D1D1D1;
+}
 .currency-grid {
   position: relative;
 }
@@ -735,94 +825,6 @@ a:focus {
   margin-left: 10px;
   vertical-align: bottom;
 }
-.btn-toolbar {
-  margin-left: 0;
-}
-.btn,
-input,
-select {
-  border-radius: 4px;
-}
-.btn:focus,
-.btn:active:focus,
-input:focus,
-select:focus,
-.close:focus {
-  outline: 0;
-  outline-offset: 0;
-}
-select {
-  border-color: #D9D9D9;
-}
-input:focus,
-select:focus {
-  border-color: #00B39E;
-}
-.form-control {
-  font-size: 12px;
-  font-size: 1.2rem;
-  height: 32px;
-  border-color: #D9D9D9;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.form-control:focus {
-  border-color: #00B39E;
-  outline: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.btn {
-  font-size: 12px;
-  font-size: 1.2rem;
-  padding: 6px 20px;
-}
-.btn:active {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.btn.btn-primary {
-  background-color: #00B39E;
-  border-color: #00B39E;
-  box-sizing: border-box;
-}
-.btn.btn-primary:hover {
-  border-color: #009886;
-  background-color: #009886;
-}
-.btn.btn-primary:focus {
-  border-color: #008676;
-  background-color: #008676;
-}
-.btn.btn-default {
-  border-color: #D9D9D9;
-  background-color: #fff;
-  box-sizing: border-box;
-}
-.btn.btn-default:hover {
-  color: #009886;
-  border-color: #009886;
-}
-.btn.btn-default:focus {
-  color: #008676;
-  border-color: #008676;
-  background-color: #E6E9E9;
-}
-.btn.btn-operate {
-  background-color: #fff;
-  border: 1px solid #D1D1D1;
-  box-sizing: border-box;
-  color: #5E6670;
-  padding: 4px 21px;
-}
-.btn.btn-operate:hover {
-  color: #009886;
-  border-color: #009886;
-}
-.btn.btn-operate:focus {
-  color: #5E6670;
-  border-color: #D1D1D1;
-}
 .ssc-alert {
   position: fixed;
   top: 50px;
@@ -866,7 +868,7 @@ select:focus {
   padding-top: 30px ;
   padding-left: 50px ;
 }
-.static-modal .modal-body .iconfont {
+.static-modal .modal-body .cl {
   font-size: 2.4rem;
   color: #FFBF00;
 }
@@ -883,10 +885,9 @@ select:focus {
   height: 100%;
 }
 .currency-input .search-icon {
-  background: url(../images/search.svg) no-repeat;
-  background-size: 20px 20px;
   width: 17px;
   height: 17px;
+  line-height: 17px;
   font-size: 17px;
   display: inline-block;
   position: absolute;
@@ -903,10 +904,10 @@ select:focus {
   z-index: 6100;
 }
 .refer-search-icon {
-  font-family: "iconfont" !important;
+  font-family: "cl" !important;
 }
 .refer-search-icon::before {
-  content: "\e69b";
+  content: "\e609";
   font-size: 16px;
   font-size: 1.6rem;
 }
@@ -934,8 +935,8 @@ select:focus {
   color: #666666;
 }
 .dropdown-menu li a:hover {
-  background-color: #00B39E;
-  color: #FFF;
+  background-color: #eee;
+  color: #333;
 }
 .dropdown-menu .active > a {
   background-color: #00B39E;
@@ -951,11 +952,20 @@ select:focus {
 .pricerount-select {
   width: 260px;
   height: 33px;
-  padding-left: 7px;
-  font-size: 12px;
   font-size: 1.2rem;
   color: #666666;
   box-sizing: border-box;
+  position: relative;
+}
+.pricerount-select select {
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+}
+.pricerount-select .select-i {
+  position: absolute;
+  right: 8px;
+  top: 6px;
 }
 .form-control[disabled],
 .form-control[readonly],
@@ -966,24 +976,17 @@ fieldset[disabled] .form-control {
 fieldset[disabled] .form-control {
   cursor: default!important;
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0;
-}
-input[type="number"] {
-  -moz-appearance: textfield;
-}
 .currency-bishu {
   color: red;
   position: relative;
   top: 2px;
-  left: -1px;
+  left: -3px;
 }
 .currency-error {
   color: red;
   position: absolute;
   top: 8px;
+  right: -90px;
 }
 .currency-content {
   background: #FFFFFF;
@@ -1008,5 +1011,21 @@ input[type="number"] {
   width: 260px;
 }
 .currency-lh {
-  line-height: 30px;
+  position: relative;
+  top: 5px;
+}
+select {
+  /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+  border: 1px solid #D9D9D9;
+  /*很关键：将默认的select选择框样式清除*/
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  /*在选择框的最右侧中间显示小箭头图片*/
+  /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+  padding-right: 14px;
+}
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand {
+  display: none;
 }

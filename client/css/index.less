@@ -45,7 +45,7 @@
 @btnPrimaryFocus: #008676;          // btn-primary按钮背景色focus
 
 // 列表 li options 等
-@listHoverBackColor: #00B39E;       // 列表 drop-menu等 列表项hover时背景色
+@listHoverBackColor: #eee;       // 列表 drop-menu等 列表项hover时背景色
 
 // 表格
 @gridHeaderBackColor: #F4F4F4;      // 表头背景色
@@ -103,10 +103,93 @@ body {
   .p20;
 }
 
-a {  color: @mainGreen;
+a {
+  color: @mainGreen;
   &:hover { color: @btnPrimaryHover; }
   &:focus { color: @btnPrimaryFocus; }
 }
+
+// 重置 btn input input.form-control 样式
+.btn-toolbar {  margin-left: 0;  }
+.btn, input, select {  .br4;  }
+.btn:focus, .btn:active:focus, input:focus, select:focus, .close:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+select {
+  border-color: @inputBorderColor;
+}
+input:focus, select:focus {
+  border-color: @inputBorderFocus;
+}
+.form-control {
+  .f12;
+  height: 32px;
+  border-color: @inputBorderColor;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  &:focus {
+    border-color: @inputBorderFocus;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+// 按钮统一样式
+.btn {
+  .f12;
+  padding: 5px 16px;
+  vertical-align: initial;
+  &:active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
+.btn.btn-primary {   // 首要按钮
+  border-color: @btnPrimaryColor;
+  background-color: @btnPrimaryColor;
+  box-sizing: border-box;
+  &:hover {
+    border-color: @btnPrimaryHover;
+    background-color: @btnPrimaryHover;
+  }
+  &:focus {
+    border-color: @btnPrimaryFocus;
+    background-color: @btnPrimaryFocus;
+  }
+}
+.btn.btn-default {  // 默认按钮
+  border-color: @btnDefaultBorder;
+  .fff;
+  box-sizing: border-box;
+  color: @fontColorLevel2;
+  &:hover {
+    color: @btnPrimaryColor;
+    border-color: @btnPrimaryColor;
+  }
+  &:focus {
+    color: @btnPrimaryFocus;
+    border-color: @btnPrimaryFocus;
+    .fff;
+  }
+}
+.btn.btn-operate {       // 表格操作列按钮
+  color: #5E6670;
+  border: 1px solid #D1D1D1;
+  .fff;
+  box-sizing: border-box;
+  padding: 4px 21px;
+  &:hover {
+    color: @btnPrimaryHover;
+    border-color: @btnPrimaryHover;
+  }
+  &:focus {
+    color: #5E6670;
+    border-color: #D1D1D1;
+  }
+}
+
 
 // 表格
 .currency-grid {
@@ -212,84 +295,16 @@ a {  color: @mainGreen;
   }
 }
 
-// 重置 btn input input.form-control 样式
-.btn-toolbar {  margin-left: 0;  }
-.btn, input, select {  .br4;  }
-.btn:focus, .btn:active:focus, input:focus, select:focus, .close:focus {
-  outline: 0;
-  outline-offset: 0;
-}
-select {
-  border-color: @inputBorderColor;
-}
-input:focus, select:focus {
-  border-color: @inputBorderFocus;
-}
-.form-control {
-  .f12;
-  height: 32px;
-  border-color: @inputBorderColor;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  &:focus {
-    border-color: @inputBorderFocus;
-    outline: 0;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-}
 
-// 按钮统一样式
-.btn {
-  .f12;
-  padding: 6px 20px;
-  &:active {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-}
-.btn.btn-primary {
-  background-color: @btnPrimaryColor;
-  border-color: @btnPrimaryColor;
-  box-sizing: border-box;
-  &:hover {
-    border-color: @btnPrimaryHover;
-    background-color: @btnPrimaryHover;
-  }
-  &:focus {
-    border-color: @btnPrimaryFocus;
-    background-color: @btnPrimaryFocus;
-  }
-}
-.btn.btn-default {
-  border-color: @btnDefaultBorder;
-  background-color: #fff;
-  box-sizing: border-box;
-  &:hover {
-    color: @btnPrimaryHover;
-    border-color: @btnPrimaryHover;
-  }
-  &:focus {
-    color: @btnPrimaryFocus;
-    border-color: @btnPrimaryFocus;
-    background-color: @backColor;
-  }
-}
-.btn.btn-operate {   // 表格操作列按钮
-  background-color: #fff;
-  border: 1px solid #D1D1D1;
-  box-sizing: border-box;
-  color: #5E6670;
-  padding: 4px 21px;
-  &:hover {
-    color: @btnPrimaryHover;
-    border-color: @btnPrimaryHover;
-  }
-  &:focus {
-    color: #5E6670;
-    border-color: #D1D1D1;
-  }
-}
+
+
+
+
+
+
+
+
+
 
 // alert弹框组件
 .ssc-alert {
@@ -360,7 +375,7 @@ input:focus, select:focus {
   .modal-body{
     padding-top:30px ;
     padding-left:50px ;
-    .iconfont{
+    .cl{
       font-size: 2.4rem;
       color:@warningColorLevel1
     }
@@ -380,10 +395,9 @@ input:focus, select:focus {
     height: 100%;
   }
   .search-icon {
-    background: url(../images/search.svg) no-repeat;
-    background-size: 20px 20px;
     width: 17px;
     height: 17px;
+    line-height: 17px;
     font-size: 17px;
     display: inline-block;
     .pa;
@@ -404,10 +418,10 @@ input:focus, select:focus {
   z-index: 6100;
 }
 .refer-search-icon {
-  font-family: "iconfont" !important;
+  font-family: "cl" !important;
 }
 .refer-search-icon::before {
-  content: "\e69b";
+  content: "\e609";
   .f16;
 }
 // 清楚参照中的右侧input-group-addon按钮样式
@@ -436,7 +450,7 @@ input:focus, select:focus {
       color: @fontColorLevel2;
       &:hover {
         background-color: @listHoverBackColor;
-        color: #FFF;
+        color: #333;
       }
     }
   }
@@ -457,11 +471,21 @@ input:focus, select:focus {
 .pricerount-select {
   width: 260px;
   height: 33px;
-  padding-left: 7px;
-  font-size: 12px;
+
   font-size: 1.2rem;
   color: #666666;
   box-sizing: border-box;
+  .pr;
+select {
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+}
+  .select-i {
+    .pa;
+    right: 8px;
+    top: 6px;
+  }
 }
 
 // 不可编辑状态
@@ -473,20 +497,13 @@ input:focus, select:focus {
 }
 
 
-// input[type=number] 隐藏上下箭头
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{   // chrome
-  -webkit-appearance: none !important;
-  margin: 0;
-}
-input[type="number"]{-moz-appearance:textfield;} // firefox
 
 // 红星
 .currency-bishu {
   color: red;
   position: relative;
   top: 2px;
-  left: -1px;
+  left: -3px;
 }
 
 // 错误提示
@@ -494,6 +511,7 @@ input[type="number"]{-moz-appearance:textfield;} // firefox
   color: red;
   position: absolute;
   top: 8px;
+  right: -90px;
 }
 
 
@@ -521,7 +539,32 @@ input[type="number"]{-moz-appearance:textfield;} // firefox
   width: 260px;
 }
 .currency-lh {
-  line-height: 30px;
+  .pr;
+  top: 5px;
 }
+
+
+select {
+  /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+  border: 1px solid @inputBorderColor;
+
+  /*很关键：将默认的select选择框样式清除*/
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+
+  /*在选择框的最右侧中间显示小箭头图片*/
+  //background: url('../images/arrow.svg') no-repeat scroll right center transparent;
+  //background-size: 12px;
+
+  /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+  padding-right: 14px;
+
+}
+
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }
+
 
 
