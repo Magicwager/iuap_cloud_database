@@ -5,7 +5,9 @@
 import React, {Component, PropTypes} from 'react';
 import {Modal, Form, FormGroup, FormControl, ControlLabel, Col, Button, Checkbox} from 'react-bootstrap';
 import {observer} from 'mobx-react';
-
+import {Select as TinperSelect} from "tinper-bee";
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 import {Refers} from 'ssc-refer';
 import GlobalStore from '../../stores/GlobalStore';
 import Config from '../../config';
@@ -23,37 +25,68 @@ export default class CurrencyList extends Component {
         this.store = props.store;
         this.state = {
             show: false,
-            currency: {},
-            ulList: [],  //
             value: '',
             index: -1,
             validation: {
                 pricedigit: null,
                 moneydigit: null
-            }
+            },
+            refJsonData: this.store.refJsonData,
+            selectedOption:{},
+            matchPos: 'any',
+            matchValue: true,
+            matchLabel: true,
+            selectValue: this.store.currency.code,
+            options: [{ value: '奥令', label: '11', className: 'State-ACT' },
+                { value: '先例', label: '22', className: 'State-NSW' },
+                { value: '日元', label: '33', className: 'State-Vic' },
+                { value: '港币', label: '44', className: 'State-Qld' },
+                { value: '人民币', label: '55', className: 'State-WA' },
+                { value: '泰元', label: '66', className: 'State-SA' },
+                { value: '韩元', label: '77', className: 'State-Tas' },
+                { value: '美元', label: '88', className: 'State-NT' }]
         }
+
+        this.handleRule = this.handleRule.bind(this);
     }
 
     componentDidMount() {
-        this.store.getRefData()
+        this.store.getRefData();
+
     }
 
     // 取消
     close() {
         this.store.page = 1;
-        //Object.assign(this.store.currency, {code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0})
+        if (this.state.flag == 'add') {
+            Object.assign(this.store.currency, {
+                code: '',
+                name: '',
+                sign: '',
+                pricedigit: 6,
+                moneydigit: 2,
+                pricerount: 5,
+                moneyrount: 5,
+                description: '',
+                isdefault: 0
+            })
+        }
+        if (this.state.flag == 'edit') {
+            Object.assign(this.store.currency, this.store.editCurrencyData);
+        }
+        this.refs.message.innerHTML = '';
+        this.refs.pricedigit.innerHTML = '';
+        this.refs.moneydigit.innerHTML = '';
     }
+
 
     // 币种参照
     changeCurrency(select) {
         if (select.length <= 0)
             return
         let value = select[0];
-        //this.setState({ulList: select})
         Object.assign(this.store.currency, value);
-        //Object.assign(this.store.currency, {id: value.id, name: value.name, code: value.code, sign: value.sign});
         this.refs.message.innerHTML = " ";
-        console.log(444, value)
         // 数据校验
         this.store.ListData.map((value, index) => {
             let val = this.store.currency.code;
@@ -69,7 +102,6 @@ export default class CurrencyList extends Component {
         let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
         this.refs[field].innerHTML = '';
         var _val = "";
-        /*保存上次的值*/
         if (isNaN(val)) {
             val = _val;
             this.refs[field].innerHTML = '只能输入数字!';
@@ -78,10 +110,12 @@ export default class CurrencyList extends Component {
             }.bind(this), 1000);
         } else {
             val = val.replace(/\s+/g, '');
-            _val = val;
+            var reg = new RegExp(/[0-9]/g)
+            if (!reg.test(val)) {
+                _val = val;
+            }
         }
         this.store.currency[field] = val;
-
         if (field == 'pricedigit') {
             this.setState(Object.assign(this.state.validation, {pricedigit: null}))
         }
@@ -91,8 +125,7 @@ export default class CurrencyList extends Component {
     }
 
     // 改变进位规则
-    changeRule(field, e) {
-        let value = e.target.value;
+    changeRule(field, value) {
         this.store.currency[field] = value;
     }
 
@@ -107,10 +140,22 @@ export default class CurrencyList extends Component {
         })
     }
 
+    // 前端转换规则
+    handleRule(param) {
+        switch (param) {
+            case 0:
+                return param = '全部舍位';
+                break;
+            case 1:
+                return param = '全部进位';
+                break;
+            default:
+                return param = '四舍五入';
+        }
+    }
+
     // 保存提交
     handleSubmit() {
-
-
         if (this.state.flag == 'add') {
             // 币种数据校验
             for (var i = 0, len = this.store.ListData.length; i < len; i++) {
@@ -155,63 +200,28 @@ export default class CurrencyList extends Component {
     _renderMenuItemChildren(option, props, index) {
         return [
             <span key="code">
-        {option.code + " "}
+        {option.label + " "}
       </span>,
-            <strong key="name">{option.name} </strong>
+            <strong key="name">{option.value} </strong>
         ];
     }
 
-    _handleBlur( ) {
-
-        let _this = this;
-        let val = _this._currency.getInstance().getInputTextValue();
-        this.store.refJsonData.map((value, index) => {
-            if (value.code != val) {
-                Object.assign(this.store.currency, {id: '', name: '', code: '', sign: ''});
-                _this._currency.getInstance()._handleTextChange('');
-                _this._currency.getInstance()._hideDropdown();
-                console.log(456)
-            }
-        })
 
 
-        // let _this = this;
 
-        // let op = this.store.refJsonData.filter((item, index) => {
-        //     if (item == select[0]) {
-        //         return true;
-        //     }
-        // })
-        // setTimeout(function () {
-        //     if(_this.state.ulList.length>0&&op.length == 0){
-        //         _this._currency.getInstance().clear();
-        //     }
-        // }, 3000)
 
-        //   let val = e.target.value;
-        //   this.store.refJsonData.map((value,index) => {
-        //       if(value.code !== val ) {
-        //           Object.assign(this.store.currency, {id: '', name: '', code: '', sign: ''});
-        //
-        //       }
-        //   })
-        //$('.currency-ref .dropdown-menu').hide()
-        // console.log(this._currency.getInstance())
-        // console.log(this._currency.getInstance()._handleTextChange(''))
-        // console.log(this._currency.getInstance()._handleBlur())
-        // console.log(this._currency.getInstance().handleClickOutside())
-        //$('.currency-ref').find('input.form-control.bootstrap-typeahead-input-main').val(' ')
-        //console.log($('.currency-ref').find('input.form-control.bootstrap-typeahead-input-main').val());
-        //console.log(22, JSON.stringify(this._currency.getInstance().getInputTextValue())); //获取输入框里当前输入的值
-        //console.log(33, JSON.stringify(this._currency.getInstance().clear())); //清除
-        //console.log(44, JSON.stringify(this._currency.getInstance().hideRefers)); //显示参照
+    updateValue (newValue) {
+        console.log(newValue)
+        this.setState({
+            selectValue: newValue,
+        });
+        Object.assign(this.store.currency, {id: newValue.id, code: newValue.label,name: newValue.value,sign:newValue.sign})
     }
+
 
     render() {
         let currency = this.store.currency;
         const filterByFields = ['name', 'code'];
-
-        //let ul = [currency];
 
         return (
             <div className="ledger">
@@ -240,37 +250,44 @@ export default class CurrencyList extends Component {
                                                     filterBy={filterByFields}
                                                     labelKey="code"
                                                     emptyLabel="暂无数据"
-                                                    onBlur={this._handleBlur.bind(this)}
                                                     onChange={this.changeCurrency.bind(this)}
                                                     placeholder="请选择..."
                                                     referConditions={{"refCode":" ","refType":"list","displayFields":["code","name"]}}
                                                     referDataUrl={'http://127.0.0.1/webCurrency/getRefData'}
                                                     referType="list"
                                                     ref={ref => this._currency = ref}
-                                                    //defaultSelected={[currency]}
                                                     selected={[currency]}
                                                     disabled={true}
                                                     renderMenuItemChildren={this._renderMenuItemChildren.bind(this)}
-                                                />
-                                                :
-                                                <Refers
+                                                /> :
+                                                <Select
                                                     className="currency-ref"
-                                                    filterBy={filterByFields}
-                                                    labelKey="code"
-                                                    emptyLabel="暂无数据"
-                                                    onBlur={this._handleBlur.bind(this)}
-                                                    onChange={this.changeCurrency.bind(this)}
                                                     placeholder="请选择..."
-                                                    referConditions={{"refCode":" ","refType":"list","displayFields":["code","name"]}}
-                                                    referDataUrl={'http://127.0.0.1/webCurrency/getRefData'}
-                                                    referType="list"
-                                                    ref={ref => this._currency = ref}
-                                                    //defaultSelected={[currency]}
-                                                    selected={[currency]}
-                                                    renderMenuItemChildren={this._renderMenuItemChildren.bind(this)}
+                                                    name="form-field-name"
+                                                    value={this.state.selectValue}
+                                                    onChange={this.updateValue.bind(this)}
+                                                    options={this.store.refJsonData}
+                                                    clearable='false'
+                                                    optionRenderer={this._renderMenuItemChildren.bind(this)}
                                                 />
                                         }
                                         <div ref="message" className="currency-error"></div>
+                                        {/*
+                                         * <Refers
+                                         className="currency-ref"
+                                         filterBy={filterByFields}
+                                         labelKey="code"
+                                         emptyLabel="暂无数据"
+                                         onChange={this.changeCurrency.bind(this)}
+                                         placeholder="请选择..."
+                                         referConditions={{"refCode":" ","refType":"list","displayFields":["code","name"]}}
+                                         referDataUrl={'http://127.0.0.1/webCurrency/getRefData'}
+                                         referType="list"
+                                         ref={ref => this._currency = ref}
+                                         selected={[currency]}
+                                         renderMenuItemChildren={this._renderMenuItemChildren.bind(this)}
+                                         optionRenderer={this._renderMenuItemChildren.bind(this)}
+                                         />*/}
                                     </div>
                                 </Col>
                             </FormGroup>
@@ -327,6 +344,7 @@ export default class CurrencyList extends Component {
                                                autoComplete="off"
                                                onChange={this.handleChange.bind(this, "pricedigit")}
                                                style={{'width':'260px'}}
+                                               maxLength="1"
                                         />
                                         <div ref="pricedigit" style={{'right':'-120px'}}
                                              className="currency-error"></div>
@@ -340,16 +358,16 @@ export default class CurrencyList extends Component {
                                     单价进价:
                                 </Col>
                                 <Col xs={6}>
-                                    <div className="pricerount-select">
-                                        <select defaultValue={currency.pricerount} value={currency.pricerount}
-                                                onChange={this.changeRule.bind(this, "pricerount")}>
-                                            {this.store.pricerounts.map((item, index)=> {
-                                                return (<option key={ 'pricerount' + index }
-                                                                value={item.price}>{item.name}</option>)
-                                            })}
-                                        </select>
-                                        <i className="cl cl-arrow-down select-i"></i>
-                                    </div>
+                                    <TinperSelect
+                                        className="pricerount-select"
+                                        defaultValue={this.handleRule(currency.pricerount)}
+                                        onChange={this.changeRule.bind(this, "pricerount")}
+                                    >
+                                        {this.store.pricerounts.map((item, index)=> {
+                                            return (<Option key={ 'pricerount' + index }
+                                                            value={item.price}>{item.name}</Option>)
+                                        })}
+                                    </TinperSelect>
                                 </Col>
                             </FormGroup>
                         </Col>
@@ -368,6 +386,7 @@ export default class CurrencyList extends Component {
                                                autoComplete="off"
                                                onChange={this.handleChange.bind(this, "moneydigit")}
                                                style={{'width':'260px'}}
+                                               maxLength="1"
                                         />
                                         <div ref="moneydigit" style={{'right':'-120px'}}
                                              className="currency-error"></div>
@@ -381,17 +400,16 @@ export default class CurrencyList extends Component {
                                     金额进价:
                                 </Col>
                                 <Col xs={6}>
-                                    <div className="pricerount-select">
-                                        <select defaultValue={currency.moneyrount} value={currency.moneyrount}
-                                                onChange={this.changeRule.bind(this, "moneyrount")}>
-                                            {this.store.pricerounts.map((item, index)=> {
-                                                return (<option key={ 'moneyrount' + index }
-                                                                value={item.price}>{item.name}</option>)
-                                            })}
-                                        </select>
-                                        <i className="cl cl-arrow-down select-i"></i>
-                                    </div>
-
+                                    <TinperSelect
+                                        className="pricerount-select"
+                                        defaultValue={this.handleRule(currency.moneyrount)}
+                                        onChange={this.changeRule.bind(this, "moneyrount")}
+                                    >
+                                        {this.store.pricerounts.map((item, index)=> {
+                                            return (<Option key={ 'moneyrount' + index }
+                                                            value={item.price}>{item.name}</Option>)
+                                        })}
+                                    </TinperSelect>
                                 </Col>
                             </FormGroup>
                         </Col>

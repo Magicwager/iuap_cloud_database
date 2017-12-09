@@ -6,7 +6,9 @@ import fetch from 'isomorphic-fetch';
 import { observable, computed, action, toJS } from 'mobx';
 
 import Config from '../../config';
-import GlobalStore from '../GlobalStore'
+import GlobalStore from '../GlobalStore';
+import 'whatwg-fetch';
+import Promise from 'promise-polyfill';
 
 class CurrencyStore {
   globalStore = GlobalStore;
@@ -24,6 +26,10 @@ class CurrencyStore {
   page = 1;   // 页面切换
   @observable
   refJsonData = []; // 币种参照数据
+  @observable
+  editCurrencyData = []; // 编辑状态保存的数据
+  @observable
+  searchValueKey = '' // 模糊搜索查询key
 
   // 查询接口
   @action
@@ -35,7 +41,7 @@ class CurrencyStore {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      //credentials: "include"
+     // credentials: "include"
     }
 
     return (
@@ -203,8 +209,7 @@ class CurrencyStore {
 
   // 获取币种参照数据
   @action
-  getRefData(callback) {
-    let _this = this;
+  getRefData() {
 
     let option = {
       method: 'post',
@@ -212,22 +217,26 @@ class CurrencyStore {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      //body: JSON.stringify(_this.currency),
       //credentials: "include"
     }
 
-    //_this.globalStore.showWait();
     return fetch('http://127.0.0.1/webCurrency/getRefData', option)
-    //return fetch(Config.currency.setDefault, option)
+    //return fetch(Config.currency.currencyRef, option)
         .then(response => {
-          //_this.globalStore.hideWait();
           return response.ok ? response.json() : {}
         })
         .then(data => {
-          this.refJsonData.replace(data.data);
+          var oo = []
+          data.data.map((item, index) => {
+            var li = {}
+            console.log('当前'+index, item);
+            Object.assign(li, {"value": item.name, "label": item.code,"id": item.id,"sign":item.sign})
+            oo.push(li)
+          })
+          this.refJsonData.replace(oo);
+          console.log(oo)
         })
   }
-
 }
 
 export default CurrencyStore;

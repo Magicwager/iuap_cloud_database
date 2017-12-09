@@ -1,6 +1,7 @@
 @import '../common/css/variables';
 @import '../common/css/common';
 @import './fonts/iconfont.css';
+@import './assets/tinper-bee.css';
 
 /**************************** UI基础设计规范 start ***************************/
 
@@ -122,6 +123,8 @@ select {
 input:focus, select:focus {
   border-color: @inputBorderFocus;
 }
+input::-ms-clear{display:none;}
+input::-ms-reveal{display:none;}
 .form-control {
   .f12;
   height: 32px;
@@ -212,8 +215,10 @@ input:focus, select:focus {
           line-height: 48px;
           font-weight: 700;
           .f14;
+          width: 19.5%;
           &:not(:last-child) {
             .tc;
+            width: 11.5%;
           }
         }
       }
@@ -307,16 +312,25 @@ input:focus, select:focus {
 
 
 // alert弹框组件
+.alert{
+  padding: 10px;
+  margin-bottom: 0;
+}
 .ssc-alert {
   position: fixed;
-  top: 50px;
+  top: 15px;
   left: 50%;
   width: 320px;
   margin-left: -160px;
   z-index: 10000;
   p.alert-tip {         // alert弹出框溢出显示省略号
     .ellipsis;
+    display: inline-block;
   }
+}
+.alert-dismissable .close, .alert-dismissible .close {
+  top: 5px;
+  right: 0;
 }
 
 // 模态框垂直水平居中
@@ -412,6 +426,7 @@ input:focus, select:focus {
 .bootstrap-typeahead input.bootstrap-typeahead-input-main {
   padding: 6px 30px 6px 12px;
   width: 100%!important;
+  cursor: pointer;
 }
 // 参照 input-dropdown 下拉组件 会计期间/凭证状态/科目/科目级次/辅助项目 等
 .tw-popup {
@@ -519,7 +534,8 @@ select {
 .currency-content {
   background: #FFFFFF;
   border: 1px solid #D3D3D3;
-  min-height: 600px;
+ // min-height: 600px;
+  padding-bottom:50px;
 }
 .currency-title {
   font-size: 14px;
@@ -536,7 +552,36 @@ select {
   border-top: 1px dashed #E4E4E4;
 }
 .currency-ref {
+
   width: 260px;
+  .Select-control {
+    height: 32px;
+  }
+}
+.Select {
+  outline: 0!important;
+  outline-offset: 0!important;
+}
+.Select.is-open > .Select-control {
+  border-color: @btnPrimaryColor!important;
+}
+.Select-clear-zone {
+  display: none!important;
+}
+.Select-placeholder, .Select--single > .Select-control .Select-value {
+  outline: 0!important;
+  outline-offset: 0!important;
+}
+.Select.is-focused:not(.is-open) > .Select-control {
+  border-color: @btnPrimaryColor!important;
+  box-shadow: none!important;
+  background: #fff;
+  outline: 0!important;
+  outline-offset: 0!important;
+}
+.Select-menu-outer {
+  top: 105%!important;
+
 }
 .currency-lh {
   .pr;
@@ -565,6 +610,38 @@ select {
 
 /*清除ie的默认选择框样式清除，隐藏下拉箭头*/
 select::-ms-expand { display: none; }
+/*select组件 start*/
+.u-select-dropdown .u-select-dropdown-menu {
+  background: #FFFFFF;
+  border: 1px solid #D9D9D9;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.20);
+  border-radius: 4px;
+}
+.u-select-dropdown .u-select-dropdown-menu-item {
+  color: #999999;
+  transition: none;
+}
+.u-select-dropdown .u-select-dropdown-menu-item-active, .u-select-dropdown .u-select-dropdown-menu-item:hover {
+  background-color: #eee;
+  color: #333333;
+}
+.u-select-open .u-select-selection {
+  border-color: @btnPrimaryColor;
+}
+.u-select .u-select-selection :hover {
+  border-color: @btnPrimaryColor;
+}
+
+/*select组件 end*/
+
+.cl-close-c {
+  color: #F04134;
+  font-size: 23px;
+}
+.cl-pass-c {
+color: #00B39E;
+  font-size: 23px;
+}
 
 
 
