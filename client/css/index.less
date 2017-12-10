@@ -300,20 +300,9 @@ input::-ms-reveal{display:none;}
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 // alert弹框组件
 .alert{
-  padding: 10px;
+  padding: 5px 10px;
   margin-bottom: 0;
 }
 .ssc-alert {
@@ -500,7 +489,14 @@ select {
     .pa;
     right: 8px;
     top: 6px;
+    -webkit-transform: scale(0.75) rotate(0deg);
+    transform: scale(0.75) rotate(0deg);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
+    zoom: 1;
   }
+  }
+.pricerount-select select:focus .select-i {
+  transform: rotate(180deg);
 }
 
 // 不可编辑状态
@@ -580,8 +576,71 @@ select {
   outline-offset: 0!important;
 }
 .Select-menu-outer {
-  top: 105%!important;
-
+  top: 112%!important;
+  background: #FFFFFF;
+  border: 1px solid #D9D9D9!important;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+.Select-option {
+  color: #999999!important;
+}
+.Select-option.is-selected {
+  background-color: #eee!important;
+  /* Fallback color for IE 8 */
+  background-color: rgba(238, 238, 238, 0.04);
+  color: #333!important;
+}
+.Select-option.is-focused {
+  background-color: #eee!important;
+  /* Fallback color for IE 8 */
+  background-color: rgba(238, 238, 238, 0.08);
+  color: #333!important;
+}
+.Select-arrow {
+  border: none!important;
+  font-style: normal;
+  vertical-align: baseline;
+  text-align: center;
+  text-transform: none;
+  text-rendering: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: auto!important;
+  height: auto!important;
+  //position: absolute;
+  //top: 50%;
+  //right: 8px;
+  //line-height: 1;
+  //margin-top: -6px;
+  display: inline-block;
+  font-size: 12px;
+  font-size: 9px\9;
+  -webkit-transform: scale(.75) rotate(0deg);
+  transform: scale(.75) rotate(0deg);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
+  zoom: 1;
+}
+.Select-arrow:before{
+  display: block;
+  font-family: uf!important;
+  content: "\e609";
+  -webkit-transition: -webkit-transform .2s ease;
+  transition: -webkit-transform .2s ease;
+  transition: transform .2s ease;
+  transition: transform .2s ease,-webkit-transform .2s ease;
+}
+.Select.is-open {
+  .Select-arrow:before {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+}
+.Select.is-open > .Select-control {
+  border-bottom-right-radius: 4px!important;
+  border-bottom-left-radius: 4px!important;
+  border-color:  @btnPrimaryColor!important;
 }
 .currency-lh {
   .pr;
@@ -642,6 +701,8 @@ select::-ms-expand { display: none; }
 color: #00B39E;
   font-size: 23px;
 }
+
+
 
 
 

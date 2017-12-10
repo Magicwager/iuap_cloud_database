@@ -53,6 +53,7 @@ class Currency extends React.Component {
             Object.assign(this.store.currency, this.store.currencys[index]);
             Object.assign(this.store.editCurrencyData, this.store.currencys[index]);
         }
+        console.log(this.store.currency)
         this.refs.card.show({index, store: this.store, flag});
         this.store.page = 2;
     }
