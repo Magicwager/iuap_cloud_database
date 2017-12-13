@@ -6,12 +6,10 @@ import React, {Component, PropTypes} from 'react';
 import {observer} from 'mobx-react';
 
 import {Modal, Form, FormGroup, FormControl, ControlLabel, Col, Button, Checkbox} from 'react-bootstrap';
-import {Select as TinperSelect} from "tinper-bee";
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
 import GlobalStore from '../../stores/GlobalStore';
-
 
 let title = {'add': '添加币种', 'edit': '编辑币种'}
 
@@ -25,19 +23,19 @@ export default class CurrencyList extends Component {
         super(props)
         this.store = props.store;
         this.state = {
-            show: false,
             value: '',
             index: -1,
             validation: {
                 pricedigit: null,
                 moneydigit: null
             },
-            refJsonData: this.store.refJsonData,
-            selectValue: this.store.currency.code,
-            selectOneValue: this.store.currency.pricerount
+            searchable: false,  // select是否搜索
+            clearable: false,   // select是否清楚
+            selectValue: this.store.currency.code,  // 币种参照的value
+            selectOneValue: this.store.pricerount,  // 单价进价的value
+            selectTwoValue: this.store.moneyrount,  // 金额进价的value
         }
 
-        this.handleRule = this.handleRule.bind(this);
     }
 
     componentDidMount() {
@@ -48,25 +46,12 @@ export default class CurrencyList extends Component {
     close() {
         this.store.page = 1;
         if (this.state.flag == 'add') {
-            Object.assign(this.store.currency, {
-                code: '',
-                name: '',
-                sign: '',
-                pricedigit: 6,
-                moneydigit: 2,
-                pricerount: 5,
-                moneyrount: 5,
-                description: '',
-                isdefault: 0
-            })
-            this.setState({
-                selectValue:' ',
-                selectOneValue:5
-            })
+            Object.assign(this.store.currency,{code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0});
+            this.setState({selectValue:' ',selectOneValue:this.store.pricerount,selectTwoValue: this.store.moneyrount})
         }
-        /*if (this.state.flag == 'edit') {
-            Object.assign(this.store.currency, this.store.editCurrencyData);
-        }*/
+        if (this.state.flag == 'edit') {
+            this.setState({selectOneValue:this.store.pricerount,selectTwoValue: this.store.moneyrount})
+        }
         this.refs.message.innerHTML = '';
         this.refs.pricedigit.innerHTML = '';
         this.refs.moneydigit.innerHTML = '';
@@ -82,7 +67,7 @@ export default class CurrencyList extends Component {
             this.refs[field].innerHTML = '只能输入数字!';
             setTimeout(function () {
                 this.refs[field].innerHTML = '';
-            }.bind(this), 1000);
+            }.bind(this), 3000);
         } else {
             val = val.replace(/\s+/g, '');
             var reg = new RegExp(/[0-9]/g)
@@ -99,13 +84,6 @@ export default class CurrencyList extends Component {
         }
     }
 
-    // 改变进位规则
-    changeRule(field, e,value) {
-
-        this.store.currency[field] = e.target.value;
-    }
-
-
     // 卡片展示
     show(param) {
         let {index, flag} = param;
@@ -117,19 +95,6 @@ export default class CurrencyList extends Component {
         })
     }
 
-    // 前端转换规则
-    handleRule(param) {
-        switch (param) {
-            case '0':
-                return param = '全部舍位';
-                break;
-            case '1':
-                return param = '全部进位';
-                break;
-            default:
-                return param = '四舍五入';
-        }
-    }
 
     // 保存提交
     handleSubmit() {
@@ -161,10 +126,20 @@ export default class CurrencyList extends Component {
 
 
         this.store.handleSubmit(this.state.flag)
-            .then(data => {
+            .then(data =>{
                 if (data.status) {
                     GlobalStore.showInfo("保存成功");
-                    this.store.getCurrencyLst();
+                    if(this.state.flag =='add') {
+                        this.store.searchValueKey = ' ';
+                        this.store.getCurrencyLst();
+                        this.props.handleClear();
+                    } else {
+                        if(this.store.searchValueKey != '') {
+                            this.store.handleSearch($.trim(this.store.searchValueKey));
+                        } else {
+                            this.store.getCurrencyLst();
+                        }
+                    }
                     this.close();
                 } else {
                     GlobalStore.showError(data.msg)
@@ -175,12 +150,7 @@ export default class CurrencyList extends Component {
 
     // 币种参照的code name展示
     _renderMenuItemChildren(option, props, index) {
-        return [
-            <span key="code">
-        {option.label + " "}
-      </span>,
-            <strong key="name">{option.value} </strong>
-        ];
+        return [<span key="code">{option.label + " "}</span>, <strong key="name">{option.value} </strong>];
     }
 
     // 币种参照
@@ -201,18 +171,22 @@ export default class CurrencyList extends Component {
         });
     }
 
-    componentWillMount() {
-        this.setState({
-            selectOneValue: this.store.currency.pricerount
-        })
+    // 单价、金额枚举
+    updateChangeValue(field, value) {
+        this.store.currency[field] = Number(value.price);
+        if(field=='pricerount') {
+            this.setState({selectOneValue:value})
+        }
+        if(field=='moneyrount') {
+            this.setState({selectTwoValue:value})
+        }
     }
-
 
     render() {
         let currency = this.store.currency;
         
         return (
-            <div className="ledger">
+            <div className="u-container">
                 <div className="head">
                     <div className="head-r fr">
                         <button className="btn btn-default mr15" onClick={this.close.bind(this)}>取消</button>
@@ -235,18 +209,21 @@ export default class CurrencyList extends Component {
                                             (this.state.flag === 'edit') ?
                                                 <FormControl type="text" placeholder="币种"
                                                              value={currency.code}
-                                                             disabled={true}
+                                                             readOnly={true}
                                                              style={{'width':'260px'}}
                                                 />
                                                 :
                                                 <Select
                                                     className="currency-ref"
                                                     placeholder="请选择..."
+                                                    noResultsText="无匹配"
                                                     name="form-field-name"
                                                     value={this.state.selectValue}
                                                     onChange={this.updateValue.bind(this)}
                                                     options={this.store.refJsonData}
-                                                    clearable='false'
+                                                    clearable={false}
+                                                    deleteRemoves={false}
+                                                    backspaceRemoves={false}
                                                     optionRenderer={this._renderMenuItemChildren.bind(this)}
                                                 />
                                         }
@@ -266,7 +243,7 @@ export default class CurrencyList extends Component {
                                 <Col xs={6}>
                                     <FormControl type="text" placeholder="币种简称"
                                                  value={currency.name}
-                                                 disabled={true}
+                                                 readOnly={true}
                                                  style={{'width':'260px'}}
                                     />
                                 </Col>
@@ -283,7 +260,7 @@ export default class CurrencyList extends Component {
                                 <Col xs={6}>
                                     <FormControl type="text" placeholder=" 币种符号"
                                                  value={currency.sign}
-                                                 disabled={true}
+                                                 readOnly={true}
                                                  style={{'width':'260px'}}
                                     />
                                 </Col>
@@ -293,7 +270,7 @@ export default class CurrencyList extends Component {
 
                     <Form inline className="currency-form currency-border clearfix">
                         <Col xs={6}>
-                            <FormGroup style={{"width":'100%','marginBottom': '15px'}} controlId="pricedigit"
+                            <FormGroup style={{"width":'100%','marginBottom': '20px'}} controlId="pricedigit"
                                        validationState={this.state.validation.pricedigit}>
                                 <Col xs={6} componentClass={ControlLabel} className="text-right currency-lh">
                                     <span className="currency-bishu">*</span>单价精度:
@@ -309,40 +286,29 @@ export default class CurrencyList extends Component {
                                                style={{'width':'260px'}}
                                                maxLength="1"
                                         />
-                                        <div ref="pricedigit" style={{'right':'-120px'}}
+                                        <div ref="pricedigit" style={{'top':'34px','left':'0'}}
                                              className="currency-error"></div>
                                     </div>
                                 </Col>
                             </FormGroup>
                         </Col>
                         <Col xs={6}>
-                            <FormGroup style={{"width":'100%','marginBottom': '15px'}} controlId="pricerount">
+                            <FormGroup style={{"width":'100%','marginBottom': '20px'}} controlId="pricerount">
                                 <Col xs={3} componentClass={ControlLabel} className="text-right currency-lh">
                                     单价进价:
                                 </Col>
                                 <Col xs={6}>
-                                    <div className="pricerount-select">
-                                        <select
-                                            defaultValue={currency.pricerount}
-                                                value={currency.pricerount}
-                                                onChange={this.changeRule.bind(this, "pricerount")}>
-                                            {this.store.pricerounts.map((item, index)=> {
-                                                return (<option key={ 'pricerount' + index }
-                                                                value={item.price}>{item.name}</option>)
-                                            })}
-                                        </select>
-                                        <span className="select-i cl cl-arrow-down"></span>
-                                    </div>
-                                    {/*<TinperSelect
-                                     className="pricerount-select"
-                                     defaultValue={5}
-                                     onChange={this.changeRule.bind(this, "pricerount")}
-                                     >
-                                     {this.store.pricerounts.map((item, index)=> {
-                                     return (<Option key={ 'pricerount' + index }
-                                     value={item.price}>{item.price}</Option>)
-                                     })}
-                                     </TinperSelect>*/}
+                                    <Select
+                                        className="currency-ref"
+                                        name="form-field-name"
+                                        value={this.state.selectOneValue}
+                                        onChange={this.updateChangeValue.bind(this, 'pricerount')}
+                                        options={this.store.pricerounts}
+                                        clearable={this.state.clearable}
+                                        valueKey="price"
+                                        labelKey="name"
+                                        searchable = {this.state.searchable}
+                                    />
                                 </Col>
                             </FormGroup>
                         </Col>
@@ -363,7 +329,7 @@ export default class CurrencyList extends Component {
                                                style={{'width':'260px'}}
                                                maxLength="1"
                                         />
-                                        <div ref="moneydigit" style={{'right':'-120px'}}
+                                        <div ref="moneydigit" style={{'top':'34px','left':'0'}}
                                              className="currency-error"></div>
                                     </div>
                                 </Col>
@@ -375,30 +341,17 @@ export default class CurrencyList extends Component {
                                     金额进价:
                                 </Col>
                                 <Col xs={6}>
-                                    <div className="pricerount-select">
-                                    <select
-                                        defaultValue={currency.moneyrount}
-                                        value={currency.moneyrount}
-                                        onChange={this.changeRule.bind(this, "moneyrount")}>
-                                        {this.store.pricerounts.map((item, index)=> {
-                                            return (<option className="sel" key={ 'moneyrount' + index }
-                                                            value={item.price}>{item.name}</option>)
-                                        })}
-                                    </select>
-                                        <span className="select-i cl cl-arrow-down"></span>
-                                        </div>
-                                    {
-                                        /* <TinperSelect
-                                         className="pricerount-select"
-                                         defaultValue={this.handleRule(currency.moneyrount)}
-                                         onChange={this.changeRule.bind(this, "moneyrount")}
-                                         >
-                                         {this.store.pricerounts.map((item, index)=> {
-                                         return (<Option key={ 'moneyrount' + index }
-                                         value={item.price}>{item.name}</Option>)
-                                         })}
-                                         </TinperSelect>*/
-                                    }
+                                   <Select
+                                     className="currency-ref"
+                                     name="form-field-name"
+                                     value={this.state.selectTwoValue}
+                                     onChange={this.updateChangeValue.bind(this, 'moneyrount')}
+                                     options={this.store.pricerounts}
+                                     clearable={this.state.clearable}
+                                     valueKey="price"
+                                     labelKey="name"
+                                     searchable = {this.state.searchable}
+                                   />
                                 </Col>
                             </FormGroup>
                         </Col>
@@ -406,8 +359,7 @@ export default class CurrencyList extends Component {
 
                     <Form inline className="currency-form">
                         <Col xs={6}>
-                            <FormGroup style={{"width":'100%','marginBottom': '15px'}} controlId="pricedigit"
-                                       validationState={this.state.validation.pricedigit}>
+                            <FormGroup style={{"width":'100%','marginBottom': '15px'}} controlId="description">
                                 <Col xs={6} componentClass={ControlLabel} className="text-right currency-lh">
                                     备注:
                                 </Col>

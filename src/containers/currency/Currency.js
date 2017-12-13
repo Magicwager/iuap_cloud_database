@@ -17,7 +17,7 @@ class Currency extends React.Component {
         this.state = {
             isHasData: this.store.tableDataTitle,   // 列表没有数据时显示内容
             value: '',     // 模糊搜索value
-            focus: false
+            focus: false   // 模糊搜索focus
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -34,26 +34,45 @@ class Currency extends React.Component {
         this.store.getCurrencyLst();
     }
 
+    handleClear() {
+        let _this = this;
+        _this.setState({value: ''});
+    }
+
     // 新增、编辑
     handleAdd(index, flag) {
         if (flag === 'add') {
-            Object.assign(this.store.currency, {
-                code: '',
-                name: '',
-                sign: '',
-                pricedigit: 6,
-                moneydigit: 2,
-                pricerount: 5,
-                moneyrount: 5,
-                description: '',
-                isdefault: 0
-            })
+            Object.assign(this.store.currency, {code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0});
+            Object.assign(this.store.pricerount,{'price': "5", 'name': "四舍五入"})
+            Object.assign(this.store.moneyrount,{'price': "5", 'name': "四舍五入"})
         }
         if (flag === 'edit') {
             Object.assign(this.store.currency, this.store.currencys[index]);
-            Object.assign(this.store.editCurrencyData, this.store.currencys[index]);
+
+            // 单价进位
+            if(this.store.currencys[index].pricerount==5) {
+                Object.assign(this.store.pricerount,{'price': "5", name: "四舍五入"})
+            }
+            if(this.store.currencys[index].pricerount==1) {
+                Object.assign(this.store.pricerount,{'price': "1", name: "全部进位"})
+            }
+            if(this.store.currencys[index].pricerount==0) {
+                Object.assign(this.store.pricerount,{'price': "0", name: "全部舍位"})
+            }
+
+            // 金额进位
+            if(this.store.currencys[index].moneyrount==5) {
+                Object.assign(this.store.moneyrount,{'price': "5", name: "四舍五入"})
+            }
+            if(this.store.currencys[index].moneyrount==1) {
+                Object.assign(this.store.moneyrount,{'price': "1", name: "全部进位"})
+            }
+            if(this.store.currencys[index].moneyrount==0) {
+                Object.assign(this.store.moneyrount,{'price': "0", name: "全部舍位"})
+            }
+
         }
-        console.log(this.store.currency)
+       
         this.refs.card.show({index, store: this.store, flag});
         this.store.page = 2;
     }
@@ -131,7 +150,7 @@ class Currency extends React.Component {
     render() {
         return (
             <div>
-                <div className={this.store.page == 1 ? 'ledger' :'hidden'}>
+                <div className={this.store.page == 1 ? 'u-container' :'hidden'}>
                     <div className="head">
                         <div className="head-l fl">
                             <div className="currency-input">
@@ -146,9 +165,8 @@ class Currency extends React.Component {
                                 <span className="cl cl-search search-icon" onClick={this.handleChangeSearch}></span>
                             </div>
                         </div>
-                        <div className="head-r fr noprint">
-                            <button className="btn btn-primary" onClick={this.handleAdd.bind(this, -1, 'add')}>添加
-                            </button>
+                        <div className="head-r fr">
+                            <button className="btn btn-primary" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
                         </div>
                     </div>
 
@@ -156,14 +174,14 @@ class Currency extends React.Component {
                         <table className="table">
                             <thead>
                             <tr>
-                                <th>币种</th>
-                                <th>币种简称</th>
-                                <th>币种符号</th>
-                                <th>单价精度</th>
-                                <th>金额精度</th>
-                                <th>单价进价</th>
-                                <th>金额进价</th>
-                                <th>操作</th>
+                                <th style={{'width':'11.5%;'}}>币种</th>
+                                <th style={{'width':'11.5%;'}}>币种简称</th>
+                                <th style={{'width':'11.5%;'}}>币种符号</th>
+                                <th style={{'width':'11.5%;'}}>单价精度</th>
+                                <th style={{'width':'11.5%;'}}>金额精度</th>
+                                <th style={{'width':'11.5%;'}}>单价进价</th>
+                                <th style={{'width':'11.5%;'}}>金额进价</th>
+                                <th style={{'width':'19.5%;'}}>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -179,12 +197,8 @@ class Currency extends React.Component {
                                             <td>{this.handleRule(value.pricerount)}</td>
                                             <td>{this.handleRule(value.moneyrount)}</td>
                                             <td>
-                                                <button className="btn btn-operate mr10"
-                                                        onClick={this.handleDelete.bind(this, index)}>删除
-                                                </button>
-                                                <button className="btn btn-operate mr10"
-                                                        onClick={this.handleAdd.bind(this, index, 'edit')}>编辑
-                                                </button>
+                                                <button className="btn btn-operate mr10" onClick={this.handleDelete.bind(this, index)}>删除</button>
+                                                <button className="btn btn-operate mr10" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
                                                 {
                                                     /*value.isdefault==1 ? '': <button className="btn btn-operate" onClick={this.handleDefault.bind(this, index)}>设为默认</button>*/
                                                 }
@@ -201,7 +215,7 @@ class Currency extends React.Component {
                 </div>
 
                 <div className={this.store.page == 2 ? '':'hidden'}>
-                    <CurrencyList ref="card" store={this.store} />
+                    <CurrencyList ref="card" store={this.store} handleClear={this.handleClear.bind(this)}/>
                 </div>
 
             </div>

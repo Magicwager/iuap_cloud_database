@@ -1,6 +1,6 @@
 // 不同的环境对应不同的接口
-//const serverURL = '/basedoc';
-const serverURL = '/bd';
+const serverURL = '/basedoc';
+//const serverURL = '/bd';
 
 // 基础数据
 let Config = {

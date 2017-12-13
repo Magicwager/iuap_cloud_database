@@ -24,17 +24,7 @@ class CurrencyStore {
     @observable
     currencys = [];
     @observable
-    currency = {
-        code: '',
-        name: '',
-        sign: '',
-        pricedigit: 6,
-        moneydigit: 2,
-        pricerount: 5,
-        moneyrount: 5,
-        description: '',
-        isdefault: 0
-    };
+    currency = {code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0};
     @observable
     tableDataTitle = '暂无数据！';
     @observable
@@ -46,10 +36,12 @@ class CurrencyStore {
     @observable
     refJsonData = []; // 币种参照数据
     @observable
-    editCurrencyData = []; // 编辑状态保存的数据
+    searchValueKey = ''; // 模糊搜索查询key
     @observable
-    searchValueKey = '' // 模糊搜索查询key
-
+    moneyrount =  {};  // 默认金额进位
+    @observable
+    pricerount =  {}; // 默认单价进位
+   
 
     // 查询接口
     @action
@@ -60,13 +52,13 @@ class CurrencyStore {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                //'Cache-Control': 'no-cache'
+                'Cache-Control': 'no-cache'
             },
-            credentials: "include"
+           credentials: "include"
         }
 
         return (
-            //fetch('http://127.0.0.1/webCurrency/getBillType', opt)
+           // fetch('http://127.0.0.1/webCurrency/getBillType', opt)
             fetch(timestamp(Config.currency.query), opt)
                 .then(response => {
                     this.globalStore.hideWait();
@@ -96,7 +88,7 @@ class CurrencyStore {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                //'Cache-Control': 'no-cache'
+                'Cache-Control': 'no-cache'
             },
             body: JSON.stringify(this.currency),
             credentials: "include"
@@ -135,7 +127,7 @@ class CurrencyStore {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                //'Cache-Control': 'no-cache'
+                'Cache-Control': 'no-cache'
             },
             body: JSON.stringify(params),
             credentials: "include"
@@ -168,7 +160,7 @@ class CurrencyStore {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                //'Cache-Control': 'no-cache'
+                'Cache-Control': 'no-cache'
             },
             credentials: "include"
         }
@@ -210,7 +202,7 @@ class CurrencyStore {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                //'Cache-Control': 'no-cache'
+                'Cache-Control': 'no-cache'
             },
             body: JSON.stringify(_this.currency),
             credentials: "include"
@@ -242,7 +234,7 @@ class CurrencyStore {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                //'Cache-Control': 'no-cache'
+                'Cache-Control': 'no-cache'
             },
             credentials: "include"
         }

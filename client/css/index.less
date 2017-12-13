@@ -1,8 +1,7 @@
 @import '../common/css/variables';
 @import '../common/css/common';
 @import './fonts/iconfont.css';
-@import './assets/tinper-bee.css';
-
+@import './react-datepicker.css';
 /**************************** UI基础设计规范 start ***************************/
 
 // 主题
@@ -75,7 +74,6 @@
 @navbarZ: 6000;
 
 // 状态色通用类 success warning error
-//.success { color: #5cb85c; }
 .success { color: @successColorLevel1; }  // 成功信息提示色通用类
 .warning { color: #f0ad4e; }              // 警告信息提示色通用类
 .danger  { color: @dangerColorLevel1; }   // 错误信息提示色通用类
@@ -119,7 +117,14 @@ a {
 }
 select {
   border-color: @inputBorderColor;
+  border: 1px solid @inputBorderColor;
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  padding-right: 14px;
 }
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }
 input:focus, select:focus {
   border-color: @inputBorderFocus;
 }
@@ -137,6 +142,19 @@ input::-ms-reveal{display:none;}
     -webkit-box-shadow: none;
     box-shadow: none;
   }
+}
+.form-control[readonly]:focus {
+  border-color: @inputBorderColor;
+}
+/*错误提示图标*/
+.cl-close-c {
+  color: #F04134;
+  font-size: 23px;
+}
+/*正确提示图标*/
+.cl-pass-c {
+  color: #00B39E;
+  font-size: 23px;
 }
 
 // 按钮统一样式
@@ -215,10 +233,8 @@ input::-ms-reveal{display:none;}
           line-height: 48px;
           font-weight: 700;
           .f14;
-          width: 19.5%;
           &:not(:last-child) {
             .tc;
-            width: 11.5%;
           }
         }
       }
@@ -262,45 +278,7 @@ input::-ms-reveal{display:none;}
   }
 }
 
-
-
-// 币种
-.ledger {
-  .head {
-    height: 34px;
-    line-height: 34px;
-    .mb15;
-    .head-l {
-      .fl;
-      .head-select {
-        display: inline-block;
-        .period {
-          .clearfix;
-        }
-      }
-    }
-    .head-r {
-      .fr;
-    }
-  }
-}
-
-// 顶部标题栏 通用
-.header {
-  .tc;
-  .oh;
-  .header-title {
-    font-weight: 700;
-    .f17;
-    color: @fontColorLevel1;
-  }
-  .header-date {
-    .ml10;
-    .vb;
-  }
-}
-
-// alert弹框组件
+/*alert弹框组件*/
 .alert{
   padding: 5px 10px;
   margin-bottom: 0;
@@ -315,6 +293,7 @@ input::-ms-reveal{display:none;}
   p.alert-tip {         // alert弹出框溢出显示省略号
     .ellipsis;
     display: inline-block;
+    width: 73%;
   }
 }
 .alert-dismissable .close, .alert-dismissible .close {
@@ -322,58 +301,12 @@ input::-ms-reveal{display:none;}
   right: 0;
 }
 
-// 模态框垂直水平居中
-//.modal.in .modal-dialog {
-//  -webkit-transform: translate(-50%,-50%);
-//  -ms-transform: translate(-50%,-50%);
-//  -o-transform: translate(-50%,-50%);
-//  transform: translate(-50%,-50%)
-//}
-//
-//.modal-dialog {
-//  position: absolute;
-//  width: auto;
-//  margin: 0 auto;
-//  left: 50%;
-//  top: 50%
-//}
-//
-//@media (min-width:768px) {
-//  .modal-dialog {
-//    width: 600px
-//  }
-//}
-
-.modal-title {
-  .f14;
-  .fn;
-  display: inline;
-  color: @fontColorLevel1;
-}
-
-.modal-body {
-    .container {
-      margin-left: -15px;
-      margin-right: -15px;
-    }
-}
-@media (min-width: 768px) {
-  .form-inline .input-group .form-control, .form-inline .input-group .input-group-addon, .form-inline .input-group .input-group-btn {
-    width: 0;
-  }
-}
-
-
 /*静态模态框，提示类模态框*/
 .static-modal {
   z-index: 999999999;
   .modal-dialog{
     width: 418px;
     margin: 10% auto;
-    //-webkit-transform: translate(0,-80%)!important;
-    //-ms-transform: translate(0,-80%)!important;
-    //-o-transform: translate(0,-80%)!important;
-    //transform: translate(0,-80%)!important;
   }
   .modal-body{
     padding-top:30px ;
@@ -389,174 +322,13 @@ input::-ms-reveal{display:none;}
   }
 }
 
-// 币种搜索
-.currency-input {
-  width: 180px;
-  height: 30px;
-  .pr;
-  input {
-    height: 100%;
-  }
-  .search-icon {
-    width: 17px;
-    height: 17px;
-    line-height: 17px;
-    font-size: 17px;
-    display: inline-block;
-    .pa;
-    right: 7px;
-    top: 7px;
-    z-index: 1;
-    color: #999;
-  }
-}
-
-// 参照
-.bootstrap-typeahead input.bootstrap-typeahead-input-main {
-  padding: 6px 30px 6px 12px;
-  width: 100%!important;
-  cursor: pointer;
-}
-// 参照 input-dropdown 下拉组件 会计期间/凭证状态/科目/科目级次/辅助项目 等
-.tw-popup {
-  z-index: 6100;
-}
-.refer-search-icon {
-  font-family: "cl" !important;
-}
-.refer-search-icon::before {
-  content: "\e609";
-  .f16;
-}
-// 清楚参照中的右侧input-group-addon按钮样式
-.bootstrap-typeahead .input-group {
-  .Clearfix;
-  .form-control {
-    float: none;
-    .br4;
-  }
-  span.input-group-addon {
-    .pa;
-    top: 2px;
-    right: 13px;
-    border: none;
-    .transparent;
-  }
-}
-
-// 下拉列表
-.dropdown-menu {
-  width: 100%;
-  li {
-    a {
-      .f12;
-      .pointer;
-      color: @fontColorLevel2;
-      &:hover {
-        background-color: @listHoverBackColor;
-        color: #333;
-      }
-    }
-  }
-  .active >a {
-    background-color: @mainGreen;
-    &:hover {
-      background-color: @mainGreenHover;
-    }
-  }
-}
-.dropdown-menu-list {
-  .p0;
-  min-width: 90px;
-  border-radius: 0;
-}
-
-// 单价下拉框
-.pricerount-select {
-  width: 260px;
-  height: 33px;
-
-  font-size: 1.2rem;
-  color: #666666;
-  box-sizing: border-box;
-  .pr;
-select {
-  width: 100%;
-  height: 100%;
-  padding-left: 10px;
-}
-  .select-i {
-    .pa;
-    right: 8px;
-    top: 6px;
-    -webkit-transform: scale(0.75) rotate(0deg);
-    transform: scale(0.75) rotate(0deg);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
-    zoom: 1;
-  }
-  }
-.pricerount-select select:focus .select-i {
-  transform: rotate(180deg);
-}
-
-// 不可编辑状态
-.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-  background-color: #fff!important;
-}
-.form-control[disabled], fieldset[disabled] .form-control {
-  cursor: default!important;
-}
-
-
-
-// 红星
-.currency-bishu {
-  color: red;
-  position: relative;
-  top: 2px;
-  left: -3px;
-}
-
-// 错误提示
-.currency-error {
-  color: red;
-  position: absolute;
-  top: 8px;
-  right: -90px;
-}
-
-
-// 币种卡片
-.currency-content {
-  background: #FFFFFF;
-  border: 1px solid #D3D3D3;
- // min-height: 600px;
-  padding-bottom:50px;
-}
-.currency-title {
-  font-size: 14px;
-  color: #333333;
-  .tc;
-  margin: 30px auto;
-}
-.currency-form {
-  padding-bottom: 30px;
-  padding-top: 30px;
-}
-.currency-border {
-  border-bottom: 1px dashed #E4E4E4;
-  border-top: 1px dashed #E4E4E4;
-}
-.currency-ref {
-
-  width: 260px;
-  .Select-control {
-    height: 32px;
-  }
-}
+/*react-select 组件 start*/
 .Select {
   outline: 0!important;
   outline-offset: 0!important;
+}
+.Select-control {
+  height: 32px;
 }
 .Select.is-open > .Select-control {
   border-color: @btnPrimaryColor!important;
@@ -609,14 +381,8 @@ select {
   -moz-osx-font-smoothing: grayscale;
   width: auto!important;
   height: auto!important;
-  //position: absolute;
-  //top: 50%;
-  //right: 8px;
-  //line-height: 1;
-  //margin-top: -6px;
   display: inline-block;
-  font-size: 12px;
-  font-size: 9px\9;
+  font-size: 16px;
   -webkit-transform: scale(.75) rotate(0deg);
   transform: scale(.75) rotate(0deg);
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
@@ -624,7 +390,7 @@ select {
 }
 .Select-arrow:before{
   display: block;
-  font-family: uf!important;
+  font-family: 'cl'!important;
   content: "\e609";
   -webkit-transition: -webkit-transform .2s ease;
   transition: -webkit-transform .2s ease;
@@ -642,65 +408,208 @@ select {
   border-bottom-left-radius: 4px!important;
   border-color:  @btnPrimaryColor!important;
 }
+/*react-select 组件 end*/
+
+// 分页组件
+.u-pagination {
+  .tc;
+  margin: 20px auto;
+  .pagination {
+    li>a, li>span {
+      .fff;
+      border: 1px solid @btnDefaultBorder;
+      .br4;
+      color: @fontColorLevel2;
+    }
+    li:not(:first-child)>a {margin-left: 9px;}
+    li>span {font-weight: 700;}
+    li.active > a {
+      border: none;
+      background-color: transparent;
+      color: #000000;
+      /*&:hover {
+        border-color: @btnPrimaryHover;
+        background-color: @btnPrimaryHover;
+      }
+      &:focus {
+        border-color: @btnPrimaryFocus;
+        background-color: @btnPrimaryFocus;
+      }*/
+    }
+  }
+}
+
+// 日期组件
+.v-table-inputdate {
+  display: inline-block;
+  input {
+    padding-left: 8px;
+    padding-right: 16px;
+    .f12;
+    color: @fontColorLevel2;
+    background: url(../images/input-date.png) no-repeat 95% center;
+    .pointer;
+  }
+}
+
+//币种
+.u-container {
+  .head {
+    height: 34px;
+    line-height: 34px;
+    .mb15;
+    .head-l {
+      .fl;
+    }
+    .head-r {
+      .fr;
+    }
+  }
+}
+
+// 币种搜索
+.currency-input {
+  width: 180px;
+  height: 30px;
+  .pr;
+  input {
+    height: 100%;
+  }
+  .search-icon {
+    width: 17px;
+    height: 17px;
+    line-height: 17px;
+    font-size: 17px;
+    display: inline-block;
+    .pa;
+    right: 7px;
+    top: 7px;
+    z-index: 1;
+    color: #999;
+  }
+}
+
+// 币种新增、编辑
+.currency-content {
+  .fff;
+  border: 1px solid #D3D3D3;
+  padding-bottom: 50px;
+}
+.currency-title {
+  font-size: 14px;
+  color: #333333;
+  .tc;
+  margin: 30px auto;
+}
+.currency-form {
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+.currency-border {
+  border-bottom: 1px dashed #E4E4E4;
+  border-top: 1px dashed #E4E4E4;
+}
+.currency-ref {
+  width: 260px!important;
+}
+.currency-bishu {
+  color: red;
+  position: relative;
+  top: 2px;
+  left: -3px;
+}
+.currency-error {
+  color: red;
+  position: absolute;
+  top: 8px;
+  right: -90px;
+}
 .currency-lh {
   .pr;
   top: 5px;
 }
 
-
-select {
-  /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
-  border: 1px solid @inputBorderColor;
-
-  /*很关键：将默认的select选择框样式清除*/
-  appearance:none;
-  -moz-appearance:none;
-  -webkit-appearance:none;
-
-  /*在选择框的最右侧中间显示小箭头图片*/
-  //background: url('../images/arrow.svg') no-repeat scroll right center transparent;
-  //background-size: 12px;
-
-  /*为下拉小箭头留出一点位置，避免被文字覆盖*/
-  padding-right: 14px;
-
-}
-
-
-/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
-select::-ms-expand { display: none; }
-/*select组件 start*/
-.u-select-dropdown .u-select-dropdown-menu {
-  background: #FFFFFF;
-  border: 1px solid #D9D9D9;
+/*定义自定义 start*/
+.custom-co {
+  .fff;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.20);
+  width: 198px;
+  height: 260px;
+  margin: 0 auto;
+  .cusom-t {
+    width: 100%;
+    height: 120px;
+    background: #F7F7F7;
+    line-height: 120px;
+    text-align: center;
+  }
+}
+.btn-custom {
+  background: #FFFFFF;
+  border: 1px solid #00B39E;
   border-radius: 4px;
+  display: inline-block;
+  font-size: 14px;
+  color: #00B39E;
+  width: 158px;
+  height: 32px;
+  .tc;
+  line-height: 32px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-.u-select-dropdown .u-select-dropdown-menu-item {
-  color: #999999;
-  transition: none;
+.custom-pc {
+  margin: 10px auto;
+  margin-top: 27px;
+  margin-bottom: 0;
 }
-.u-select-dropdown .u-select-dropdown-menu-item-active, .u-select-dropdown .u-select-dropdown-menu-item:hover {
-  background-color: #eee;
-  color: #333333;
+.custom-pt1 {
+  margin: 10px auto;
+  margin-bottom: 0;
 }
-.u-select-open .u-select-selection {
-  border-color: @btnPrimaryColor;
+.custom-row  {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  .col-5 {
+    width: 20%;
+    height: 260px;
+    .fl;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    .pr;
+  }
 }
-.u-select .u-select-selection :hover {
-  border-color: @btnPrimaryColor;
+.custom-bto {
+  .pa;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 28px;
+}
+.custom-btop {
+  .pa;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 11px;
+}
+.custom-pc1 {
+  margin: 10px auto;
+  margin-top: 17px;
+  margin-bottom: 0;
+}
+.custom-title {
+  margin-top: 45px;
+  margin-bottom: 35px;
+}
+.custom-formgroup {
+  width: 100%;
+  margin-bottom: 30px;
 }
 
-/*select组件 end*/
 
-.cl-close-c {
-  color: #F04134;
-  font-size: 23px;
-}
-.cl-pass-c {
-color: #00B39E;
-  font-size: 23px;
-}
+
+
 
 
 
