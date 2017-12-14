@@ -680,7 +680,7 @@ input::-ms-reveal {
 .form-control {
   font-size: 12px;
   font-size: 1.2rem;
-  height: 32px;
+  height: 36px;
   border-color: #D9D9D9;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -953,6 +953,9 @@ input::-ms-reveal {
   border-bottom-left-radius: 4px!important;
   border-color: #00B39E !important;
 }
+.Select.is-open.is-focused > .Select-control .Select-value .Select-value-label {
+  color: #999!important;
+}
 /*react-select 组件 end*/
 .u-pagination {
   text-align: center;
@@ -1063,7 +1066,7 @@ input::-ms-reveal {
 }
 .currency-lh {
   position: relative;
-  top: 5px;
+  top: 7px;
 }
 /*定义自定义 start*/
 .custom-co {
@@ -1079,6 +1082,14 @@ input::-ms-reveal {
   background: #F7F7F7;
   line-height: 120px;
   text-align: center;
+}
+.custom-co .cusom-t img {
+  transition: transform .6s;
+  -ms-transform-origin: center;
+  transform-origin: center;
+}
+.custom-co .cusom-t:hover img {
+  transform: scale(1.1);
 }
 .btn-custom {
   background: #FFFFFF;

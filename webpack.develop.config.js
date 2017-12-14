@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
-
+const context = [`/basedoc/bd/attr/extendFields`, `/basedoc/bd/attr/extendField`]
 module.exports = {
   devtool: 'source-map',
 
@@ -105,6 +105,15 @@ module.exports = {
     contentBase: "./src",//本地服务器加载页面所在目录
     colors: true, //终端中输出结果为彩色
     historyApiFallback: true, //不跳转
-    inline: false//实时刷新
+    inline: false,//实时刷新
+    host:'127.0.0.1',
+    port: '5001', //设置端口号
+    proxy: [
+      {
+        context: context,
+        target: 'http://127.0.0.1:5001',
+        secure: false
+      }
+    ]
   }
 };

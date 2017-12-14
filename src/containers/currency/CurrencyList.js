@@ -5,7 +5,7 @@
 import React, {Component, PropTypes} from 'react';
 import {observer} from 'mobx-react';
 
-import {Modal, Form, FormGroup, FormControl, ControlLabel, Col, Button, Checkbox} from 'react-bootstrap';
+import {Modal, Form, FormGroup, FormControl, Grid, Row, ControlLabel, Col, Button, Checkbox} from 'react-bootstrap';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
@@ -65,9 +65,6 @@ export default class CurrencyList extends Component {
         if (isNaN(val)) {
             val = _val;
             this.refs[field].innerHTML = '只能输入数字!';
-            setTimeout(function () {
-                this.refs[field].innerHTML = '';
-            }.bind(this), 3000);
         } else {
             val = val.replace(/\s+/g, '');
             var reg = new RegExp(/[0-9]/g)
@@ -142,7 +139,7 @@ export default class CurrencyList extends Component {
                     }
                     this.close();
                 } else {
-                    GlobalStore.showError(data.msg)
+                    GlobalStore.showError("保存失败");
                 }
             });
     }
@@ -197,6 +194,7 @@ export default class CurrencyList extends Component {
                     <div className="currency-title">
                         {title[this.state.flag]}
                     </div>
+
                     <Form inline className="currency-form">
                         <Col xs={6}>
                             <FormGroup style={{"width":'100%','marginBottom': '15px'}} controlId="code">
@@ -286,18 +284,18 @@ export default class CurrencyList extends Component {
                                                style={{'width':'260px'}}
                                                maxLength="1"
                                         />
-                                        <div ref="pricedigit" style={{'top':'34px','left':'0'}}
+                                        <div ref="pricedigit" style={{'top':'36px','left':'0'}}
                                              className="currency-error"></div>
                                     </div>
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <Col xs={6}>
+                        <Col sm={6} xs={12}>
                             <FormGroup style={{"width":'100%','marginBottom': '20px'}} controlId="pricerount">
-                                <Col xs={3} componentClass={ControlLabel} className="text-right currency-lh">
+                                <Col  md={4} sm={3} xs={6} componentClass={ControlLabel} className="text-right currency-lh">
                                     单价进价:
                                 </Col>
-                                <Col xs={6}>
+                                <Col md={4} sm={6} xs={6}>
                                     <Select
                                         className="currency-ref"
                                         name="form-field-name"
@@ -329,18 +327,18 @@ export default class CurrencyList extends Component {
                                                style={{'width':'260px'}}
                                                maxLength="1"
                                         />
-                                        <div ref="moneydigit" style={{'top':'34px','left':'0'}}
+                                        <div ref="moneydigit" style={{'top':'36px','left':'0'}}
                                              className="currency-error"></div>
                                     </div>
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <Col xs={6}>
+                        <Col sm={6} xs={12}>
                             <FormGroup style={{"width":'100%','marginBottom': '15px'}} controlId="moneyrount">
-                                <Col xs={3} componentClass={ControlLabel} className="text-right currency-lh">
+                                <Col md={4} sm={3} xs={6} componentClass={ControlLabel} className="text-right currency-lh">
                                     金额进价:
                                 </Col>
-                                <Col xs={6}>
+                                <Col md={4} sm={6} xs={6}>
                                    <Select
                                      className="currency-ref"
                                      name="form-field-name"

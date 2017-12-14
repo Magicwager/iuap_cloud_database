@@ -26,7 +26,7 @@ class CurrencyStore {
     @observable
     currency = {code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0};
     @observable
-    tableDataTitle = '暂无数据！';
+    tableDataTitle = '暂无数据';
     @observable
     pricerounts = [{'price': "5", name: "四舍五入"}, {'price': "0", name: "全部舍位"}, {'price': "1", name: "全部进位"}]; // 单价舍入规则
     @observable
@@ -69,7 +69,7 @@ class CurrencyStore {
                         this.currencys.replace(data.data);
                         this.ListData.replace(data.data);
                     } else {
-                        this.globalStore.showError(!data.msg ? "币种列表数据查询失败" : data.msg);
+                        this.globalStore.showError(!data.msg ? "列表数据查询失败" : data.msg);
                     }
                 }).catch(function (err) {
                 this.globalStore.hideWait();

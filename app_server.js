@@ -4,9 +4,20 @@ var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.develop.config');
 
 var express = require('express');
+var proxy = require('http-proxy-middleware');
 var app = express();
 var port = 5001;
 var ip = '127.0.0.1';
+
+// 配置反向代理
+const context = [`/basedoc/bd/attr/extendFields`, `/basedoc/bd/attr/extendField`]
+const options = {
+  target: 'http://127.0.0.1:8180',
+  changeOrigin: true
+}
+const apiProxy = proxy(options)
+app.use(context, apiProxy);
+
 
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, {

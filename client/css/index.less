@@ -132,7 +132,7 @@ input::-ms-clear{display:none;}
 input::-ms-reveal{display:none;}
 .form-control {
   .f12;
-  height: 32px;
+  height: 36px;
   border-color: @inputBorderColor;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -408,6 +408,9 @@ input::-ms-reveal{display:none;}
   border-bottom-left-radius: 4px!important;
   border-color:  @btnPrimaryColor!important;
 }
+.Select.is-open.is-focused>.Select-control .Select-value .Select-value-label {
+  color: #999!important;
+}
 /*react-select 组件 end*/
 
 // 分页组件
@@ -526,7 +529,7 @@ input::-ms-reveal{display:none;}
 }
 .currency-lh {
   .pr;
-  top: 5px;
+  top: 7px;
 }
 
 /*定义自定义 start*/
@@ -542,6 +545,16 @@ input::-ms-reveal{display:none;}
     background: #F7F7F7;
     line-height: 120px;
     text-align: center;
+    img {
+      transition: transform .6s;
+      -ms-transform-origin: center;
+      transform-origin: center;
+    }
+    &:hover {
+      img {
+        transform: scale(1.1);
+      }
+    }
   }
 }
 .btn-custom {

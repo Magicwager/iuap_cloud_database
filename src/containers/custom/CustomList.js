@@ -7,6 +7,7 @@ import {observer} from 'mobx-react';
 import {Pagination} from 'react-bootstrap';
 
 import CustomListAddOrEdit from '../../components/custom/CustomListAddOrEdit';
+import Utils from '../../components/utils';
 
 import GlobalStore from '../../stores/GlobalStore';
 import CustomStore from '../../stores/custom/CustomStore';
@@ -19,21 +20,48 @@ class CustomList extends React.Component {
     this.state = {
       isHasData: this.store.tableDataTitle,   // 列表没有数据时显示内容
       activePage: 1,  // 分页当前页
+      totalPage:'',   // 总页数
     }
 
+    this.handlePagination = this.handlePagination.bind(this);
+  }
+
+  componentWillMount() {
+    const itemPerPage = this.store.pageNumber;
+
+    // 页面初始化查询
+    this.store.getCustomList({startIndex:1, itemPerPage: itemPerPage}, (data) => {
+      this.setState({
+        totalPage: data.totalPages,
+        activePage: 1
+      });
+      this.store.activePageSize = 1;
+    });
 
   }
 
   componentDidMount() {
     document.title = "自定义";
-    // 初始化查询列表
-    this.store.getCustomList();
+
+  }
+
+  // 获取下一个分页数据
+  handlePagination(nextPage, event) {
+    event.preventDefault();
+    let _this = this;
+    const itemPerPage = _this.store.pageNumber;
+    _this.store.getCustomList({startIndex:nextPage, itemPerPage: itemPerPage}, () => {
+      _this.setState({
+        activePage: nextPage
+      });
+      _this.store.activePageSize = nextPage;
+    });
   }
 
   // 新增、编辑
   handleAdd(index, flag) {
     if (flag === 'add') {
-
+      Object.assign(this.store.custom,{"name":"","type":"String","doctype":"staff","attrlength":"","precision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""})
     }
     if (flag === 'edit') {
 
@@ -48,12 +76,6 @@ class CustomList extends React.Component {
     }, () => {  });
   }
 
-  // 分页
-  handleSelect(eventKey) {
-    this.setState({
-      activePage: eventKey,
-    });
-  }
 
   render() {
     return (
@@ -87,16 +109,16 @@ class CustomList extends React.Component {
                   this.store.customs.length > 0 ?
                     this.store.customs.map((value, index) =>
                       (<tr key={'custom-'+index}>
-                        <td>{value.name}</td>
-                        <td>{value.sign}</td>
-                        <td>{value.pricedigit}</td>
-                        <td>{value.moneydigit}</td>
-                        <td>{value.pricerount}</td>
-                        <td>{value.moneyrount}</td>
-                        <td>{value.date}</td>
-                        <td>{value.description}</td>
-                        <td>{value.deleTime}</td>
-                        <td>
+                        <td style={{'width':'9%'}}>{value.name}</td>
+                        <td style={{'width':'9%'}}>{value.type}</td>
+                        <td style={{'width':'9%'}}>{value.doctype}</td>
+                        <td style={{'width':'9%'}}>{value.attrlength}</td>
+                        <td style={{'width':'9%'}}>{value.precision}</td>
+                        <td style={{'width':'9%'}}>{value.creator}</td>
+                        <td style={{'width':'9%'}}>{Utils.formatDate(value.creationtime)}</td>
+                        <td style={{'width':'9%'}}>{value.modifier}</td>
+                        <td style={{'width':'9%'}}>{Utils.formatDate(value.modifiedtime)}</td>
+                        <td style={{'width':'19%'}}>
                           <button className="btn btn-operate mr10" onClick={this.handleDelete.bind(this, index)}>删除</button>
                           <button className="btn btn-operate" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
                         </td>
@@ -112,12 +134,12 @@ class CustomList extends React.Component {
                   next
                   first={false}
                   last={false}
-                  boundaryLinks={false}
-                  ellipsis={true}
-                  items={9}
+                  boundaryLinks
+                  ellipsis
+                  items={this.state.totalPage}
                   maxButtons={5}
                   activePage={this.state.activePage}
-                  onSelect={this.handleSelect.bind(this)}
+                  onSelect={this.handlePagination}
                 />
               </div>
             </div>

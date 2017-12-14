@@ -52,6 +52,11 @@ export default class AlertDialog {
         this.type = 'danger';
         this.message = message;
         this.show = true;
+        if (this.timeout !== 0) {
+            setTimeout(() => {
+                this.show = false;
+            }, this.timeout);
+        }
     }
 
     showWarning(message) {

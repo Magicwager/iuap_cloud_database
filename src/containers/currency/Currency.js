@@ -174,14 +174,14 @@ class Currency extends React.Component {
                         <table className="table">
                             <thead>
                             <tr>
-                                <th style={{'width':'11.5%;'}}>币种</th>
-                                <th style={{'width':'11.5%;'}}>币种简称</th>
-                                <th style={{'width':'11.5%;'}}>币种符号</th>
-                                <th style={{'width':'11.5%;'}}>单价精度</th>
-                                <th style={{'width':'11.5%;'}}>金额精度</th>
-                                <th style={{'width':'11.5%;'}}>单价进价</th>
-                                <th style={{'width':'11.5%;'}}>金额进价</th>
-                                <th style={{'width':'19.5%;'}}>操作</th>
+                                <th style={{'width':'11.5%'}}>币种</th>
+                                <th style={{'width':'11.5%'}}>币种简称</th>
+                                <th style={{'width':'11.5%'}}>币种符号</th>
+                                <th style={{'width':'11.5%'}}>单价精度</th>
+                                <th style={{'width':'11.5%'}}>金额精度</th>
+                                <th style={{'width':'11.5%'}}>单价进价</th>
+                                <th style={{'width':'11.5%'}}>金额进价</th>
+                                <th style={{'width':'19.5%'}}>操作</th>
                             </tr>
                             </thead>
                             <tbody>

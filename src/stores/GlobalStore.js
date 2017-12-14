@@ -91,6 +91,9 @@ class GlobalStore {
       autoClose: false,
       alertVisible: true
     });
+    setTimeout(() => {
+      this.alertMsg = Object.assign(this.alertMsg, {message: '', alertVisible: false});
+    }, 3000);
   }
 
   // 隐藏提示信息
