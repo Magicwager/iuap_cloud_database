@@ -20,7 +20,7 @@ class CustomList extends React.Component {
     this.state = {
       isHasData: this.store.tableDataTitle,   // 列表没有数据时显示内容
       activePage: 1,  // 分页当前页
-      totalPage:'',   // 总页数
+      totalPage:'',   // 分页总页数
     }
 
     this.handlePagination = this.handlePagination.bind(this);
@@ -28,52 +28,62 @@ class CustomList extends React.Component {
 
   componentWillMount() {
     const itemPerPage = this.store.pageNumber;
+    let _this = this;
 
-    // 页面初始化查询
-    this.store.getCustomList({startIndex:1, itemPerPage: itemPerPage}, (data) => {
-      this.setState({
+    // 初始化查询
+    _this.store.getCustomList({startIndex:1, itemPerPage: itemPerPage}, (data) => {
+      // 存储当前页的值
+      _this.store.activePageSize = 1;
+
+      _this.setState({
         totalPage: data.totalPages,
         activePage: 1
       });
-      this.store.activePageSize = 1;
     });
 
   }
 
   componentDidMount() {
-    document.title = "自定义";
-
+    document.title = "自定义项";
   }
 
-  // 获取下一个分页数据
+  // 分页
   handlePagination(nextPage, event) {
     event.preventDefault();
     let _this = this;
     const itemPerPage = _this.store.pageNumber;
+
     _this.store.getCustomList({startIndex:nextPage, itemPerPage: itemPerPage}, () => {
+      _this.store.activePageSize = nextPage;
+
       _this.setState({
         activePage: nextPage
       });
-      _this.store.activePageSize = nextPage;
     });
+
   }
 
   // 新增、编辑
   handleAdd(index, flag) {
     if (flag === 'add') {
-      Object.assign(this.store.custom,{"name":"","type":"String","doctype":"staff","attrlength":"","precision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""})
+      Object.assign(this.store.custom,{"name":"","type":"String","doctype":"staff","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""})
     }
     if (flag === 'edit') {
-
+      let currentData = this.store.customs[index];
+      Object.assign(this.store.custom,{"id":currentData.id,"name":currentData.name,"type":currentData.type,"doctype":currentData.doctype,"attrlength":currentData.attrlength,"attrprecision":currentData.attrprecision,"creator":currentData.creator,"creationtime":currentData.creationtime,"modifier":currentData.modifier,"modifiedtime":currentData.modifiedtime});
     }
+    
     this.refs.customcard.show({index, store: this.store, flag});
     this.store.page = 2;
   }
 
   // 删除
-  handleDelete(index) {
-    GlobalStore.showCancelModel('确定要删除这条信息吗？', () => {
-    }, () => {  });
+  doDelete(index, event) {
+    GlobalStore.showCancelModel('确定要删除这条信息吗？', () => { },() => {
+      this.store.handleDelete(index, () => {
+        this.handlePagination(this.store.activePageSize, event);
+      });
+    });
   }
 
 
@@ -109,17 +119,17 @@ class CustomList extends React.Component {
                   this.store.customs.length > 0 ?
                     this.store.customs.map((value, index) =>
                       (<tr key={'custom-'+index}>
-                        <td style={{'width':'9%'}}>{value.name}</td>
-                        <td style={{'width':'9%'}}>{value.type}</td>
-                        <td style={{'width':'9%'}}>{value.doctype}</td>
-                        <td style={{'width':'9%'}}>{value.attrlength}</td>
-                        <td style={{'width':'9%'}}>{value.precision}</td>
-                        <td style={{'width':'9%'}}>{value.creator}</td>
-                        <td style={{'width':'9%'}}>{Utils.formatDate(value.creationtime)}</td>
-                        <td style={{'width':'9%'}}>{value.modifier}</td>
-                        <td style={{'width':'9%'}}>{Utils.formatDate(value.modifiedtime)}</td>
+                        <td style={{'width':'9%'}} title={value.name}>{value.name}</td>
+                        <td style={{'width':'9%'}} title={value.type}>{value.type}</td>
+                        <td style={{'width':'9%'}} title={value.doctype}>{value.doctype}</td>
+                        <td style={{'width':'9%'}} title={value.attrlength}>{value.attrlength}</td>
+                        <td style={{'width':'9%'}} title={value.attrprecision}>{value.attrprecision}</td>
+                        <td style={{'width':'9%'}} title={value.creator}>{value.creator}</td>
+                        <td style={{'width':'9%'}} title={Utils.formatDate(value.creationtime)}>{Utils.formatDate(value.creationtime)}</td>
+                        <td style={{'width':'9%'}} title={value.modifier}>{value.modifier}</td>
+                        <td style={{'width':'9%'}} title={Utils.formatDate(value.modifiedtime)}>{Utils.formatDate(value.modifiedtime)}</td>
                         <td style={{'width':'19%'}}>
-                          <button className="btn btn-operate mr10" onClick={this.handleDelete.bind(this, index)}>删除</button>
+                          <button className="btn btn-operate mr10" onClick={this.doDelete.bind(this, index)}>删除</button>
                           <button className="btn btn-operate" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
                         </td>
                       </tr>)
@@ -145,8 +155,8 @@ class CustomList extends React.Component {
             </div>
           </div>
         </div>
-        <div className={this.store.page == '2' ? '':'hidden'}>
-          <CustomListAddOrEdit ref='customcard' store={this.store}/>
+        <div className={this.store.page == 2 ? '':'hidden'}>
+          <CustomListAddOrEdit ref='customcard' store={this.store} handlePagination={this.handlePagination}/>
         </div>
       </div>
     )

@@ -37,7 +37,7 @@ module.exports = {
         },
             {
                 test: /\.less$/,
-                loader: 'style-loader!css-loader!postcss-loader!less-loader'   // 自动补全css3前缀
+                loader: 'style-loader!css-loader!postcss-loader!less-loader'
             },
             {
                 test: /\.(png|jpg|bmp)$/,
@@ -79,7 +79,7 @@ module.exports = {
             options: {
                 context: __dirname,
                 postcss: [
-                    autoprefixer({browsers:['last 2 versions']}) // 自动补全css3前缀  浏览器版本
+                    autoprefixer({browsers:['last 2 versions']})
                 ]
             }
         })

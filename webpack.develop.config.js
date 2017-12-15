@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
-const context = [`/basedoc/bd/attr/extendFields`, `/basedoc/bd/attr/extendField`]
+
 module.exports = {
   devtool: 'source-map',
 
@@ -17,36 +17,19 @@ module.exports = {
   //输入目标
   output: {
     path: path.join(__dirname, 'client/js'),
-    filename: '[name].js', //Template based on keys in entry above
+    filename: '[name].js', 
     publicPath: '/client/js',
     chunkFilename: '[name].js'
   },
 
   //common.js 是公共模块
   plugins: [
-    // new webpack.optimize.CommonsChunkPlugin('common.js'),
     new webpack.optimize.CommonsChunkPlugin({
       name: "commons",
-      // (the commons chunk name)
-
       filename: "commons.js",
-      // (the filename of the commons chunk)
-
-      // minChunks: 3,
-      // (Modules must be shared between 3 entries)
-
-      // chunks: ["pageA", "pageB"],
-      // (Only use these entries)
     }),
     new webpack.NoEmitOnErrorsPlugin(),
-    // new webpack.optimize.OccurenceOrderPlugin(),
-    // new webpack.optimize.UglifyJsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // new HappyPack({
-    //     id: 'jsx',
-    //     threads: 4,
-    //     loaders: ['babel?cacheDirectory=true']
-    // }),
 
     new webpack.DefinePlugin({
       'process.env': {
@@ -58,21 +41,13 @@ module.exports = {
       options: {
         context: __dirname,
         postcss: [
-          autoprefixer({browsers:['last 2 versions']}) // 自动补全css3前缀  浏览器版本
+          autoprefixer({browsers:['last 2 versions']})                   // 自动补全css3前缀  浏览器版本
         ]
       }
     })
-    // // Transfer Files
-    // new TransferWebpackPlugin([
-    //     {from: 'www'},
-    // ], path.resolve(__dirname, 'src')),
-    // new ManifestPlugin({
-    //     fileName:  'manifest.json'
-    // })
   ],
 
   resolve: {
-    // root: [path.resolve('./src')],
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     extensions: ['.js', '.jsx']
   },
@@ -93,7 +68,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!postcss-loader!less-loader'    // 自动补全css3前缀
+        loader: 'style-loader!css-loader!postcss-loader!less-loader' 
       },
       {
         test: /\.(png|jpg|bmp)$/,
@@ -106,14 +81,5 @@ module.exports = {
     colors: true, //终端中输出结果为彩色
     historyApiFallback: true, //不跳转
     inline: false,//实时刷新
-    host:'127.0.0.1',
-    port: '5001', //设置端口号
-    proxy: [
-      {
-        context: context,
-        target: 'http://127.0.0.1:5001',
-        secure: false
-      }
-    ]
   }
 };

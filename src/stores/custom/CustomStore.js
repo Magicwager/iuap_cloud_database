@@ -14,7 +14,7 @@ class CustomStore {
   @observable
   customs = [];
   @observable
-  custom = {"name":"","type":"","doctype":"","attrlength":"","precision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""};
+  custom = {"name":"","type":"","doctype":"","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""};
   @observable
   tableDataTitle = '暂无数据';
   @observable
@@ -24,7 +24,7 @@ class CustomStore {
   @observable
   datatypeVale = {'code':'0','name':'日期'};  // 数据类型的默认value
   @observable
-  pageNumber = 20; // 每一页显示的数据条数
+  pageNumber = 20;    // 每一页显示的数据条数
   @observable
   activePageSize = 1; // 记录当前显示的页码数
 
@@ -34,8 +34,9 @@ class CustomStore {
   @action
   getCustomList(data, callback) {
     let _this = this;
-    let param = {"orders":[{"direction":"ASC","property":"code"}],"conditions":[{"conditionList":[],"datatype":"string","extendSql":{},"field":"doctype","logic":false,"logicsymbol":"and","operator":"=","value":"staff"}],"pageIndex":data.startIndex,"pageSize":data.itemPerPage};
     _this.globalStore.showWait();
+
+    let param = {"orders":[{"direction":"ASC","property":"code"}],"conditions":[{"conditionList":[],"datatype":"string","extendSql":{},"field":"doctype","logic":false,"logicsymbol":"and","operator":"=","value":"staff"}],"pageIndex":data.startIndex,"pageSize":data.itemPerPage};
 
     let opt = {
       method: 'post',
@@ -43,7 +44,7 @@ class CustomStore {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         //'Cache-Control': 'no-cache',
-        'mode': "no-cors",
+        'mode': "no-cors"
       },
       body: JSON.stringify(param),
       //credentials: "include"
@@ -51,8 +52,7 @@ class CustomStore {
 
     return (
       fetch('/basedoc/bd/attr/extendFields'+'?tenantId=owzp1n95', opt)
-      //fetch('http://127.0.0.1/WebCustom/getBillType', opt)
-      //fetch(timestamp(Config.currency.query), opt)
+      //fetch(timestamp(Config.custom.query), opt)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -61,7 +61,8 @@ class CustomStore {
           if (data.status) {
             _this.customs.replace(data.data.content);
             callback(data.data);
-          } else {
+          } 
+          else {
             _this.globalStore.showError(!data.msg ? "列表数据查询失败" : data.msg);
           }
         }).catch(function (err) {
@@ -77,20 +78,23 @@ class CustomStore {
     let _this = this;
     this.globalStore.showWait();
 
-    let option = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Cache-Control': 'no-cache'
-      },
-      body: JSON.stringify(this.custom),
-      //credentials: "include"
-    }
-
     if (flag === 'add') {
+      let option = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache',
+          'userId':'2c179f11b41643fcb61508d86b798910',  // 新增接口使用
+          'tenantId':'owzp1n95',                        // 新增接口使用
+          'sysId':'all',                                // 新增接口使用
+        },
+        body: JSON.stringify(this.custom),
+        //credentials: "include"
+      }
+
       return fetch('/basedoc/bd/attr/extendField', option)
-      //return fetch(Config.currency.add, option)
+      //return fetch(Config.custom.add, option)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -99,8 +103,19 @@ class CustomStore {
     }
 
     if (flag === 'edit') {
-      return fetch('/extendField', option)
-      //return fetch(Config.currency.edit, option)
+      let option = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache'
+        },
+        body: JSON.stringify(this.custom),
+        //credentials: "include"
+      }
+
+      return fetch('/basedoc/bd/attr/extendField/'+`${this.custom.id}`+'?tenantId=owzp1n95', option)
+      //return fetch(Config.custom.edit, option)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -110,44 +125,43 @@ class CustomStore {
   }
 
   // 删除接口
-  // @action
-  // handleDelete(index, callback) {
-  //   let _this = this;
-  //
-  //   let params = {
-  //     id: _this.customs[index].id
-  //   }
-  //
-  //   let option = {
-  //     method: 'post',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json',
-  //       'Cache-Control': 'no-cache'
-  //     },
-  //     body: JSON.stringify(params),
-  //     credentials: "include"
-  //   }
-  //
-  //   _this.globalStore.showWait();
-  //
-  //   //return fetch('http://127.0.0.1/webCurrency/getDelType', option)
-  //   return fetch(Config.currency.delete, option)
-  //     .then(response => {
-  //       _this.globalStore.hideWait();
-  //       return response.ok ? response.json() : {}
-  //     })
-  //     .then(data => {
-  //       if (data.status) {
-  //         callback();
-  //         GlobalStore.showInfo("删除成功");
-  //       } else {
-  //         GlobalStore.showError(data.msg);
-  //       }
-  //     })
-  // }
+  @action
+  handleDelete(index, callback) {
+    let _this = this;
 
+    let params = {
+      id: _this.customs[index].id
+    }
 
+    let option = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cache-Control': 'no-cache',
+        'tenantId':'owzp1n95',                        // 删除接口使用
+      },
+      body: JSON.stringify(params),
+      //credentials: "include"
+    }
+
+    _this.globalStore.showWait();
+
+    return fetch('/basedoc/bd/attr/extendField/'+`${_this.customs[index].id}`, option)
+    //return fetch(Config.custom.delete, option)
+      .then(response => {
+        _this.globalStore.hideWait();
+        return response.ok ? response.json() : {}
+      })
+      .then(data => {
+        if (data.status) {
+          GlobalStore.showInfo("删除成功");
+          callback();
+        } else {
+          GlobalStore.showError(data.msg);
+        }
+      })
+  }
 
 }
 

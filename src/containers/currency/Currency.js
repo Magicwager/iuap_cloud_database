@@ -189,13 +189,13 @@ class Currency extends React.Component {
                                 this.store.currencys.length > 0 ?
                                     this.store.currencys.map((value, index) =>
                                         (<tr key={index}>
-                                            <td>{value.code}</td>
-                                            <td>{value.name}</td>
-                                            <td>{value.sign}</td>
-                                            <td>{value.pricedigit}</td>
-                                            <td>{value.moneydigit}</td>
-                                            <td>{this.handleRule(value.pricerount)}</td>
-                                            <td>{this.handleRule(value.moneyrount)}</td>
+                                            <td title={value.code}>{value.code}</td>
+                                            <td title={value.name}>{value.name}</td>
+                                            <td title={value.sign}>{value.sign}</td>
+                                            <td title={value.pricedigit}>{value.pricedigit}</td>
+                                            <td title={value.moneydigit}>{value.moneydigit}</td>
+                                            <td title={this.handleRule(value.pricerount)}>{this.handleRule(value.pricerount)}</td>
+                                            <td title={this.handleRule(value.moneyrount)}>{this.handleRule(value.moneyrount)}</td>
                                             <td>
                                                 <button className="btn btn-operate mr10" onClick={this.handleDelete.bind(this, index)}>删除</button>
                                                 <button className="btn btn-operate mr10" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>

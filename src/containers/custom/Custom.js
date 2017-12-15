@@ -30,7 +30,7 @@ class Custom extends React.Component {
   }
 
   componentDidMount() {
-    document.title = "自定义";
+    document.title = "自定义项";
   }
 
   render() {

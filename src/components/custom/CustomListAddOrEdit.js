@@ -28,15 +28,15 @@ class CustomListAddOrEdit extends Component {
       },
       startDate: moment(),  // 创建时间
       endDate: moment(),    // 最后修改时间
+      makeTime:moment(),
       clearable: false,
       searchable: false,
       selectOneValue: this.store.datatypeVale,
-      makeTime:moment(),
-      startDate:moment(),
     }
 
     //this.handleChange = this.handleChange.bind(this);
-    this.close = this.close.bind(this);
+    this.close = this.close.bind(this)
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   // 展示
@@ -95,17 +95,24 @@ class CustomListAddOrEdit extends Component {
     }
   }
 
+  // 输入框变化事件
   handleChange(field, e) {
     let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
     this.store.custom[field] = val;
   }
 
-  handleSubmit() {
+  // 保存
+  onSubmit(event) {
+    event.preventDefault();
     this.store.handleSubmit(this.state.flag)
       .then(data =>{
         if (data.status) {
           GlobalStore.showInfo("保存成功");
-          this.store.getCustomList({startIndex:this.store.activePageSize, itemPerPage: this.store.pageNumber})
+          if(this.state.page == 'add') {
+            this.props.handlePagination(1, event);
+          } else {
+            this.props.handlePagination(this.store.activePageSize, event);
+          }
           this.close();
         } else {
           GlobalStore.showError("保存失败");
@@ -122,7 +129,7 @@ class CustomListAddOrEdit extends Component {
         <div className="head">
           <div className="head-r fr">
             <button className="btn btn-default mr15" onClick={this.close}>取消</button>
-            <button className="btn btn-primary" onClick={this.handleSubmit.bind(this)}>保存</button>
+            <button className="btn btn-primary" onClick={this.onSubmit}>保存</button>
           </div>
         </div>
         <div className="currency-content container-fluid" style={{'paddingBottom': '160px'}}>
@@ -131,7 +138,7 @@ class CustomListAddOrEdit extends Component {
           </div>
           <Form inline className="currency-form">
             <Col md={6} sm={12}>
-              <FormGroup className="custom-formgroup" controlId="formInlineName">
+              <FormGroup className="custom-formgroup" controlId="name">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} >
                   名称：
                 </Col>
@@ -141,7 +148,7 @@ class CustomListAddOrEdit extends Component {
               </FormGroup>
             </Col>
             <Col md={6} sm={12}>
-              <FormGroup className="custom-formgroup" controlId="formInlineEmail">
+              <FormGroup className="custom-formgroup" controlId="attrlength">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} sm={4} >
                   输入长度：
                 </Col>
@@ -154,7 +161,7 @@ class CustomListAddOrEdit extends Component {
 
           <Form inline className="currency-form">
             <Col md={6} sm={12}>
-              <FormGroup className="custom-formgroup" controlId="formInlineName">
+              <FormGroup className="custom-formgroup" controlId="type">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} >
                   数据类型：
                 </Col>
@@ -174,12 +181,12 @@ class CustomListAddOrEdit extends Component {
               </FormGroup>
             </Col>
             <Col md={6} sm={12}>
-              <FormGroup className="custom-formgroup" controlId="formInlineEmail">
+              <FormGroup className="custom-formgroup" controlId="attrprecision">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} sm={4} >
                   精度：
                 </Col>
                 <Col md={6}>
-                  <FormControl className="currency-ref" type="text" placeholder="精度" value={custom.precision} onChange={this.handleChange.bind(this, 'precision')}/>
+                  <FormControl className="currency-ref" type="text" placeholder="精度" value={custom.attrprecision} onChange={this.handleChange.bind(this, 'attrprecision')}/>
                 </Col>
               </FormGroup>
             </Col>
@@ -187,7 +194,7 @@ class CustomListAddOrEdit extends Component {
 
           <Form inline className="currency-form" style={{'borderBottom': '1px dashed #E4E4E4','paddingBottom': '60px'}}>
             <Col md={6} sm={12}>
-              <FormGroup className="custom-formgroup" controlId="formInlineName">
+              <FormGroup className="custom-formgroup" controlId="doctype">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} >
                   引用档案：
                 </Col>
@@ -212,7 +219,7 @@ class CustomListAddOrEdit extends Component {
 
           <Form inline className="currency-form">
             <Col md={6} sm={12}>
-              <FormGroup className="custom-formgroup" controlId="formInlineName">
+              <FormGroup className="custom-formgroup" controlId="creator">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4}>
                   创建人：
                 </Col>
@@ -222,7 +229,7 @@ class CustomListAddOrEdit extends Component {
               </FormGroup>
             </Col>
             <Col md={6} sm={12}>
-              <FormGroup className="custom-formgroup" controlId="formInlineEmail">
+              <FormGroup className="custom-formgroup" controlId="modifier">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} sm={4} >
                   最后修改人：
                 </Col>

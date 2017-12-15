@@ -9,7 +9,7 @@ var app = express();
 var port = 5001;
 var ip = '127.0.0.1';
 
-// 配置反向代理
+/* 配置反向代理 start */
 const context = [`/basedoc/bd/attr/extendFields`, `/basedoc/bd/attr/extendField`]
 const options = {
   target: 'http://127.0.0.1:8180',
@@ -17,7 +17,7 @@ const options = {
 }
 const apiProxy = proxy(options)
 app.use(context, apiProxy);
-
+/* 配置反向代理 end */
 
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, {
@@ -29,7 +29,6 @@ app.use(webpackDevMiddleware(compiler, {
     colors: true
   }
 }));
-// app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath, lazy: false, watchOptions: {aggregateTimeout: 300,poll: true}}))
 app.use(webpackHotMiddleware(compiler));
 app.use('/', express.static(__dirname + '/client/'));
 
