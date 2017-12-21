@@ -11,6 +11,7 @@ import Utils from '../../components/utils';
 
 import GlobalStore from '../../stores/GlobalStore';
 import CustomStore from '../../stores/custom/CustomStore';
+import moment from 'moment';
 
 @observer
 class CustomList extends React.Component {
@@ -70,7 +71,7 @@ class CustomList extends React.Component {
     }
     if (flag === 'edit') {
       let currentData = this.store.customs[index];
-      Object.assign(this.store.custom,{"id":currentData.id,"name":currentData.name,"type":currentData.type,"doctype":currentData.doctype,"attrlength":currentData.attrlength,"attrprecision":currentData.attrprecision,"creator":currentData.creator,"creationtime":currentData.creationtime,"modifier":currentData.modifier,"modifiedtime":currentData.modifiedtime});
+      Object.assign(this.store.custom,{"id":currentData.id,"name":currentData.name,"type":currentData.type,"doctype":currentData.doctype,"attrlength":currentData.attrlength,"attrprecision":currentData.attrprecision,"creator":currentData.creator,"creationtime":moment(currentData.creationtime).format("YYYY-MM-DD"),"modifier":currentData.modifier,"modifiedtime":moment(currentData.modifiedtime).format("YYYY-MM-DD")});
     }
     
     this.refs.customcard.show({index, store: this.store, flag});

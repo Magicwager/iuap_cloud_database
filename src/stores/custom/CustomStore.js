@@ -4,6 +4,8 @@
  */
 import fetch from 'isomorphic-fetch';
 import {observable, computed, action, toJS} from 'mobx';
+import moment from 'moment';
+
 
 import Config from '../../config';
 import GlobalStore from '../GlobalStore';
@@ -14,19 +16,91 @@ class CustomStore {
   @observable
   customs = [];
   @observable
-  custom = {"name":"","type":"","doctype":"","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""};
+  custom = {"name":"","type":"","doctype":"","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":moment().format("YYYY-MM-DD HH:mm:ss")};
   @observable
   tableDataTitle = '暂无数据';
   @observable
   page = 1;     // 显示当前页
   @observable
-  dataTypes = [{'code':'0','name':'日期'},{'code':'1','name':'布尔'},{'code':'2','name':'数字'},{'code':'3','name':'字符'},{'code':'4','name':'自定义档案'},{'code':'5','name':'基本档案'}]; // 数据类型
+  dataTypes = [{'code':'0','name':'字符串'},{'code':'1','name':'整数'},{'code':'2','name':'数值'},{'code':'3','name':'布尔类型'},{'code':'4','name':'日期'},{'code':'5','name':'日期时间'},{'code':'6','name':'自定义档案'},{'code':'7','name':'基本档案'}]; // 数据类型
   @observable
-  datatypeVale = {'code':'0','name':'日期'};  // 数据类型的默认value
+  datatypeVale = {'code':'0','name':'字符串'};  // 数据类型的默认value
   @observable
   pageNumber = 20;    // 每一页显示的数据条数
   @observable
   activePageSize = 1; // 记录当前显示的页码数
+  @observable
+  docustoms = [];     // 自定义项目数据
+  @observable
+  precisionNULL = false; // 记录数据类型联动时精度为零的记录
+  @observable
+  lengthNull = false;   // 记录输入长度的不可编辑状态
+
+  // 查询所有的自定义项目 接口
+  @action
+  getDocs(data, callback) {
+    let _this = this;
+    _this.globalStore.showWait();
+
+    //let param = {};
+
+    let opt = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        //'Cache-Control': 'no-cache',
+        'mode': "no-cors",
+        'tenantId':'owzp1n95',                        // 查询接口使用
+        'sysId':'all',                                // 查询接口使用
+      },
+      //body: JSON.stringify(param),
+      //credentials: "include"
+    }
+
+    return (
+      fetch('/basedoc/bd/attr/doccustoms', opt)
+      //fetch(timestamp(Config.custom.query), opt)
+        .then(response => {
+          _this.globalStore.hideWait();
+          return response.ok ? response.json() : {}
+        })
+        .then(data => {
+          if (data.status) {
+
+            data.data.map((item, index) => {
+              if(item.doctype == 'adminorg') {
+                Object.assign(item, {'src': './images/xingzhengzuzhi.png'});
+              }
+              if(item.doctype == 'customer') {
+                Object.assign(item, {'src': './images/kehu.png',});
+              }
+              if(item.doctype == 'materials') {
+                Object.assign(item, {'src': './images/wuliao.png', });
+              }
+              if(item.doctype == 'project') {
+                Object.assign(item, {'src': './images/xiangmu.png'});
+              }
+              if(item.doctype == 'staff') {
+                Object.assign(item, {'src': './images/yuangong.png'});
+              }
+              if(item.doctype == 'supplier') {
+                Object.assign(item, {'src': './images/gongyingsahng.png'});
+              }
+            });
+
+            _this.docustoms.replace(data.data);
+            //callback(data.data);
+          }
+          else {
+            _this.globalStore.showError(!data.msg ? "数据查询失败" : data.msg);
+          }
+        }).catch(function (err) {
+        _this.globalStore.hideWait();
+        _this.globalStore.showError('数据请求失败,错误信息:' + err.toString());
+      })
+    )
+  }
 
 
 

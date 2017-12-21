@@ -757,6 +757,21 @@ input::-ms-reveal {
   color: #5E6670;
   border-color: #D1D1D1;
 }
+.btn.btn-primary-red {
+  border-color: #E14C46;
+  background-color: #E14C46;
+  box-sizing: border-box;
+  color: #fff;
+  padding: 4px 22px;
+}
+.btn.btn-primary-red:hover {
+  border-color: #E14C46;
+  background-color: #E14C46;
+}
+.btn.btn-primary-red:focus {
+  border-color: #E14C46;
+  background-color: #E14C46;
+}
 .currency-grid {
   position: relative;
 }
@@ -1152,4 +1167,104 @@ input::-ms-reveal {
 .custom-formgroup {
   width: 100%;
   margin-bottom: 30px;
+}
+/*分级管控*/
+.fa {
+  font-family: "cl" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.fa-chevron-up:before {
+  content: "\e637";
+}
+.fa-chevron-down:before {
+  content: "\e601";
+}
+.manage-peizhi {
+  position: absolute;
+  top: 1px;
+  left: 5px;
+  display: inline-block;
+  color: #00CB7C;
+  font-size: 23px;
+}
+.second-menu {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  font-size: 10px;
+  color: #007ACE;
+  letter-spacing: 0;
+  opacity: 0;
+}
+.orgchart .node:hover .second-menu {
+  opacity: 1;
+}
+.manage-title {
+  font-size: 14px;
+  font-size: 1.4rem;
+  color: #333333;
+}
+/*tinper-bee checkbox组件*/
+.u-checkbox .u-checkbox-label:after,
+.u-checkbox .u-checkbox-label:before {
+  top: -8px;
+  width: 16px;
+  height: 16px;
+}
+.u-radio .u-radio-label:after,
+.u-radio .u-radio-label:before {
+  bottom: 3px;
+  width: 16px;
+  height: 16px;
+}
+.manage-checkbox {
+  font-size: 12px;
+  color: #474D54;
+  letter-spacing: 0;
+}
+.manage-checkbox label {
+  font-weight: normal;
+}
+.manage-content {
+  width: 100%;
+}
+.manage-content table {
+  margin-bottom: 0;
+  background-color: #fff;
+  border: 1px solid #E6E6E6;
+  border-collapse: inherit;
+}
+.manage-content table thead tr th {
+  white-space: nowrap;
+  padding: 0 12px;
+  padding-left: 35px;
+  height: 45px;
+  line-height: 45px;
+  font-size: 14px;
+  font-size: 1.4rem;
+  border-bottom: 0;
+  color: #474D54;
+  letter-spacing: 0;
+}
+.manage-content table tbody tr td {
+  border: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  padding: 0 12px;
+  height: 45px;
+  line-height: 45px;
+  font-size: 12px;
+  font-size: 1.2rem;
+  color: #333333;
+  border-top: 1px solid #E6E6E6;
+}
+.manage-content table tbody tr td:first-child {
+  padding-left: 50px;
 }

@@ -210,7 +210,21 @@ input::-ms-reveal{display:none;}
     border-color: #D1D1D1;
   }
 }
-
+.btn.btn-primary-red {   // 首要按钮  红色
+  border-color: #E14C46;
+  background-color: #E14C46;
+  box-sizing: border-box;
+  color: #fff;
+  padding: 4px 22px;
+  &:hover {
+    border-color: #E14C46;
+    background-color: #E14C46;
+  }
+  &:focus {
+    border-color: #E14C46;
+    background-color: #E14C46;
+  }
+}
 
 // 表格
 .currency-grid {
@@ -294,6 +308,9 @@ input::-ms-reveal{display:none;}
     .ellipsis;
     display: inline-block;
     width: 73%;
+    //white-space: pre-wrap;
+    //word-break: break-all;
+    //word-wrap: break-word;
   }
 }
 .alert-dismissable .close, .alert-dismissible .close {
@@ -621,8 +638,114 @@ input::-ms-reveal{display:none;}
 }
 
 
+/*分级管控*/
+.fa {
+  font-family:"cl" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.fa-chevron-up:before {
+  content: "\e637";
+}
+.fa-chevron-down:before {
+  content: "\e601";
+}
 
+.manage-peizhi {
+  .pa;
+  top: 1px;
+  left: 5px;
+  display: inline-block;
+  color: #00CB7C;
+  font-size: 23px;
+}
+.second-menu {
+  .pa;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  .pointer;
+  font-size: 10px;
+  color: #007ACE;
+  letter-spacing: 0;
+  opacity: 0;
+}
 
+.orgchart .node:hover {
+  .second-menu {
+    opacity: 1;
+  }
+}
+
+.manage-title {
+  .f14;
+  color: @fontColorLevel1;
+}
+
+/*tinper-bee checkbox组件*/
+.u-checkbox .u-checkbox-label:after, .u-checkbox .u-checkbox-label:before {
+  top: -8px;
+  width: 16px;
+  height: 16px;
+}
+.u-radio .u-radio-label:after, .u-radio .u-radio-label:before {
+  bottom: 3px;
+  width: 16px;
+  height: 16px;
+}
+.manage-checkbox {
+  font-size: 12px;
+  color: #474D54;
+  letter-spacing: 0;
+  label {
+    .fn;
+  }
+}
+// 分级管控配置界面
+.manage-content {
+  .w;
+  table {
+    .mb0;
+    .fff;
+    border: 1px solid @borderColor;
+    border-collapse: inherit;
+    thead {
+      tr {
+        th {
+          .ws;
+          padding: 0 12px;
+          padding-left: 35px;
+          height: 45px;
+          line-height: 45px;
+          .f14;
+          border-bottom: 0;
+          color: #474D54;
+          letter-spacing: 0;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          .b0;
+          .ellipsis;
+          max-width: 150px;
+          padding: 0 12px;
+          height: 45px;
+          line-height: 45px;
+          .f12;
+          color: @fontColorLevel1;
+          border-top: 1px solid @borderColor;
+          &:first-child {
+            padding-left: 50px;
+          }
+        }
+      }
+    }
+  }
+}
 
 
 

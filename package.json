@@ -57,7 +57,6 @@
     "ssc-grid": "^0.66.1",
     "ssc-refer": "^0.1.27",
     "style-loader": "^0.16.1",
-    "tinper-bee": "^1.1.1",
     "url-loader": "^0.5.8",
     "whatwg-fetch": "^2.0.3"
   },
@@ -100,6 +99,7 @@
     "react-dock": "^0.2.4",
     "react-hot-loader": "^1.3.1",
     "react-transform-hmr": "^1.0.4",
+    "tinper-bee": "^1.2.3",
     "webpack": "^2.5.0",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-dev-server": "^2.4.4",

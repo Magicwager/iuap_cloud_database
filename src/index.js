@@ -7,6 +7,7 @@ import App from './containers/App';
 import Currency from './containers/currency/Currency';
 import Custom from './containers/custom/Custom';
 import CustomList from './containers/custom/CustomList';
+import Manage from './containers/manage/Manage';
 
 
 ReactDom.render(
@@ -15,6 +16,7 @@ ReactDom.render(
         <Route path="/currency" component={Currency} />
         <Route path="/custom" component={Custom} />
         <Route path="/customlist/:id" component={ CustomList} />
+        <Route path="/manage" component={ Manage } />
       </Route>
     </Router>,
     document.getElementById('root')

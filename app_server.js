@@ -10,7 +10,7 @@ var port = 5001;
 var ip = '127.0.0.1';
 
 /* 配置反向代理 start */
-const context = [`/basedoc/bd/attr/extendFields`, `/basedoc/bd/attr/extendField`]
+const context = [`/basedoc/bd/attr/extendFields`, `/basedoc/bd/attr/extendField`,`/basedoc/bd/attr/doccustoms`]
 const options = {
   target: 'http://127.0.0.1:8180',
   changeOrigin: true

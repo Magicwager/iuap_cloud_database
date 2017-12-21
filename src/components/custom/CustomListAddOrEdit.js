@@ -28,10 +28,9 @@ class CustomListAddOrEdit extends Component {
       },
       startDate: moment(),  // 创建时间
       endDate: moment(),    // 最后修改时间
-      makeTime:moment(),
       clearable: false,
       searchable: false,
-      selectOneValue: this.store.datatypeVale,
+      selectOneValue: this.store.datatypeVale,   // 默认选择的数据类型
     }
 
     //this.handleChange = this.handleChange.bind(this);
@@ -65,18 +64,8 @@ class CustomListAddOrEdit extends Component {
       });
       this.store.custom.modifiedtime = date;
     }
-
-  }
-
-  setChangeData = (field, value) => {
-    if (field == "maketime") {
-      let formattedValue = moment(value).format("YYYY-MM-DD HH:mm:ss");
-      this.setState({makeTime:value});
-      this.voucherEditStore.changeSaveData(field,formattedValue)
-    } else{
-      value = value.target.value;
-      this.voucherEditStore.changeSaveData(field,value)
-    }
+    let formattedValue = moment(date).format("YYYY-MM-DD HH:mm:ss");
+    console.log(formattedValue, date);
   }
 
   // 取消
@@ -84,21 +73,91 @@ class CustomListAddOrEdit extends Component {
     this.store.page = 1;
   }
 
-  // 单价、金额枚举
+  // 数据类型、引用档案 枚举
   updateChangeValue(field, value) {
-    //this.store.currency[field] = Number(value.price);
-    if(field=='pricerount') {
-      this.setState({selectOneValue:value})
+    this.store.custom[field] = value.code;
+    if(field=='type') {
+      this.setState({selectOneValue:value});
+      this.onChangeValue(value.name);
     }
     if(field=='moneyrount') {
       this.setState({selectTwoValue:value})
     }
   }
 
-  // 输入框变化事件
+  // 选择切换数据类型
+  onChangeValue(value) {
+    switch(value) {
+      case '字符串':
+        Object.assign(this.store.custom, {'attrlength':'256', 'attrprecision':'0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = false;
+        break;
+      case '整数':
+        Object.assign(this.store.custom, {'attrlength':'8', 'attrprecision':'0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = false;
+        break;
+      case '数值':
+        Object.assign(this.store.custom, {'attrlength':'8','attrprecision':'2'});
+        this.store.precisionNULL = false;
+        this.store.lengthNull = false;
+        break;
+      case '布尔类型':
+        Object.assign(this.store.custom, {'attrlength':'1','attrprecision':'0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      case '日期':
+        Object.assign(this.store.custom, {'attrlength':'0','attrprecision':'0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      case '日期时间':
+        Object.assign(this.store.custom, {'attrlength':'0','attrprecision':'0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      case '自定义档案':
+        Object.assign(this.store.custom, {'attrlength':'36','attrprecision':'0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      case '基本档案':
+        Object.assign(this.store.custom, {'attrlength':'36','attrprecision':'0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      default:
+        break;
+    }
+  }
+
+  // 输入长度、精度 change事件
   handleChange(field, e) {
     let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
+    this.refs[field].innerHTML = '';
+    var _val = "";
+    if (isNaN(val)) {
+      val = _val;
+      this.refs[field].innerHTML = '只能输入数字!';
+    } else {
+      val = val.replace(/\s+/g, '');
+      var reg = new RegExp(/[0-9]/g)
+      if (!reg.test(val)) {
+        _val = val;
+      }
+    }
     this.store.custom[field] = val;
+  }
+
+  // 输入长度、精度 blur事件
+  handleBlur(field, e) {
+    e.preventDefault();
+    let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
+    if(val == '') {
+      this.refs[field].innerHTML = '';
+    }
   }
 
   // 保存
@@ -143,7 +202,7 @@ class CustomListAddOrEdit extends Component {
                   名称：
                 </Col>
                 <Col md={6}>
-                  <FormControl className="currency-ref" type="text" placeholder="名称" value={custom.name} onChange={this.handleChange.bind(this, 'name')}/>
+                  <FormControl autoComplete='off' className="currency-ref" type="text" placeholder="名称" value={custom.name} onChange={this.handleChange.bind(this, 'name')}/>
                 </Col>
               </FormGroup>
             </Col>
@@ -153,7 +212,18 @@ class CustomListAddOrEdit extends Component {
                   输入长度：
                 </Col>
                 <Col md={6}>
-                  <FormControl className="currency-ref" type="text" placeholder="输入长度" value={custom.attrlength} onChange={this.handleChange.bind(this, 'attrlength')}/>
+                  {this.store.lengthNull == true ?
+                    <div className="pr" style={{'width':'260px'}}>
+                      <FormControl readOnly="readOnly" autoComplete='off' className="currency-ref" type="text" placeholder="输入长度" value={custom.attrlength} onChange={this.handleChange.bind(this, 'attrlength')} onBlur={this.handleBlur.bind(this, 'attrlength')}/>
+                      <div ref="attrlength" style={{'top':'38px','left':'0'}} className="currency-error"></div>
+                    </div>
+                    :
+                    <div className="pr" style={{'width':'260px'}}>
+                      <FormControl autoComplete='off' className="currency-ref" type="text" placeholder="输入长度" value={custom.attrlength} onChange={this.handleChange.bind(this, 'attrlength')} onBlur={this.handleBlur.bind(this, 'attrlength')}/>
+                      <div ref="attrlength" style={{'top':'38px','left':'0'}} className="currency-error"></div>
+                    </div>
+                  }
+
                 </Col>
               </FormGroup>
             </Col>
@@ -170,7 +240,7 @@ class CustomListAddOrEdit extends Component {
                     className="currency-ref"
                     name="form-field-name"
                     value={this.state.selectOneValue}
-                    onChange={this.updateChangeValue.bind(this, 'pricerount')}
+                    onChange={this.updateChangeValue.bind(this, 'type')}
                     options={this.store.dataTypes}
                     clearable={this.state.clearable}
                     searchable={this.state.searchable}
@@ -181,14 +251,19 @@ class CustomListAddOrEdit extends Component {
               </FormGroup>
             </Col>
             <Col md={6} sm={12}>
+              {this.store.precisionNULL==true ? '' :
               <FormGroup className="custom-formgroup" controlId="attrprecision">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} sm={4} >
                   精度：
                 </Col>
                 <Col md={6}>
-                  <FormControl className="currency-ref" type="text" placeholder="精度" value={custom.attrprecision} onChange={this.handleChange.bind(this, 'attrprecision')}/>
+                  <div className="pr" style={{'width':'260px'}}>
+                    <FormControl autoComplete='off' className="currency-ref" type="text" placeholder="精度" value={custom.attrprecision} onChange={this.handleChange.bind(this, 'attrprecision')} onBlur={this.handleBlur.bind(this, 'attrprecision')}/>
+                    <div ref="attrprecision" style={{'top':'38px','left':'0'}} className="currency-error"></div>
+                  </div>
                 </Col>
               </FormGroup>
+              }
             </Col>
           </Form>
 
@@ -224,8 +299,13 @@ class CustomListAddOrEdit extends Component {
                   创建人：
                 </Col>
                 <Col md={6}>
-                  <FormControl className="currency-ref" type="text" placeholder="创建人" value={custom.creator} onChange={this.handleChange.bind(this, 'creator')}/>
-                </Col>
+                  {this.state.flag == 'edit' ?
+                    <FormControl readOnly="readOnly" className="currency-ref" type="text" placeholder="创建人" value={custom.creator}
+                                 onChange={this.handleChange.bind(this, 'creator')}/>
+                    :<FormControl autoComplete='off' className="currency-ref" type="text" placeholder="创建人" value={custom.creator}
+                                   onChange={this.handleChange.bind(this, 'creator')}/>
+                  }
+                  </Col>
               </FormGroup>
             </Col>
             <Col md={6} sm={12}>
@@ -234,7 +314,10 @@ class CustomListAddOrEdit extends Component {
                   最后修改人：
                 </Col>
                 <Col md={6}>
-                  <FormControl className="currency-ref" type="text" placeholder="最后修改人" value={custom.modifier}  onChange={this.handleChange.bind(this, 'modifier')}/>
+                  {this.state.flag == 'edit' ?
+                    <FormControl readOnly="readOnly" className="currency-ref" type="text" placeholder="最后修改人" value={custom.modifier}  onChange={this.handleChange.bind(this, 'modifier')}/>
+                    :<FormControl autoComplete='off' className="currency-ref" type="text" placeholder="最后修改人" value={custom.modifier}  onChange={this.handleChange.bind(this, 'modifier')}/>
+                  }
                 </Col>
               </FormGroup>
             </Col>
@@ -247,22 +330,21 @@ class CustomListAddOrEdit extends Component {
                   创建时间：
                 </Col>
                 <Col md={6}>
-                  <div className="v-table-inputdate">
-                    <DatePicker
-                      minDate={this.state.startDate}
-                      selected={this.state.makeTime}
-                      selected={this.state.startDate}
-                      onChange={this.handleChangeDate.bind(this, 'startData')}
-                      locale="zh-CN"
-                      dateFormat="YYYY-MM-DD"
-                      peekNextMonth
-                      showYearDropdown
-                      showMonthDropdown
-                      todayButton={"今天"}
-                      className="form-control currency-ref"
-                      readOnly="readOnly"
-                    />
-                  </div>
+                  {this.state.flag == 'edit' ?
+                    <FormControl readOnly="readOnly" className="currency-ref" type="text"  value={custom.creationtime}  />
+                    :<div className="v-table-inputdate">
+                      <DatePicker
+                        selected={this.state.startDate}
+                        onChange={this.handleChangeDate.bind(this, 'startData')}
+                        locale="zh-CN"
+                        dateFormat="YYYY-MM-DD"
+                        peekNextMonth
+                        showYearDropdown
+                        showMonthDropdown
+                        todayButton={"今天"}
+                        className="form-control currency-ref"
+                      />
+                     </div>}
                 </Col>
               </FormGroup>
             </Col>
@@ -272,20 +354,21 @@ class CustomListAddOrEdit extends Component {
                   最后修改时间：
                 </Col>
                 <Col md={6}>
-                  <div className="v-table-inputdate">
-                    <DatePicker
-                      selected={this.state.endDate}
-                      onChange={this.handleChangeDate.bind(this, 'endData')}
-                      locale="zh-CN"
-                      dateFormat="YYYY-MM-DD"
-                      peekNextMonth
-                      showYearDropdown
-                      showMonthDropdown
-                      todayButton={"今天"}
-                      className="form-control currency-ref"
-                      readOnly="readOnly"
-                    />
-                  </div>
+                  {this.state.flag == 'edit' ?
+                    <FormControl readOnly="readOnly" className="currency-ref" type="text"  value={custom.modifiedtime}  />
+                    :<div className="v-table-inputdate">
+                      <DatePicker
+                        selected={this.state.endDate}
+                        onChange={this.handleChangeDate.bind(this, 'endData')}
+                        locale="zh-CN"
+                        dateFormat="YYYY-MM-DD"
+                        peekNextMonth
+                        showYearDropdown
+                        showMonthDropdown
+                        todayButton={"今天"}
+                        className="form-control currency-ref"
+                      />
+                    </div>}
                 </Col>
               </FormGroup>
             </Col>

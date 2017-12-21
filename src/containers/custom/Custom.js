@@ -31,6 +31,7 @@ class Custom extends React.Component {
 
   componentDidMount() {
     document.title = "自定义项";
+    this.store.getDocs();
   }
 
   render() {
@@ -40,14 +41,17 @@ class Custom extends React.Component {
           定义自定义项的项目
         </div>
         <div className="custom-row">
-          {this.state.customs.map((item, index) => {
+          {this.store.docustoms.map((item, index) => {
             return (
               <div key={index} className="col-5">
                 <div className="custom-co">
                   <div className="cusom-t"><img src={item.src} alt=""/></div>
-                  <Link to={"/customlist/"+item.id} className={item.btnTwoName ? 'btn-custom custom-pc1':"btn-custom custom-pc"}>{item.btnOneName}</Link>
-                  {item.btnTwoName ? <button className="btn-custom custom-pt1">{item.btnTwoName}</button> : ''}
-                  <button className={item.btnTwoName ? "btn btn-primary custom-btop" :"btn btn-primary custom-bto"}>{item.btnThreeName}</button>
+                  <Link to={"/customlist/"+item.doctype} className={item.subDoccustom.length>0 ? 'btn-custom custom-pc1':"btn-custom custom-pc"}>{item.name}</Link>
+                  {item.subDoccustom.length>0 ? item.subDoccustom.map((value, index) => {
+                   return ( <button key={index} className="btn-custom custom-pt1">{value.name}</button>)
+                  }) :''}
+                  {/*item.btnTwoName ? <button className="btn-custom custom-pt1">{item.btnTwoName}</button> : ''*/}
+                  <button className={item.subDoccustom.length>0 ? "btn btn-primary custom-btop" :"btn btn-primary custom-bto"}>配置显示</button>
                 </div>
               </div>)
           })}

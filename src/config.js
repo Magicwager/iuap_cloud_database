@@ -20,6 +20,7 @@ let Config = {
     add: `${serverURL}/basedoc/bd/attr/extendField`,                // 新增
     edit: `${serverURL}/basedoc/bd/attr/extendField/`,              // 编辑
     delete: `${serverURL}/basedoc/bd/attr/extendField/`,            // 删除
+    queryDocs: `${serverURL}/basedoc/bd/attr/doccustoms`,           // 查询所有的自定义项目
   }
 };
 

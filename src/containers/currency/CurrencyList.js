@@ -139,7 +139,7 @@ export default class CurrencyList extends Component {
                     }
                     this.close();
                 } else {
-                    GlobalStore.showError("保存失败");
+                    GlobalStore.showError(data.msg);
                 }
             });
     }

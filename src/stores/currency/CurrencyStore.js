@@ -166,8 +166,7 @@ class CurrencyStore {
         }
 
         //let url = encodeURI('http://127.0.0.1/webCurrency/getSearch?keyword='+param);
-        let url = encodeURI(Config.currency.search + '?keyword=' + param);
-        url = encodeURI(url);
+        let url = Config.currency.search + '?keyword=' + encodeURIComponent(param);
 
         return (
             fetch(url, opt)
@@ -182,8 +181,6 @@ class CurrencyStore {
                         } else {
                             this.currencys.replace(data.data);
                         }
-                    } else {
-                        this.globalStore.showError(!data.msg ? "暂无数据" : data.msg);
                     }
                 }).catch(function (err) {
                 this.globalStore.hideWait();
