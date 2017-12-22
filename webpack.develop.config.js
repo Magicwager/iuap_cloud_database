@@ -5,7 +5,6 @@ var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-
   //可以配置多个入口模块
   entry: {
     index: [
@@ -13,7 +12,6 @@ module.exports = {
       './src/index'
     ]
   },
-
   //输入目标
   output: {
     path: path.join(__dirname, 'client/js'),
@@ -21,7 +19,6 @@ module.exports = {
     publicPath: '/client/js',
     chunkFilename: '[name].js'
   },
-
   //common.js 是公共模块
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
@@ -46,7 +43,6 @@ module.exports = {
       }
     })
   ],
-
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     extensions: ['.js', '.jsx']

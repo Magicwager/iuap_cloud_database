@@ -1,12 +1,3 @@
-/*
- * Organization Chart Class
- * https://github.com/dabeng/OrgChart.js
- *
- *
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
-
 .orgchart {
   display: inline-block;
   min-height: 202px;
@@ -18,8 +9,6 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  //background-image: linear-gradient(90deg, rgba(200, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgba(200, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0) 10%);
-  //background-size: 10px 10px;
   border: 1px dashed transparent;
   padding: 20px;
 }
@@ -178,10 +167,8 @@
   display: inline-block;
   position: relative;
   margin: 0;
-  //padding: 3px;
   border: 2px dashed transparent;
   text-align: center;
-  //width: 130px;
   width: 160px;
   height: 52px;
   background: rgba(244,245,247,0.60);
@@ -210,14 +197,13 @@
 }
 
 .orgchart .node:hover {
-  //background-color: rgba(238, 217, 54, 0.5);
   transition: .5s;
   cursor: default;
   z-index: 20;
 }
 
 .orgchart .node.focused {
-  //background-color: rgba(238, 217, 54, 0.5);
+
 }
 
 .orgchart .ghost-node {
@@ -240,15 +226,10 @@
   text-align: center;
   font-size: 12px;
   font-weight: bold;
-  //height: 20px;
-  //line-height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  //background-color: rgba(217, 83, 79, 0.8);
   color: #4A515D;
-
-  //border-radius: 4px 4px 0 0;
 }
 
 .orgchart.b2t .node .title {
@@ -298,10 +279,7 @@
   height: 20px;
   font-size: 11px;
   line-height: 18px;
-  //border: 1px solid rgba(217, 83, 79, 0.8);
-  //border-radius: 0 0 4px 4px;
   text-align: center;
-  //background-color: #fff;
   color: #333;
   overflow: hidden;
   text-overflow: ellipsis;

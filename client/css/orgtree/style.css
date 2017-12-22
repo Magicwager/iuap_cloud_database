@@ -23,8 +23,6 @@
   left: 10px;
   height: 420px;
   width: calc(100% - 24px);
-  //border: 2px dashed #aaa;
-  //border-radius: 5px;
   background: #FFFFFF;
   border: 1px solid #D3D3D3;
   overflow: auto;

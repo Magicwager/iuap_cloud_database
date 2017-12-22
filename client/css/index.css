@@ -1,5 +1,5 @@
 @import 'fonts/iconfont.css';
-@import 'react-datepicker.css';
+@import 'datepicker/react-datepicker.css';
 html {
   font-size: 62.5%;
 }
@@ -802,12 +802,6 @@ input::-ms-reveal {
 .currency-grid table tbody > tr:nth-of-type(even) {
   background-color: #FAFAFA;
 }
-.currency-grid table tbody tr {
-  /*td:last-child > a, td:last-child span {
-          color: transparent;
-          .mr15;
-        }*/
-}
 .currency-grid table tbody tr td {
   border: 0;
   white-space: nowrap;
@@ -826,14 +820,6 @@ input::-ms-reveal {
 }
 .currency-grid table tbody tr:hover {
   background-color: rgba(0, 179, 158, 0.1);
-  /*  td:last-child > a, td:last-child > span, td:last-child > i,td:last-child >div> span ,td:last-child >div> a,td:last-child >div> i{
-            color: @mainGreen;
-            .clearfix;
-            .pointer;
-            &:hover {
-              color: @btnPrimaryHover;
-            }
-          }*/
 }
 .currency-grid table tbody tr:hover td {
   border: 0;
@@ -972,35 +958,41 @@ input::-ms-reveal {
   color: #999!important;
 }
 /*react-select 组件 end*/
-.u-pagination {
+/*tinper-bee checkbox和radio组件*/
+.u-checkbox .u-checkbox-label:after,
+.u-checkbox .u-checkbox-label:before {
+  top: -8px;
+  width: 16px;
+  height: 16px;
+}
+.u-radio .u-radio-label:after,
+.u-radio .u-radio-label:before {
+  bottom: 3px;
+  width: 16px;
+  height: 16px;
+}
+/*tinper-bee checkbox和radio组件*/
+.database-pagination {
   text-align: center;
   margin: 20px auto;
 }
-.u-pagination .pagination li > a,
-.u-pagination .pagination li > span {
+.database-pagination .pagination li > a,
+.database-pagination .pagination li > span {
   background-color: #fff;
   border: 1px solid #D9D9D9;
   border-radius: 4px;
   color: #666666;
 }
-.u-pagination .pagination li:not(:first-child) > a {
+.database-pagination .pagination li:not(:first-child) > a {
   margin-left: 9px;
 }
-.u-pagination .pagination li > span {
+.database-pagination .pagination li > span {
   font-weight: 700;
 }
-.u-pagination .pagination li.active > a {
+.database-pagination .pagination li.active > a {
   border: none;
   background-color: transparent;
   color: #000000;
-  /*&:hover {
-        border-color: @btnPrimaryHover;
-        background-color: @btnPrimaryHover;
-      }
-      &:focus {
-        border-color: @btnPrimaryFocus;
-        background-color: @btnPrimaryFocus;
-      }*/
 }
 .v-table-inputdate {
   display: inline-block;
@@ -1014,15 +1006,15 @@ input::-ms-reveal {
   background: url(../images/input-date.png) no-repeat 95% center;
   cursor: pointer;
 }
-.u-container .head {
+.database-container .head {
   height: 34px;
   line-height: 34px;
   margin-bottom: 15px;
 }
-.u-container .head .head-l {
+.database-container .head .head-l {
   float: left;
 }
-.u-container .head .head-r {
+.database-container .head .head-r {
   float: right;
 }
 .currency-input {
@@ -1208,19 +1200,6 @@ input::-ms-reveal {
   font-size: 14px;
   font-size: 1.4rem;
   color: #333333;
-}
-/*tinper-bee checkbox组件*/
-.u-checkbox .u-checkbox-label:after,
-.u-checkbox .u-checkbox-label:before {
-  top: -8px;
-  width: 16px;
-  height: 16px;
-}
-.u-radio .u-radio-label:after,
-.u-radio .u-radio-label:before {
-  bottom: 3px;
-  width: 16px;
-  height: 16px;
 }
 .manage-checkbox {
   font-size: 12px;

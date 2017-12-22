@@ -7,7 +7,7 @@ import { render } from 'react-dom';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router';
 
-import OrgChart from '../../components/orgchart.js';
+import OrgChart from '../../components/OrgChart.js';
 import ManageModal from '../../components/manage/ManageModal';
 
 
@@ -17,12 +17,14 @@ class Manage extends React.Component {
     super(props);
     //this.store = new CustomStore();
     this.state = {
-      isShow: false,// 配置界面显示
+      isShow: false,   // 配置界面显示
     }
 
   }
 
   componentDidMount() {
+    document.title = '分级管控';
+
     let that = this;
 
     let datascource = {

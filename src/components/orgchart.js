@@ -1,3 +1,7 @@
+/*
+* 组织架构tree组件
+* 2017-12-22
+*/
 export default class OrgChart {
   constructor(options) {
     this._name = 'OrgChart';

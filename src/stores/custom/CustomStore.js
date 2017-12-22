@@ -6,9 +6,19 @@ import fetch from 'isomorphic-fetch';
 import {observable, computed, action, toJS} from 'mobx';
 import moment from 'moment';
 
-
 import Config from '../../config';
 import GlobalStore from '../GlobalStore';
+
+//解决浏览器缓存
+function timestamp(url) {
+  var getTimestamp = new Date().getTime();
+  if (url.indexOf("?") > -1) {
+    url = url + "×tamp=" + getTimestamp
+  } else {
+    url = url + "?timestamp=" + getTimestamp
+  }
+  return url;
+}
 
 
 class CustomStore {
@@ -26,7 +36,7 @@ class CustomStore {
   @observable
   datatypeVale = {'code':'0','name':'字符串'};  // 数据类型的默认value
   @observable
-  pageNumber = 20;    // 每一页显示的数据条数
+  pageNumber = 10;    // 每一页显示的数据条数
   @observable
   activePageSize = 1; // 记录当前显示的页码数
   @observable
@@ -59,8 +69,7 @@ class CustomStore {
     }
 
     return (
-      fetch('/basedoc/bd/attr/doccustoms', opt)
-      //fetch(timestamp(Config.custom.query), opt)
+      fetch(timestamp(Config.custom.queryDocs), opt)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -101,9 +110,7 @@ class CustomStore {
       })
     )
   }
-
-
-
+  
   // 查询接口
   @action
   getCustomList(data, callback) {
@@ -118,15 +125,15 @@ class CustomStore {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         //'Cache-Control': 'no-cache',
-        'mode': "no-cors"
+        'mode': "no-cors",
+        'tenantId':'owzp1n95',                        // 查询接口使用
       },
       body: JSON.stringify(param),
       //credentials: "include"
     }
 
     return (
-      fetch('/basedoc/bd/attr/extendFields'+'?tenantId=owzp1n95', opt)
-      //fetch(timestamp(Config.custom.query), opt)
+      fetch(timestamp(Config.custom.query), opt)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -167,8 +174,8 @@ class CustomStore {
         //credentials: "include"
       }
 
-      return fetch('/basedoc/bd/attr/extendField', option)
-      //return fetch(Config.custom.add, option)
+
+      return fetch(Config.custom.add, option)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -188,8 +195,8 @@ class CustomStore {
         //credentials: "include"
       }
 
-      return fetch('/basedoc/bd/attr/extendField/'+`${this.custom.id}`+'?tenantId=owzp1n95', option)
-      //return fetch(Config.custom.edit, option)
+      // return fetch('/basedoc-ext/bd/attr/extendField/'+`${this.custom.id}`+'?tenantId=owzp1n95', option)
+      return fetch(Config.custom.edit+`${this.custom.id}`+'?tenantId=owzp1n95', option)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -221,8 +228,8 @@ class CustomStore {
 
     _this.globalStore.showWait();
 
-    return fetch('/basedoc/bd/attr/extendField/'+`${_this.customs[index].id}`, option)
-    //return fetch(Config.custom.delete, option)
+    // return fetch('/basedoc-ext/bd/attr/extendField/'+`${_this.customs[index].id}`, option)
+    return fetch(Config.custom.delete+`${_this.customs[index].id}`, option)
       .then(response => {
         _this.globalStore.hideWait();
         return response.ok ? response.json() : {}
@@ -236,7 +243,6 @@ class CustomStore {
         }
       })
   }
-
 }
 
 export default CustomStore;

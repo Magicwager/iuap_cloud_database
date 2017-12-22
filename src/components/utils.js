@@ -1,4 +1,7 @@
-
+/*
+* 封装的工具方法
+* 2017-12-22
+*/
 export default {
   getTime: function(){
     let date = new Date();

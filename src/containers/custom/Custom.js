@@ -16,16 +16,7 @@ class Custom extends React.Component {
   constructor(props) {
     super(props);
     this.store = new CustomStore();
-    this.state = {
-      customs: [
-        {'id':'organ','src': './images/xingzhengzuzhi.png', 'btnOneName': '行政组织', 'btnTwoName': '', 'btnThreeName': '配置显示'},
-        {'id':'staff','src': './images/yuangong.png', 'btnOneName': '员工', 'btnTwoName': '', 'btnThreeName': '配置显示'},
-        {'id':'supplier','src': './images/gongyingsahng.png', 'btnOneName': '供应商', 'btnTwoName': '银行账号', 'btnThreeName': '配置显示'},
-        {'id':'customer','src': './images/kehu.png', 'btnOneName': '客户', 'btnTwoName': '银行账号', 'btnThreeName': '配置显示'},
-        {'id':'materiel','src': './images/wuliao.png', 'btnOneName': '物料', 'btnTwoName': '', 'btnThreeName': '配置显示'},
-        {'id':'project','src': './images/xiangmu.png', 'btnOneName': '项目', 'btnTwoName': '', 'btnThreeName': '配置显示'}
-      ]
-    }
+    this.state = {}
 
   }
 
@@ -36,7 +27,7 @@ class Custom extends React.Component {
 
   render() {
     return (
-      <div className="currency-content container-fluid">
+      <div className="currency-content container-fluid" style={{'paddingBottom': '0'}}>
         <div className="currency-title custom-title">
           定义自定义项的项目
         </div>
@@ -46,12 +37,15 @@ class Custom extends React.Component {
               <div key={index} className="col-5">
                 <div className="custom-co">
                   <div className="cusom-t"><img src={item.src} alt=""/></div>
-                  <Link to={"/customlist/"+item.doctype} className={item.subDoccustom.length>0 ? 'btn-custom custom-pc1':"btn-custom custom-pc"}>{item.name}</Link>
-                  {item.subDoccustom.length>0 ? item.subDoccustom.map((value, index) => {
-                   return ( <button key={index} className="btn-custom custom-pt1">{value.name}</button>)
-                  }) :''}
-                  {/*item.btnTwoName ? <button className="btn-custom custom-pt1">{item.btnTwoName}</button> : ''*/}
-                  <button className={item.subDoccustom.length>0 ? "btn btn-primary custom-btop" :"btn btn-primary custom-bto"}>配置显示</button>
+                  <Link to={"/customlist/"+item.doctype}
+                        className={item.subDoccustom.length>0 ? 'btn-custom custom-pc1':"btn-custom custom-pc"}>{item.name}</Link>
+                  {item.subDoccustom.length > 0 ? item.subDoccustom.map((value, index) => {
+                    return ( <button key={index} className="btn-custom custom-pt1">{value.name}</button>)
+                  }) : ''}
+                  <button
+                    className={item.subDoccustom.length>0 ? "btn btn-primary custom-btop" :"btn btn-primary custom-bto"}>
+                    配置显示
+                  </button>
                 </div>
               </div>)
           })}

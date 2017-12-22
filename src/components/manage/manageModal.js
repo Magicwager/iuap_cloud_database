@@ -53,7 +53,8 @@ class ManageModal extends Component {
                 <tbody>
                   <tr>
                     <td><div className="manage-checkbox"><Checkbox colors="dark"> 客户</Checkbox></div></td>
-                    <td><div className="manage-checkbox"><Radio.RadioGroup
+                    <td><div className="manage-checkbox">
+                      <Radio.RadioGroup
                       name="fruit"
                       onChange={this.handleChange.bind(this)}>
                       <Radio value="apple"> 共享下级</Radio>

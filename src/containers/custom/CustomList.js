@@ -8,10 +8,10 @@ import {Pagination} from 'react-bootstrap';
 
 import CustomListAddOrEdit from '../../components/custom/CustomListAddOrEdit';
 import Utils from '../../components/utils';
+import moment from 'moment';
 
 import GlobalStore from '../../stores/GlobalStore';
 import CustomStore from '../../stores/custom/CustomStore';
-import moment from 'moment';
 
 @observer
 class CustomList extends React.Component {
@@ -21,7 +21,7 @@ class CustomList extends React.Component {
     this.state = {
       isHasData: this.store.tableDataTitle,   // 列表没有数据时显示内容
       activePage: 1,  // 分页当前页
-      totalPage:'',   // 分页总页数
+      totalPage: 1,   // 分页总页数
     }
 
     this.handlePagination = this.handlePagination.bind(this);
@@ -56,7 +56,6 @@ class CustomList extends React.Component {
 
     _this.store.getCustomList({startIndex:nextPage, itemPerPage: itemPerPage}, () => {
       _this.store.activePageSize = nextPage;
-
       _this.setState({
         activePage: nextPage
       });
@@ -67,7 +66,7 @@ class CustomList extends React.Component {
   // 新增、编辑
   handleAdd(index, flag) {
     if (flag === 'add') {
-      Object.assign(this.store.custom,{"name":"","type":"String","doctype":"staff","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""})
+      Object.assign(this.store.custom,{"name":"","type":"String","doctype":"staff","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""});
     }
     if (flag === 'edit') {
       let currentData = this.store.customs[index];
@@ -87,11 +86,10 @@ class CustomList extends React.Component {
     });
   }
 
-
   render() {
     return (
       <div>
-        <div className={this.store.page=='1'?'u-container':'hidden'}>
+        <div className={this.store.page=='1'?'database-container':'hidden'}>
           <div className="head">
             <div className="head-r fr">
               <button className="btn btn-primary mr15" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
@@ -100,19 +98,19 @@ class CustomList extends React.Component {
           </div>
           <div className="currency-content container-fluid">
             <div className="currency-grid" style={{'marginLeft':'-15px','marginRight':'-15px'}}>
-              <table className="table">
+              <table className="table" style={{'borderTop': 'none', 'borderLeft': 'none', 'borderRight':'none'}}>
                 <thead>
                 <tr>
-                  <th>名称</th>
-                  <th>数据类型</th>
-                  <th>引用档案</th>
-                  <th>输入长度</th>
-                  <th>精度</th>
-                  <th>创建人</th>
-                  <th>创建日期</th>
-                  <th>最后修改人</th>
-                  <th>最后修改日期</th>
-                  <th>操作</th>
+                  <th style={{'width':'9%'}}>名称</th>
+                  <th style={{'width':'9%'}}>数据类型</th>
+                  <th style={{'width':'9%'}}>引用档案</th>
+                  <th style={{'width':'9%'}}>输入长度</th>
+                  <th style={{'width':'9%'}}>精度</th>
+                  <th style={{'width':'9%'}}>创建人</th>
+                  <th style={{'width':'9%'}}>创建日期</th>
+                  <th style={{'width':'9%'}}>最后修改人</th>
+                  <th style={{'width':'9%'}}>最后修改日期</th>
+                  <th style={{'width':'19%'}}>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -120,16 +118,16 @@ class CustomList extends React.Component {
                   this.store.customs.length > 0 ?
                     this.store.customs.map((value, index) =>
                       (<tr key={'custom-'+index}>
-                        <td style={{'width':'9%'}} title={value.name}>{value.name}</td>
-                        <td style={{'width':'9%'}} title={value.type}>{value.type}</td>
-                        <td style={{'width':'9%'}} title={value.doctype}>{value.doctype}</td>
-                        <td style={{'width':'9%'}} title={value.attrlength}>{value.attrlength}</td>
-                        <td style={{'width':'9%'}} title={value.attrprecision}>{value.attrprecision}</td>
-                        <td style={{'width':'9%'}} title={value.creator}>{value.creator}</td>
-                        <td style={{'width':'9%'}} title={Utils.formatDate(value.creationtime)}>{Utils.formatDate(value.creationtime)}</td>
-                        <td style={{'width':'9%'}} title={value.modifier}>{value.modifier}</td>
-                        <td style={{'width':'9%'}} title={Utils.formatDate(value.modifiedtime)}>{Utils.formatDate(value.modifiedtime)}</td>
-                        <td style={{'width':'19%'}}>
+                        <td title={value.name}>{value.name}</td>
+                        <td title={value.type}>{value.type}</td>
+                        <td title={value.doctype}>{value.doctype}</td>
+                        <td title={value.attrlength}>{value.attrlength}</td>
+                        <td title={value.attrprecision}>{value.attrprecision}</td>
+                        <td title={value.creator}>{value.creator}</td>
+                        <td title={Utils.formatDate(value.creationtime)}>{Utils.formatDate(value.creationtime)}</td>
+                        <td title={value.modifier}>{value.modifier}</td>
+                        <td title={Utils.formatDate(value.modifiedtime)}>{Utils.formatDate(value.modifiedtime)}</td>
+                        <td>
                           <button className="btn btn-operate mr10" onClick={this.doDelete.bind(this, index)}>删除</button>
                           <button className="btn btn-operate" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
                         </td>
@@ -139,7 +137,7 @@ class CustomList extends React.Component {
                 }
                 </tbody>
               </table>
-              <div className='u-pagination'>
+              <div className='database-pagination'>
                 <Pagination
                   prev
                   next

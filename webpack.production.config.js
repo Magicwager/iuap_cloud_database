@@ -9,6 +9,7 @@ const GIT_REVISION = childProcess.execSync('git rev-parse HEAD').toString().trim
 // 获取版本
 const packageJSON = require('./package.json');
 module.exports = {
+    //devtool: 'cheap-module-source-map',
     entry: {
         common: ['react', 'react-dom', 'react-router'],
         index: [
@@ -18,10 +19,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'client/js'),
-        // publicPath: '/',
         filename: '[name].js'
     },
-    //devtool: 'cheap-module-source-map',
     module: {
         loaders: [{
             test: /\.js$/,

@@ -5,6 +5,9 @@ import AlertDialogModel from './models/AlertDialog';
 
 const defaultProps = {
     message: '',
+    onClose: function() {
+      return;
+    }
 };
 
 function AlertDialog({ ...props }) {

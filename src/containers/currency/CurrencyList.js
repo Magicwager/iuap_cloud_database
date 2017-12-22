@@ -183,7 +183,7 @@ export default class CurrencyList extends Component {
         let currency = this.store.currency;
         
         return (
-            <div className="u-container">
+            <div className="database-container">
                 <div className="head">
                     <div className="head-r fr">
                         <button className="btn btn-default mr15" onClick={this.close.bind(this)}>取消</button>
