@@ -17,13 +17,14 @@ class Custom extends React.Component {
     super(props);
     this.store = new CustomStore();
     this.state = {}
-
   }
 
   componentDidMount() {
     document.title = "自定义项";
     this.store.getDocs();
   }
+
+
 
   render() {
     return (
@@ -40,7 +41,8 @@ class Custom extends React.Component {
                   <Link to={"/customlist/"+item.doctype}
                         className={item.subDoccustom.length>0 ? 'btn-custom custom-pc1':"btn-custom custom-pc"}>{item.name}</Link>
                   {item.subDoccustom.length > 0 ? item.subDoccustom.map((value, index) => {
-                    return ( <button key={index} className="btn-custom custom-pt1">{value.name}</button>)
+                    return ( <Link key={index} to={"/customlist/"+value.doctype}
+                                   className="btn-custom custom-pt1">{value.name}</Link>)
                   }) : ''}
                   <button
                     className={item.subDoccustom.length>0 ? "btn btn-primary custom-btop" :"btn btn-primary custom-bto"}>

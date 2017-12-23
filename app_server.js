@@ -11,6 +11,7 @@ var ip = '127.0.0.1';
 
 /* 配置反向代理 start */
 const context = [`/basedoc-ext/bd/attr/extendFields`,
+                 `/basedoc-ext/bd/attr/extendField/`,
                  `/basedoc-ext/bd/attr/extendField`,
                   `/basedoc-ext/bd/attr/doccustoms`,
                   `/basedoc-mc/manage/save`,

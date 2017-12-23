@@ -621,9 +621,16 @@ p.error {
   color: #009886;
 }
 /**************************** UI基础设计规范 end ***************************/
+html,
+body {
+  height: 100%;
+}
 body {
   color: #333333;
   background-color: #E6E9E9;
+}
+#root {
+  height: 100%;
 }
 .content {
   height: 100%;
@@ -1174,7 +1181,7 @@ input::-ms-reveal {
 .fa-chevron-down:before {
   content: "\e601";
 }
-.manage-peizhi {
+.second-menu-icon {
   position: absolute;
   top: 1px;
   left: 5px;

@@ -31,8 +31,11 @@ class CustomList extends React.Component {
     const itemPerPage = this.store.pageNumber;
     let _this = this;
 
+    // 自定义下的查询类型
+    let queryType = this.props.routeParams.id;
+
     // 初始化查询
-    _this.store.getCustomList({startIndex:1, itemPerPage: itemPerPage}, (data) => {
+    _this.store.getCustomList({startIndex:1, itemPerPage: itemPerPage, queryType: queryType}, (data) => {
       // 存储当前页的值
       _this.store.activePageSize = 1;
 
@@ -53,8 +56,10 @@ class CustomList extends React.Component {
     event.preventDefault();
     let _this = this;
     const itemPerPage = _this.store.pageNumber;
+    // 自定义下的查询类型
+    let queryType = this.props.routeParams.id;
 
-    _this.store.getCustomList({startIndex:nextPage, itemPerPage: itemPerPage}, () => {
+    _this.store.getCustomList({startIndex:nextPage, itemPerPage: itemPerPage, queryType: queryType}, () => {
       _this.store.activePageSize = nextPage;
       _this.setState({
         activePage: nextPage
@@ -88,7 +93,7 @@ class CustomList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <div className={this.store.page=='1'?'database-container':'hidden'}>
           <div className="head">
             <div className="head-r fr">

@@ -45,6 +45,9 @@ class CustomStore {
   precisionNULL = false; // 记录数据类型联动时精度为零的记录
   @observable
   lengthNull = false;   // 记录输入长度的不可编辑状态
+ 
+
+
 
   // 查询所有的自定义项目 接口
   @action
@@ -117,7 +120,7 @@ class CustomStore {
     let _this = this;
     _this.globalStore.showWait();
 
-    let param = {"orders":[{"direction":"ASC","property":"code"}],"conditions":[{"conditionList":[],"datatype":"string","extendSql":{},"field":"doctype","logic":false,"logicsymbol":"and","operator":"=","value":"staff"}],"pageIndex":data.startIndex,"pageSize":data.itemPerPage};
+    let param = {"orders":[{"direction":"ASC","property":"code"}],"conditions":[{"conditionList":[],"datatype":"string","extendSql":{},"field":"doctype","logic":false,"logicsymbol":"and","operator":"=","value":data.queryType}],"pageIndex":data.startIndex,"pageSize":data.itemPerPage};
 
     let opt = {
       method: 'post',

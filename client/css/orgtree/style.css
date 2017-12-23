@@ -21,7 +21,7 @@
   display: inline-block;
   top: 10px;
   left: 10px;
-  height: 420px;
+  /*height: 420px;*/
   width: calc(100% - 24px);
   background: #FFFFFF;
   border: 1px solid #D3D3D3;

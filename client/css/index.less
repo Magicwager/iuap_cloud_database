@@ -90,14 +90,18 @@
 
 /**************************** UI基础设计规范 end ***************************/
 
-
+html, body {
+  .h;
+}
 body {
   color: @fontColorLevel1;
   background-color: @backColor;
 }
-
+#root {
+  .h;
+}
 .content {
-  height: 100%;
+  .h;
   background-color: @backColor;
   .p20;
 }
@@ -642,7 +646,7 @@ input::-ms-reveal{display:none;}
 .fa-chevron-down:before {
   content: "\e601";
 }
-.manage-peizhi {
+.second-menu-icon {
   .pa;
   top: 1px;
   left: 5px;
@@ -665,6 +669,12 @@ input::-ms-reveal{display:none;}
   .second-menu {
     opacity: 1;
   }
+}
+.orgchart tr.lines .leftLine.topLine {
+  //border-left: none;
+}
+.orgchart tr.lines .leftLine {
+  //border-left: none;
 }
 .manage-title {
   .f14;

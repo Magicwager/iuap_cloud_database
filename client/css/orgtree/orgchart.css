@@ -345,7 +345,7 @@
   width: calc(100% - 10px);
   width: -webkit-calc(100% - 10px);
   width: -moz-calc(100% - 10px);
-  left: 5px;
+  left: 1px;     /*add*/
 }
 
 .orgchart .node .topEdge {

@@ -31,9 +31,9 @@ class Manage extends React.Component {
         'name': '企业帐号',
         'title': '',
         'children': [
-          { 'name': '用友网络科技', 'title': '',
+          { 'name': '用友网络科技', 'title': '', 'ismc':'1',
             'children': [
-              { 'name': '用友股份', 'title': '',
+              { 'name': '用友股份', 'title': '','ismc':'1',
                 'children': [
                   { 'name': 'NC集团', 'title': '',
                     'children': [
@@ -97,31 +97,39 @@ class Manage extends React.Component {
       'data' : datascource,
       'depth': 2,
       'nodeContent': 'title',
-      'pan': true,
-      'zoom': true,
+      //'pan': true,
+      //'zoom': true,
       'nodeID': 'id',
       'createNode': function(node, data) {
-        console.log(node)
-        let secondMenuIcon = document.createElement('i'),
+        //console.log(node, data);
+
+        /*let secondMenuIcon = document.createElement('i'),
             secondMenu = document.createElement('div');
         secondMenuIcon.setAttribute('class', 'cl cl-guanli second-menu-icon manage-peizhi');
         secondMenu.setAttribute('class', 'second-menu');
         secondMenu.innerHTML = `配置`;
-        node.appendChild(secondMenuIcon)
+        node.appendChild(secondMenuIcon);
         node.appendChild(secondMenu);
+         `<div class="second-menu">配置</div>`
+        */
+        var str;
+        data.ismc=='1'?str="<i class='cl cl-guanli second-menu-icon'></i>":str="<i class='cl cl-guanli second-menu-icon hidden'></i>";
+        //console.log(11, data, str);
+
+        $(node).append(str+'<div class="second-menu">配置</div>');
       }
     });
+
     $('body').delegate('.second-menu','click',function(){
-      console.log(that);
-      that.refs.managecard.show({ });
+      that.refs.managecard.show({index:1});
     });
 
   }
 
   render() {
     return (
-      <div>
-        <div id="chart-container"></div>
+      <div className="container-fluid" style={{'height':'100%'}}>
+        <div id="chart-container" style={{'height':'100%', 'overflow':'auto'}}></div>
         <ManageModal ref="managecard" />
       </div>
     )
