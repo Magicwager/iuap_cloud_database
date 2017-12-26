@@ -286,6 +286,7 @@
   white-space: nowrap;
   background: rgba(244,245,247,0.60)!important;
   padding: 0!important;
+  display: none;   /*add*/
 }
 
 .orgchart.b2t .node .content {

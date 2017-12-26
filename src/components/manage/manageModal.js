@@ -1,5 +1,5 @@
 /*
- * 基础数据分级管理配置
+ * 管控模式配置
  * dangwei@yonyou.com
  */
 import React, {Component} from 'react'
@@ -7,32 +7,88 @@ import {Modal, Button} from 'react-bootstrap'
 import {observer} from 'mobx-react'
 import {Checkbox, Radio} from 'tinper-bee';
 
+import GlobalStore from '../../stores/GlobalStore';
+import ManageStore from '../../stores/manage/ManageStore';
+
 @observer
 class ManageModal extends Component {
   constructor(props) {
     super(props)
-    this.store = props.store
+    this.store = new ManageStore();
     this.state = {
-      isShow: false,
-      selectedValue: 'apple'
+      isShow: false,        // 弹出是否显示
+      checkedFlag: false,   // 复选框
+      isChecked: false,     // 单选框
     }
+
     this.close = this.close.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(value) {
-    this.setState({selectedValue: value});
+  componentDidMount() {
+
   }
 
-  // 卡片展示
+  // 打开
   show(param) {
-    let {index, flag} = param
-    this.setState({isShow: true})
+    let {paramData} = param;
+    this.setState({isShow: true});
+    Object.assign(this.store.paramData, paramData)
+    Object.assign(this.store.docTypes, paramData.docTypes)
   }
 
   // 关闭
   close() {
-    this.setState({isShow: false})
+    this.setState({isShow: false});
+    this.store.docTypes = [];
   }
+
+  // 是否管控
+  handleChange(docid, index, e) {
+    if(e == true) {
+      Object.assign(this.store.docTypes[index], {'ismc':'1'});
+      Object.assign(this.store.docTypeList, this.store.docTypes[index]);
+    }
+    if(e == false) {
+      Object.assign(this.store.docTypes[index], {'ismc':'0','isshare':'0'});
+    }
+  }
+
+  // 是否共享下级
+  handleCheck(docid, index) {
+    this.setState({
+      isChecked: !this.state.isChecked
+    }, () => {
+      if(this.store.docTypes[index].ismc == '1') {
+        if(this.state.isChecked == true) {
+          Object.assign(this.store.docTypes[index], {'isshare':'1'});
+        }
+        if(this.state.isChecked == false) {
+          Object.assign(this.store.docTypes[index], {'isshare':'0'});
+        }
+      }
+      else {
+        return false;
+      }
+    });
+  }
+
+   // 保存
+   handleSubmit() {
+     let _this = this;
+     _this.store.doSave()
+      .then(data => {
+         if (data.flag) {
+           GlobalStore.showInfo("保存成功");
+           this.close();
+           this
+         } else {
+           GlobalStore.showError("保存失败");
+         }
+       });
+   }
 
 
   render() {
@@ -51,54 +107,31 @@ class ManageModal extends Component {
                   <tr><th colSpan={2}>管理范围</th></tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><div className="manage-checkbox"><Checkbox colors="dark"> 客户</Checkbox></div></td>
-                    <td><div className="manage-checkbox">
-                      <Radio.RadioGroup
-                      name="fruit"
-                      onChange={this.handleChange.bind(this)}>
-                      <Radio value="apple"> 共享下级</Radio>
-                    </Radio.RadioGroup></div></td>
-                  </tr>
-                  <tr>
-                    <td><div className="manage-checkbox"><Checkbox colors="dark"> 供应商</Checkbox></div></td>
-                    <td><div className="manage-checkbox"><Radio.RadioGroup
-                      name="fruit"
-                      onChange={this.handleChange.bind(this)}>
-                      <Radio value="apple"> 共享下级</Radio>
-                    </Radio.RadioGroup></div></td>
-                  </tr>
-                  <tr>
-                    <td><div className="manage-checkbox"><Checkbox colors="dark"> 物料</Checkbox></div></td>
-                    <td><div className="manage-checkbox"><Radio.RadioGroup
-                      name="fruit"
-                      onChange={this.handleChange.bind(this)}>
-                      <Radio value="apple"> 共享下级</Radio>
-                    </Radio.RadioGroup></div></td>
-                  </tr>
-                  <tr>
-                    <td><div className="manage-checkbox"><Checkbox colors="dark"> 项目</Checkbox></div></td>
-                    <td><div className="manage-checkbox"><Radio.RadioGroup
-                      name="fruit"
-                      onChange={this.handleChange.bind(this)}>
-                      <Radio value="apple"> 共享下级</Radio>
-                    </Radio.RadioGroup></div></td>
-                  </tr>
-                  <tr>
-                    <td><div className="manage-checkbox"><Checkbox colors="dark"> 人力</Checkbox></div></td>
-                    <td><div className="manage-checkbox"><Radio.RadioGroup
-                      name="fruit"
-                      onChange={this.handleChange.bind(this)}>
-                      <Radio value="apple"> 共享下级</Radio>
-                    </Radio.RadioGroup></div></td>
-                  </tr>
+                  {this.store.docTypes.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <div className="manage-checkbox">
+                            <Checkbox colors="dark"
+                                      checked={item.ismc == '1' ? true : false}
+                                      onChange={this.handleChange.bind(this, item.docid, index)}> {item.docname}</Checkbox>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="manage-checkbox" onClick={this.handleCheck.bind(this, item.docid, index)}>
+                            <div className={item.isshare == '1' ? "manage-radio-checked":"manage-radio"}></div>
+                            <span>共享下级</span>
+                          </div>
+                        </td>
+                      </tr>)
+                  })}
                 </tbody>
               </table>
             </div>
           </Modal.Body>
           <Modal.Footer style={{'borderTop':'none'}}>
-            <button className="btn btn-primary-red mr10">保存</button>
-            <Button onClick={_this.close}>取消</Button>
+            <button className="btn btn-primary-red mr10" onClick={_this.handleSubmit}>保存</button>
+            <button className="btn btn-default-red" onClick={_this.close}>取消</button>
           </Modal.Footer>
         </Modal>
       </div>

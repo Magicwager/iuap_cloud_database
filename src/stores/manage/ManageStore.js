@@ -1,5 +1,5 @@
 /*
-* 分级管控模式 store
+* 管控模式 store
 * dangwei@yonyou.com
 */
 import fetch from 'isomorphic-fetch';
@@ -22,19 +22,26 @@ function timestamp(url) {
 
 class ManageStore {
   globalStore= GlobalStore;
-
   @observable
-  ismc = '1';      // 是否可管控
+  datascource = {};  // 树形数据
   @observable
-  isshare = '1';   // 是否共享下级
+  ismc = '1';        // 是否可管控
+  @observable
+  isshare = '1';     // 是否共享下级
+  @observable
+  paramData = {};    //  管控数据
+  @observable
+  docTypes = [];     // 当前默认的管控数据
+  @observable
+  docTypeList = {"id":null,"docid":"","docname":"","isshare":"","ismc":"","ts":null};  // 管控中的每一条数据
+  @observable
+  selectedData = []; // 存储保存的数据
 
   // 查询接口
   @action
-  getCustomList(data, callback) {
+  doGetManageData(callback) {
     let _this = this;
     _this.globalStore.showWait();
-
-    let param = {"orders":[{"direction":"ASC","property":"code"}],"conditions":[{"conditionList":[],"datatype":"string","extendSql":{},"field":"doctype","logic":false,"logicsymbol":"and","operator":"=","value":"staff"}],"pageIndex":data.startIndex,"pageSize":data.itemPerPage};
 
     let opt = {
       method: 'post',
@@ -42,23 +49,22 @@ class ManageStore {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         //'Cache-Control': 'no-cache',
-        'mode': "no-cors",
-        'tenantId':'owzp1n95',                        // 查询接口使用
+        //'mode': "no-cors",
       },
-      body: JSON.stringify(param),
+      //body: JSON.stringify(param),
       //credentials: "include"
     }
 
     return (
-      fetch(timestamp(Config.manage.query), opt)
+      fetch('http://127.0.0.1/webManage/getBillType', opt)
+      //fetch(timestamp(Config.manage.query), opt)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
         })
         .then(data => {
-          if (data.status) {
-            _this.customs.replace(data.data.content);
-            callback(data.data);
+          if (data.flag) {
+            callback(data);
           }
           else {
             _this.globalStore.showError(!data.msg ? "查询失败" : data.msg);
@@ -72,9 +78,11 @@ class ManageStore {
 
   // 添加管控接口
   @action
-  onAdd() {
+  doSave() {
     let _this = this;
     _this.globalStore.showWait();
+
+    console.log('修改之后的数据', this.docTypes);
 
     let opt = {
       method: 'post',
@@ -82,21 +90,20 @@ class ManageStore {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         //'Cache-Control': 'no-cache',
-        'mode': "no-cors",
-        'tenantId':'owzp1n95',                        // 查询接口使用
+        // 'mode': "no-cors",
       },
-      body: JSON.stringify(param),
+      body: JSON.stringify(this.docTypes),
       //credentials: "include"
     }
 
-    return fetch(Config.custom.edit+`${this.custom.id}`+'?tenantId=owzp1n95', opt)
+    //return fetch(Config.manage.addSave, opt)
+    return fetch('http://127.0.0.1/webManage/save', opt)
       .then(response => {
         _this.globalStore.hideWait();
         return response.ok ? response.json() : {}
       })
       .then(data => data)
   }
-
 }
 
 export default ManageStore;

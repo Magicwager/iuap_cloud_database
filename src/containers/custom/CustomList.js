@@ -25,6 +25,8 @@ class CustomList extends React.Component {
     }
 
     this.handlePagination = this.handlePagination.bind(this);
+    this.onChangeDoctype = this.onChangeDoctype.bind(this);
+    this.onChangeType = this.onChangeType.bind(this);
   }
 
   componentWillMount() {
@@ -65,23 +67,107 @@ class CustomList extends React.Component {
         activePage: nextPage
       });
     });
-
   }
 
   // 新增、编辑
   handleAdd(index, flag) {
     if (flag === 'add') {
-      Object.assign(this.store.custom,{"name":"","type":"String","doctype":"staff","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""});
+      Object.assign(this.store.custom,{"name":"","type":"","doctype":"","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""});
+      Object.assign(this.store.custom, {'attrlength': '256', 'attrprecision': '0'});
+      this.store.precisionNULL = true;
+      this.store.lengthNull = false;
     }
     if (flag === 'edit') {
       let currentData = this.store.customs[index];
       Object.assign(this.store.custom,{"id":currentData.id,"name":currentData.name,"type":currentData.type,"doctype":currentData.doctype,"attrlength":currentData.attrlength,"attrprecision":currentData.attrprecision,"creator":currentData.creator,"creationtime":moment(currentData.creationtime).format("YYYY-MM-DD"),"modifier":currentData.modifier,"modifiedtime":moment(currentData.modifiedtime).format("YYYY-MM-DD")});
+      this.onChangeDoctype(currentData.doctype);
+      this.onChangeType(currentData.type);
     }
     
     this.refs.customcard.show({index, store: this.store, flag});
     this.store.page = 2;
   }
 
+  // 引用档案类型 切换事件
+  onChangeDoctype(param) {
+    switch (param) {
+      case "adminorg":
+        return Object.assign(this.store.instancefileValue,{'code':'adminorg','name':'行政组织'});
+        break;
+      case "staff":
+        return Object.assign(this.store.instancefileValue,{ 'code':'staff','name':'员工'});
+        break;
+      case "supplier":
+        return Object.assign(this.store.instancefileValue,{'code':'supplier','name':'供应商'});
+        break;
+      case "supplierbkAccount":
+        return Object.assign(this.store.instancefileValue,{'code':'supplierbkAccount','name':'供应商银行账号'});
+        break;
+      case "customer":
+        return Object.assign(this.store.instancefileValue,{'code':'customer','name':'客户'});
+        break;
+      case "customerbkAccount":
+        return Object.assign(this.store.instancefileValue,{'code':'customerbkAccount','name':'客户银行账号'});
+        break;
+      case "materials":
+        return Object.assign(this.store.instancefileValue,{'code':'materials','name':'物料'});
+        break;
+      case "project":
+        return Object.assign(this.store.instancefileValue,{'code':'project','name':'项目'});
+        break;
+      default:
+        break;
+    }
+  }
+
+  // 数据类型 切换事件
+  onChangeType(value) {
+    switch (value) {
+      case '字符串':
+        Object.assign(this.store.custom, {'attrlength': '256', 'attrprecision': '0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = false;
+        break;
+      case '整数':
+        Object.assign(this.store.custom, {'attrlength': '8', 'attrprecision': '0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = false;
+        break;
+      case '数值':
+        Object.assign(this.store.custom, {'attrlength': '8', 'attrprecision': '2'});
+        this.store.precisionNULL = false;
+        this.store.lengthNull = false;
+        break;
+      case '布尔类型':
+        Object.assign(this.store.custom, {'attrlength': '1', 'attrprecision': '0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      case '日期':
+        Object.assign(this.store.custom, {'attrlength': '0', 'attrprecision': '0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      case '日期时间':
+        Object.assign(this.store.custom, {'attrlength': '0', 'attrprecision': '0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      case '自定义档案':
+        Object.assign(this.store.custom, {'attrlength': '36', 'attrprecision': '0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      case '基本档案':
+        Object.assign(this.store.custom, {'attrlength': '36', 'attrprecision': '0'});
+        this.store.precisionNULL = true;
+        this.store.lengthNull = true;
+        break;
+      default:
+        break;
+    }
+  }
+  
   // 删除
   doDelete(index, event) {
     GlobalStore.showCancelModel('确定要删除这条信息吗？', () => { },() => {
@@ -93,8 +179,8 @@ class CustomList extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
-        <div className={this.store.page=='1'?'database-container':'hidden'}>
+      <div className="container-fluid" style={{'height':'100%'}}>
+        <div className={this.store.page=='1'?'database-container':'hidden'} style={{'height':'100%'}}>
           <div className="head">
             <div className="head-r fr">
               <button className="btn btn-primary mr15" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
@@ -143,7 +229,7 @@ class CustomList extends React.Component {
                 </tbody>
               </table>
               <div className='database-pagination'>
-                <Pagination
+                {this.store.customs.length > 0 ?  <Pagination
                   prev
                   next
                   first={false}
@@ -154,13 +240,13 @@ class CustomList extends React.Component {
                   maxButtons={5}
                   activePage={this.state.activePage}
                   onSelect={this.handlePagination}
-                />
+                />:''}
               </div>
             </div>
           </div>
         </div>
         <div className={this.store.page == 2 ? '':'hidden'}>
-          <CustomListAddOrEdit ref='customcard' store={this.store} handlePagination={this.handlePagination}/>
+          <CustomListAddOrEdit ref='customcard' store={this.store} handlePagination={this.handlePagination} onChangeType={this.onChangeType}/>
         </div>
       </div>
     )

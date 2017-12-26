@@ -32,9 +32,9 @@ class CustomStore {
   @observable
   page = 1;     // 显示当前页
   @observable
-  dataTypes = [{'code':'0','name':'字符串'},{'code':'1','name':'整数'},{'code':'2','name':'数值'},{'code':'3','name':'布尔类型'},{'code':'4','name':'日期'},{'code':'5','name':'日期时间'},{'code':'6','name':'自定义档案'},{'code':'7','name':'基本档案'}]; // 数据类型
+  dataTypes = [{'code':'string','name':'字符串'},{'code':'integer','name':'整数'},{'code':'double','name':'数值'},{'code':'boolean','name':'布尔类型'},{'code':'date','name':'日期'},{'code':'datetime','name':'日期时间'},{'code':'ref','name':'自定义档案'},{'code':'list','name':'基本档案'}]; // 数据类型
   @observable
-  datatypeVale = {'code':'0','name':'字符串'};  // 数据类型的默认value
+  datatypeVale = {'code':'string','name':'字符串'};  // 数据类型的默认value
   @observable
   pageNumber = 10;    // 每一页显示的数据条数
   @observable
@@ -45,7 +45,10 @@ class CustomStore {
   precisionNULL = false; // 记录数据类型联动时精度为零的记录
   @observable
   lengthNull = false;   // 记录输入长度的不可编辑状态
- 
+  @observable
+  instanceFiles = [{'code':'adminorg','name':'行政组织'},{ 'code':'staff','name':'员工'},{'code':'supplier','name':'供应商'},{'code':'supplierbkAccount','name':'供应商银行账号'},{'code':'customer','name':'客户'},{'code':'customerbkAccount','name':'客户银行账号'},{'code':'materials','name':'物料'},{'code':'project','name':'项目'}]; // 引用档案
+  @observable
+  instancefileValue = {'code':'adminorg','name':'行政组织'};  // 引用档案的默认value
 
 
 

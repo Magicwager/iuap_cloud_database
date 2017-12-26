@@ -23,14 +23,14 @@ class CustomListAddOrEdit extends Component {
       value: '',
       index: -1,
       validation: {
-        pricedigit: null,
-        moneydigit: null
+        name: null
       },
       startDate: moment(),  // 创建时间
       endDate: moment(),    // 最后修改时间
       clearable: false,
       searchable: false,
       selectOneValue: this.store.datatypeVale,   // 默认选择的数据类型
+      selectTwoValue: this.store.instancefileValue, // 默认选择的引用档案
     }
 
     this.close = this.close.bind(this);
@@ -56,85 +56,54 @@ class CustomListAddOrEdit extends Component {
       this.setState({
         startDate: date
       });
-      this.store.custom.creationtime = formattedValue;
+      this.store.custom.creationtime = date;
     }
 
     if (param == 'endData') {
       this.setState({
         endDate: date
       });
-      this.store.custom.modifiedtime = formattedValue;
+      this.store.custom.modifiedtime = date;
     }
   }
 
   // 取消
   close() {
     this.store.page = 1;
+    if (this.state.page == 'add') {
+      Object.assign(this.store.custom,{"name":"","type":"","doctype":"","attrlength":"256","attrprecision":"0","creator":"","creationtime":"","modifier":"","modifiedtime":""});
+      this.store.precisionNULL = true;
+      this.store.lengthNull = false;
+      this.setState({selectOneValue: this.store.datatypeVale, selectTwoValue: this.store.instancefileValue});
+    }
+
+    if (this.state.flag == 'edit') {
+      this.setState({selectOneValue: this.store.datatypeVale, selectTwoValue: this.store.instancefileValue});
+    }
   }
 
   // 数据类型、引用档案 枚举
   updateChangeValue(field, value) {
-    this.store.custom[field] = value.code;
     if (field == 'type') {
       this.setState({selectOneValue: value});
-      this.onChangeValue(value.name);
+      this.props.onChangeType(value.name);
+      this.store.custom[field] = value.code;
     }
-    if (field == 'moneyrount') {
-      this.setState({selectTwoValue: value})
-    }
-  }
-
-  // 选择切换数据类型
-  onChangeValue(value) {
-    switch (value) {
-      case '字符串':
-        Object.assign(this.store.custom, {'attrlength': '256', 'attrprecision': '0'});
-        this.store.precisionNULL = true;
-        this.store.lengthNull = false;
-        break;
-      case '整数':
-        Object.assign(this.store.custom, {'attrlength': '8', 'attrprecision': '0'});
-        this.store.precisionNULL = true;
-        this.store.lengthNull = false;
-        break;
-      case '数值':
-        Object.assign(this.store.custom, {'attrlength': '8', 'attrprecision': '2'});
-        this.store.precisionNULL = false;
-        this.store.lengthNull = false;
-        break;
-      case '布尔类型':
-        Object.assign(this.store.custom, {'attrlength': '1', 'attrprecision': '0'});
-        this.store.precisionNULL = true;
-        this.store.lengthNull = true;
-        break;
-      case '日期':
-        Object.assign(this.store.custom, {'attrlength': '0', 'attrprecision': '0'});
-        this.store.precisionNULL = true;
-        this.store.lengthNull = true;
-        break;
-      case '日期时间':
-        Object.assign(this.store.custom, {'attrlength': '0', 'attrprecision': '0'});
-        this.store.precisionNULL = true;
-        this.store.lengthNull = true;
-        break;
-      case '自定义档案':
-        Object.assign(this.store.custom, {'attrlength': '36', 'attrprecision': '0'});
-        this.store.precisionNULL = true;
-        this.store.lengthNull = true;
-        break;
-      case '基本档案':
-        Object.assign(this.store.custom, {'attrlength': '36', 'attrprecision': '0'});
-        this.store.precisionNULL = true;
-        this.store.lengthNull = true;
-        break;
-      default:
-        break;
+    if (field == 'doctype') {
+      this.setState({selectTwoValue: value});
+      this.store.custom[field] = value.code;
     }
   }
 
+  
   // change事件
   handleChange(field, e) {
     let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
+
+    if(field == 'name') {
+      this.refs[field].innerHTML = '';
+      this.setState(Object.assign(this.state.validation, {name: null}))
+    }
 
     // 输入长度、精度
     if (field == 'attrprecision' || field == 'attrlength') {
@@ -167,6 +136,14 @@ class CustomListAddOrEdit extends Component {
   // 保存
   onSubmit(event) {
     event.preventDefault();
+
+    // 保存校验
+    if (this.store.custom.name == '') {
+      this.refs.name.innerHTML = '不能为空！';
+      this.setState(Object.assign(this.state.validation, {name: 'error'}))
+      return false;
+    }
+
     this.store.handleSubmit(this.state.flag)
       .then(data => {
         if (data.status) {
@@ -201,13 +178,16 @@ class CustomListAddOrEdit extends Component {
           </div>
           <Form inline className="currency-form">
             <Col md={6} sm={12}>
-              <FormGroup className="custom-formgroup" controlId="name">
+              <FormGroup className="custom-formgroup" controlId="name" validationState={this.state.validation.name}>
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4}>
                   名称：
                 </Col>
                 <Col md={6}>
-                  <FormControl autoComplete='off' className="currency-ref" type="text" placeholder="名称"
-                               value={custom.name} onChange={this.handleChange.bind(this, 'name')}/>
+                  <div className="pr" style={{'width':'260px'}}>
+                    <FormControl autoComplete='off' className="currency-ref" type="text" placeholder="名称"
+                                 value={custom.name} onChange={this.handleChange.bind(this, 'name')}/>
+                    <div ref="name" style={{'top':'38px','left':'0'}} className="currency-error"></div>
+                  </div>
                 </Col>
               </FormGroup>
             </Col>
@@ -289,6 +269,9 @@ class CustomListAddOrEdit extends Component {
                   <Select
                     className="currency-ref"
                     name="form-field-name"
+                    value={this.state.selectTwoValue}
+                    onChange={this.updateChangeValue.bind(this, 'doctype')}
+                    options={this.store.instanceFiles}
                     clearable={this.state.clearable}
                     searchable={this.state.searchable}
                     valueKey="code"
@@ -356,6 +339,7 @@ class CustomListAddOrEdit extends Component {
                       showMonthDropdown
                       todayButton={"今天"}
                       className="form-control currency-ref"
+                      minDate={moment()}
                     />
                   </div>}
                 </Col>
@@ -380,6 +364,7 @@ class CustomListAddOrEdit extends Component {
                       showMonthDropdown
                       todayButton={"今天"}
                       className="form-control currency-ref"
+                      minDate={moment()}
                     />
                   </div>}
                 </Col>
