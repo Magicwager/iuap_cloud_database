@@ -158,7 +158,7 @@
   background-color: #EFEFEF;
   margin: 0 auto;
   height: 20px;
-  width: 1px;
+  width: 2px;
   float: none;
 }
 
@@ -200,6 +200,8 @@
   transition: .5s;
   cursor: default;
   z-index: 20;
+  background: rgba(9,44,66,0.08);
+  border: 1px solid #CED8DE;
 }
 
 .orgchart .node.focused {
@@ -225,7 +227,7 @@
   padding-top: 8px;
   text-align: center;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -325,12 +327,19 @@
 }
 
 .orgchart .node .edge {
+  box-sizing: border-box;
   font-size: 15px;
-  position: absolute;
-  color: rgba(68, 157, 68, 0.5);
+  //color: rgba(68, 157, 68, 0.6);
   cursor: default;
   transition: .2s;
   -webkit-transition: .2s;
+  color: rgba(74,81,93, .6);
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  position: absolute;
+  left: 50%;
+  margin-left: -12px;
 }
 
 .orgchart.noncollapsable .node .edge {
@@ -338,15 +347,12 @@
 }
 
 .orgchart .edge:hover {
-  color: #449d44;
+  //color: #449d44;
+  color: #4A515D;
   cursor: pointer;
 }
 
 .orgchart .node .verticalEdge {
-  width: calc(100% - 10px);
-  width: -webkit-calc(100% - 10px);
-  width: -moz-calc(100% - 10px);
-  left: 1px;     /*add*/
 }
 
 .orgchart .node .topEdge {

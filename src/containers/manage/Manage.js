@@ -45,8 +45,9 @@ class Manage extends React.Component {
         'nodeContent': 'title',
         'nodeID': 'id',
         'createNode': function(node, data) {
+          console.log(data);
           var str;
-          data.ismc=='1'?str="<i class='cl cl-guanli second-menu-icon'></i>":str="<i class='cl cl-guanli second-menu-icon hidden'></i>";
+          data.existsetting==true?str="<i class='cl cl-guanli second-menu-icon'></i>":str="<i class='cl cl-guanli second-menu-icon hidden'></i>";
           $(node).append(str+'<div class="second-menu">配置</div>');
         }
       });
@@ -57,12 +58,16 @@ class Manage extends React.Component {
         if (typeof paramData === 'string') {
           paramData = JSON.parse(paramData)
         }
+        console.log('编辑的数据', paramData);
         that.refs.managecard.show({paramData});
       });
 
     });
 
   }
+
+  // 查询树结构数据
+
 
   // 树结构转换方法
   isInArray(arrays, current) {
@@ -136,8 +141,8 @@ class Manage extends React.Component {
   render() {
     return (
       <div className="container-fluid" style={{'height': 'calc(100% - 20px)'}}>
-        <div id="chart-container" style={{'height':'100%', 'overflow':'auto'}}></div>
-        <ManageModal ref="managecard" />
+        <div id="chart-container"></div>
+        <ManageModal ref="managecard" convert={this.convert}/>
       </div>
     )
   }

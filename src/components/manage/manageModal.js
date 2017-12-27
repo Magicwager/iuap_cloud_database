@@ -36,13 +36,15 @@ class ManageModal extends Component {
     let {paramData} = param;
     this.setState({isShow: true});
     Object.assign(this.store.paramData, paramData)
-    Object.assign(this.store.docTypes, paramData.docTypes)
+    Object.assign(this.store.docTypes, paramData.docTypes);
+    this.store.selectedDataId = paramData.id;
   }
 
   // 关闭
   close() {
     this.setState({isShow: false});
     this.store.docTypes = [];
+    this.store.selectedDataId = "";
   }
 
   // 是否管控
@@ -83,7 +85,43 @@ class ManageModal extends Component {
          if (data.flag) {
            GlobalStore.showInfo("保存成功");
            this.close();
-           this
+
+           // this.store.doGetManageData((data) => {
+           //   let treeData = this.props.convert(data.data);
+           //   let that = this;
+           //   let datascource = {
+           //     'name': '企业帐号',
+           //     'title': '',
+           //     'children': treeData
+           //   }
+           //
+           //   console.log('保存查询数据', treeData);
+           //
+           //   let orgchart = new OrgChart({
+           //     'chartContainer': '#chart-container',
+           //     'data' : datascource,
+           //     'depth': 2,
+           //     'nodeContent': 'title',
+           //     'nodeID': 'id',
+           //     'createNode': function(node, data) {
+           //       var str;
+           //       data.ismc=='1'?str="<i class='cl cl-guanli second-menu-icon'></i>":str="<i class='cl cl-guanli second-menu-icon hidden'></i>";
+           //       $(node).append(str+'<div class="second-menu">配置</div>');
+           //     }
+           //   });
+           //
+           //   // $('body').delegate('.second-menu','click',function(){
+           //   //   var _thisData = $(this).parent()[0];
+           //   //   var paramData = _thisData.getAttribute('data-source');
+           //   //   if (typeof paramData === 'string') {
+           //   //     paramData = JSON.parse(paramData)
+           //   //   }
+           //   //   console.log('编辑的数据', paramData);
+           //   //   that.refs.managecard.show({paramData});
+           //   // });
+           //
+           // });
+
          } else {
            GlobalStore.showError("保存失败");
          }

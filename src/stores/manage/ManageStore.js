@@ -36,6 +36,9 @@ class ManageStore {
   docTypeList = {"id":null,"docid":"","docname":"","isshare":"","ismc":"","ts":null};  // 管控中的每一条数据
   @observable
   selectedData = []; // 存储保存的数据
+  @observable
+  selectedDataId = ''; // 编辑时数据的id
+  
 
   // 查询接口
   @action
@@ -44,7 +47,7 @@ class ManageStore {
     _this.globalStore.showWait();
 
     let opt = {
-      method: 'post',
+      method: 'get',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -56,8 +59,8 @@ class ManageStore {
     }
 
     return (
-      fetch('http://127.0.0.1/webManage/getBillType', opt)
-      //fetch(timestamp(Config.manage.query), opt)
+      //fetch('http://127.0.0.1/webManage/getBillType', opt)
+      fetch(Config.manage.query, opt)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -82,7 +85,15 @@ class ManageStore {
     let _this = this;
     _this.globalStore.showWait();
 
-    console.log('修改之后的数据', this.docTypes);
+    // 保存的数据
+    let param = {
+      "id": this.selectedDataId,
+      "docTypes": this.docTypes.slice()
+    }
+
+    console.log(Array.isArray(this.docTypes.slice()))
+    console.log(this.docTypes.slice())
+    console.log('修改之后的数据', param);
 
     let opt = {
       method: 'post',
@@ -92,12 +103,12 @@ class ManageStore {
         //'Cache-Control': 'no-cache',
         // 'mode': "no-cors",
       },
-      body: JSON.stringify(this.docTypes),
+      body: JSON.stringify(param),
       //credentials: "include"
     }
 
-    //return fetch(Config.manage.addSave, opt)
-    return fetch('http://127.0.0.1/webManage/save', opt)
+    return fetch(Config.manage.addSave, opt)
+    //return fetch('http://127.0.0.1/webManage/save', opt)
       .then(response => {
         _this.globalStore.hideWait();
         return response.ok ? response.json() : {}
