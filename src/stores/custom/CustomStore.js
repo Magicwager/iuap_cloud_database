@@ -54,24 +54,23 @@ class CustomStore {
 
   // 查询所有的自定义项目 接口
   @action
-  getDocs(data, callback) {
+  getDocs() {
     let _this = this;
     _this.globalStore.showWait();
 
-    //let param = {};
 
     let opt = {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        //'Cache-Control': 'no-cache',
+        'Cache-Control': 'no-cache',
         'mode': "no-cors",
         'tenantId':'owzp1n95',                        // 查询接口使用
         'sysId':'all',                                // 查询接口使用
       },
       //body: JSON.stringify(param),
-      //credentials: "include"
+      credentials: "include"
     }
 
     return (
@@ -105,7 +104,6 @@ class CustomStore {
             });
 
             _this.docustoms.replace(data.data);
-            //callback(data.data);
           }
           else {
             _this.globalStore.showError(!data.msg ? "数据查询失败" : data.msg);
@@ -130,12 +128,12 @@ class CustomStore {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        //'Cache-Control': 'no-cache',
+        'Cache-Control': 'no-cache',
         'mode': "no-cors",
         'tenantId':'owzp1n95',                        // 查询接口使用
       },
       body: JSON.stringify(param),
-      //credentials: "include"
+      credentials: "include"
     }
 
     return (
@@ -177,7 +175,7 @@ class CustomStore {
           'sysId':'all',                                // 新增接口使用
         },
         body: JSON.stringify(this.custom),
-        //credentials: "include"
+        credentials: "include"
       }
 
 
@@ -198,10 +196,9 @@ class CustomStore {
           'Cache-Control': 'no-cache'
         },
         body: JSON.stringify(this.custom),
-        //credentials: "include"
+        credentials: "include"
       }
 
-      // return fetch('/basedoc-ext/bd/attr/extendField/'+`${this.custom.id}`+'?tenantId=owzp1n95', option)
       return fetch(Config.custom.edit+`${this.custom.id}`+'?tenantId=owzp1n95', option)
         .then(response => {
           _this.globalStore.hideWait();
@@ -229,12 +226,11 @@ class CustomStore {
         'tenantId':'owzp1n95',                        // 删除接口使用
       },
       body: JSON.stringify(params),
-      //credentials: "include"
+      credentials: "include"
     }
 
     _this.globalStore.showWait();
 
-    // return fetch('/basedoc-ext/bd/attr/extendField/'+`${_this.customs[index].id}`, option)
     return fetch(Config.custom.delete+`${_this.customs[index].id}`, option)
       .then(response => {
         _this.globalStore.hideWait();

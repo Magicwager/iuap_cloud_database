@@ -115,6 +115,39 @@ class ManageStore {
       })
       .then(data => data)
   }
+
+  // 保存之后的再次查询接口
+  doAgainGetManageData(callback) {
+    let _this = this;
+    let opt = {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        //'Cache-Control': 'no-cache',
+        //'mode': "no-cors",
+      },
+      //body: JSON.stringify(param),
+      //credentials: "include"
+    }
+    return (
+      fetch(Config.manage.query, opt)
+        .then(response => {
+          return response.ok ? response.json() : {}
+        })
+        .then(data => {
+          if (data.flag) {
+            callback(data);
+          }
+          else {
+            _this.globalStore.showError(!data.msg ? "查询失败" : data.msg);
+          }
+        }).catch(function (err) {
+        _this.globalStore.showError('数据请求失败,错误信息:' + err.toString());
+      })
+    )
+  }
+
 }
 
 export default ManageStore;

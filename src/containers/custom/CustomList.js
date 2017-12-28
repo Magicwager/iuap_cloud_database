@@ -27,6 +27,7 @@ class CustomList extends React.Component {
     this.handlePagination = this.handlePagination.bind(this);
     this.onChangeDoctype = this.onChangeDoctype.bind(this);
     this.onChangeType = this.onChangeType.bind(this);
+    this.onChangeTypeName = this.onChangeTypeName.bind(this);
   }
 
   componentWillMount() {
@@ -72,20 +73,55 @@ class CustomList extends React.Component {
   // 新增、编辑
   handleAdd(index, flag) {
     if (flag === 'add') {
-      Object.assign(this.store.custom,{"name":"","type":"","doctype":"","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""});
+      Object.assign(this.store.custom,{"name":"","type":"string","doctype":"adminorg","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""});
       Object.assign(this.store.custom, {'attrlength': '256', 'attrprecision': '0'});
       this.store.precisionNULL = true;
       this.store.lengthNull = false;
+      Object.assign(this.store.instancefileValue, {'code':'adminorg','name':'行政组织'});
+      Object.assign(this.store.datatypeVale, {'code':'string','name':'字符串'});
     }
     if (flag === 'edit') {
       let currentData = this.store.customs[index];
       Object.assign(this.store.custom,{"id":currentData.id,"name":currentData.name,"type":currentData.type,"doctype":currentData.doctype,"attrlength":currentData.attrlength,"attrprecision":currentData.attrprecision,"creator":currentData.creator,"creationtime":moment(currentData.creationtime).format("YYYY-MM-DD"),"modifier":currentData.modifier,"modifiedtime":moment(currentData.modifiedtime).format("YYYY-MM-DD")});
       this.onChangeDoctype(currentData.doctype);
       this.onChangeType(currentData.type);
+      this.onChangeTypeName(currentData.type);
     }
     
     this.refs.customcard.show({index, store: this.store, flag});
     this.store.page = 2;
+  }
+
+  // 数据类型转换事件
+  onChangeTypeName(param) {
+    switch (param) {
+      case 'string':
+        return Object.assign(this.store.datatypeVale, {'code':'string','name':'字符串'});
+        break;
+      case 'integer':
+        return Object.assign(this.store.datatypeVale, {'code':'integer','name':'整数'});
+        break;
+      case 'double':
+        return Object.assign(this.store.datatypeVale, {'code':'double','name':'数值'});
+        break;
+      case 'boolean':
+        return Object.assign(this.store.datatypeVale, {'code':'boolean','name':'布尔类型'});
+        break;
+      case 'date':
+        return Object.assign(this.store.datatypeVale, {'code':'date','name':'日期'});
+        break;
+      case 'datetime':
+        return Object.assign(this.store.datatypeVale, {'code':'datetime','name':'日期时间'});
+        break;
+      case 'ref':
+        return Object.assign(this.store.datatypeVale, {'code':'ref','name':'自定义档案'});
+        break;
+      case 'list':
+        return Object.assign(this.store.datatypeVale, {'code':'list','name':'基本档案'});
+        break;
+      default:
+        break;
+    }
   }
 
   // 引用档案类型 切换事件
@@ -120,45 +156,45 @@ class CustomList extends React.Component {
     }
   }
 
-  // 数据类型 切换事件
+  // 数据类型 长度、精度联动事件
   onChangeType(value) {
     switch (value) {
-      case '字符串':
+      case 'string':
         Object.assign(this.store.custom, {'attrlength': '256', 'attrprecision': '0'});
         this.store.precisionNULL = true;
         this.store.lengthNull = false;
         break;
-      case '整数':
+      case 'integer':
         Object.assign(this.store.custom, {'attrlength': '8', 'attrprecision': '0'});
         this.store.precisionNULL = true;
         this.store.lengthNull = false;
         break;
-      case '数值':
+      case 'double':
         Object.assign(this.store.custom, {'attrlength': '8', 'attrprecision': '2'});
         this.store.precisionNULL = false;
         this.store.lengthNull = false;
         break;
-      case '布尔类型':
+      case 'boolean':
         Object.assign(this.store.custom, {'attrlength': '1', 'attrprecision': '0'});
         this.store.precisionNULL = true;
         this.store.lengthNull = true;
         break;
-      case '日期':
+      case 'date':
         Object.assign(this.store.custom, {'attrlength': '0', 'attrprecision': '0'});
         this.store.precisionNULL = true;
         this.store.lengthNull = true;
         break;
-      case '日期时间':
+      case 'datetime':
         Object.assign(this.store.custom, {'attrlength': '0', 'attrprecision': '0'});
         this.store.precisionNULL = true;
         this.store.lengthNull = true;
         break;
-      case '自定义档案':
+      case 'ref':
         Object.assign(this.store.custom, {'attrlength': '36', 'attrprecision': '0'});
         this.store.precisionNULL = true;
         this.store.lengthNull = true;
         break;
-      case '基本档案':
+      case 'list':
         Object.assign(this.store.custom, {'attrlength': '36', 'attrprecision': '0'});
         this.store.precisionNULL = true;
         this.store.lengthNull = true;
@@ -179,16 +215,16 @@ class CustomList extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid" style={{'height':'100%'}}>
-        <div className={this.store.page=='1'?'database-container':'hidden'} style={{'height':'100%'}}>
+      <div className="container-fluid">
+        <div className={this.store.page=='1'?'database-container':'hidden'}>
           <div className="head">
             <div className="head-r fr">
               <button className="btn btn-primary mr15" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
               <button className="btn btn-primary">配置显示</button>
             </div>
           </div>
-          <div className="currency-content container-fluid">
-            <div className="currency-grid" style={{'marginLeft':'-15px','marginRight':'-15px'}}>
+          <div className="currency-content">
+            <div className="currency-grid">
               <table className="table" style={{'borderTop': 'none', 'borderLeft': 'none', 'borderRight':'none'}}>
                 <thead>
                 <tr>
@@ -228,8 +264,10 @@ class CustomList extends React.Component {
                 }
                 </tbody>
               </table>
-              <div className='database-pagination'>
-                {this.store.customs.length > 0 ?  <Pagination
+            </div>
+            <div className='database-pagination'>
+              {this.store.customs.length > 0 ?
+                <Pagination
                   prev
                   next
                   first={false}
@@ -241,12 +279,17 @@ class CustomList extends React.Component {
                   activePage={this.state.activePage}
                   onSelect={this.handlePagination}
                 />:''}
-              </div>
             </div>
           </div>
         </div>
         <div className={this.store.page == 2 ? '':'hidden'}>
-          <CustomListAddOrEdit ref='customcard' store={this.store} handlePagination={this.handlePagination} onChangeType={this.onChangeType}/>
+          <CustomListAddOrEdit
+             ref='customcard'
+             store={this.store}
+             handlePagination={this.handlePagination}
+             onChangeType={this.onChangeType}
+             onChangeDoctype={this.onChangeDoctype}
+          />
         </div>
       </div>
     )

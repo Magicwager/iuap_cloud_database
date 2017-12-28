@@ -207,9 +207,6 @@ a:focus {
 *html .clearfix {
   height: 1%;
 }
-.clearfix {
-  display: inline-block;
-}
 .Clearfix {
   display: block;
 }
@@ -801,6 +798,7 @@ input::-ms-reveal {
 }
 .currency-grid {
   position: relative;
+  overflow-x: auto;
 }
 .currency-grid table {
   margin-bottom: 0;
@@ -844,6 +842,9 @@ input::-ms-reveal {
 }
 .currency-grid table tbody tr td:not(:last-child) {
   text-align: center;
+}
+.currency-grid table tbody tr td:last-child {
+  max-width: 200px;
 }
 .currency-grid table tbody tr:hover {
   background-color: rgba(0, 179, 158, 0.1);
@@ -1000,6 +1001,7 @@ input::-ms-reveal {
 }
 /*tinper-bee checkbox和radio组件*/
 .database-pagination {
+  width: 100%;
   text-align: center;
   margin: 20px auto;
 }
@@ -1023,6 +1025,7 @@ input::-ms-reveal {
 }
 .v-table-inputdate {
   display: inline-block;
+  position: relative;
 }
 .v-table-inputdate input {
   padding-left: 8px;
@@ -1065,6 +1068,7 @@ input::-ms-reveal {
   color: #999;
 }
 .currency-content {
+  width: 100%;
   background-color: #fff;
   border: 1px solid #D3D3D3;
   padding-bottom: 50px;
@@ -1154,8 +1158,7 @@ input::-ms-reveal {
   height: auto;
   text-align: center;
 }
-.custom-row .col-5 {
-  width: 20%;
+.custom-row .custom-col-5 {
   height: 260px;
   float: left;
   margin: 0 auto;
@@ -1318,4 +1321,35 @@ input::-ms-reveal {
   top: 3px;
   left: 3px;
   border-radius: 50%;
+}
+@media (min-width: 320px) {
+  .custom-col-5 {
+    width: 100%;
+  }
+}
+@media (min-width: 640px) {
+  .custom-col-5 {
+    width: 50%;
+  }
+}
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: 768px) {
+  .custom-col-5 {
+    width: 33%;
+  }
+  .col-sm-12 {
+    margin-bottom: 3px;
+  }
+}
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+@media (min-width: 992px) {
+  .custom-col-5 {
+    width: 25%;
+  }
+}
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media (min-width: 1200px) {
+  .custom-col-5 {
+    width: 20%;
+  }
 }

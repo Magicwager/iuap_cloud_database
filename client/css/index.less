@@ -254,6 +254,7 @@ input::-ms-reveal{display:none;}
 // 表格
 .currency-grid {
   position: relative;
+  overflow-x: auto;
   table {
     .mb0;
     color: @fontColorLevel1;
@@ -294,6 +295,9 @@ input::-ms-reveal{display:none;}
           color: @fontColorLevel1;
           &:not(:last-child) {
             .tc;
+          }
+          &:last-child {
+            max-width: 200px;
           }
         }
         &:hover {
@@ -455,6 +459,7 @@ input::-ms-reveal{display:none;}
 
 // 分页组件
 .database-pagination {
+  .w;
   .tc;
   margin: 20px auto;
   .pagination {
@@ -477,6 +482,7 @@ input::-ms-reveal{display:none;}
 // 日期组件
 .v-table-inputdate {
   display: inline-block;
+  .pr;
   input {
     padding-left: 8px;
     padding-right: 16px;
@@ -526,6 +532,7 @@ input::-ms-reveal{display:none;}
 
 // 币种新增、编辑
 .currency-content {
+  .w;
   .fff;
   border: 1px solid #D3D3D3;
   padding-bottom: 50px;
@@ -617,8 +624,8 @@ input::-ms-reveal{display:none;}
   width: 100%;
   height: auto;
   text-align: center;
-  .col-5 {
-    width: 20%;
+  .custom-col-5 {
+    //width: 20%;
     height: 260px;
     .fl;
     margin: 0 auto;
@@ -800,6 +807,43 @@ input::-ms-reveal{display:none;}
     top: 3px;
     left: 3px;
     border-radius: 50%;
+}
+
+// css3媒体查询
+@media (min-width: 320px) {
+  .custom-col-5 {
+    width: 100%;
+  }
+}
+
+@media (min-width: 640px) {
+  .custom-col-5 {
+    width: 50%;
+  }
+}
+
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: @screen-sm-min) {
+  .custom-col-5 {
+    width: 33%;
+  }
+  .col-sm-12 {
+    margin-bottom: 3px;
+  }
+}
+
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+@media (min-width: @screen-md-min) {
+  .custom-col-5 {
+    width: 25%;
+  }
+}
+
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media (min-width: @screen-lg-min) {
+  .custom-col-5 {
+    width: 20%;
+  }
 }
 
 

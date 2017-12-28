@@ -205,9 +205,6 @@ a:focus {
 *html .clearfix {
   height: 1%;
 }
-.clearfix {
-  display: inline-block;
-}
 .Clearfix {
   display: block;
 }

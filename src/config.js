@@ -1,6 +1,6 @@
 // 不同的环境对应不同的接口
-const serverURL01 = '/basedoc';       // 币种测试环境
-//const serverURL = '/bd';            // 币种本地测试
+//const serverURL01 = '/basedoc';       // 币种测试环境
+const serverURL01 = '/bd';            // 币种本地测试
 const serverURL02 = '/basedoc-ext';   // 自定义项
 const serverURL03 = '/basedoc-mc';      // 管控模式
 

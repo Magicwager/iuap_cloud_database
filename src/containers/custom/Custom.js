@@ -5,11 +5,7 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import {Link} from 'react-router';
-
-//import GlobalStore from '../../stores/GlobalStore';
-//import CustomList from './CustomList';
 import CustomStore from '../../stores/custom/CustomStore';
-
 
 @observer
 class Custom extends React.Component {
@@ -25,17 +21,16 @@ class Custom extends React.Component {
   }
 
 
-
   render() {
     return (
       <div className="currency-content container-fluid" style={{'paddingBottom': '0'}}>
         <div className="currency-title custom-title">
           定义自定义项的项目
         </div>
-        <div className="custom-row">
+        <div className="custom-row clearfix">
           {this.store.docustoms.map((item, index) => {
             return (
-              <div key={index} className="col-5">
+              <div key={index} className="custom-col-5">
                 <div className="custom-co">
                   <div className="cusom-t"><img src={item.src} alt=""/></div>
                   <Link to={"/customlist/"+item.doctype}

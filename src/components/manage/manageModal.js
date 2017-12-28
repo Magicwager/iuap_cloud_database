@@ -85,6 +85,10 @@ class ManageModal extends Component {
          if (data.flag) {
            GlobalStore.showInfo("保存成功");
            this.close();
+           
+           // _this.store.doAgainGetManageData((data) => {
+           //
+           // });
 
            // this.store.doGetManageData((data) => {
            //   let treeData = this.props.convert(data.data);
