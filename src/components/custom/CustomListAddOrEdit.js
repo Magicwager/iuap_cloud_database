@@ -79,7 +79,7 @@ class CustomListAddOrEdit extends Component {
     if(this.refs.attrprecision) {this.refs.attrprecision.innerHTML = '';}
 
     if (this.state.page == 'add') {
-      Object.assign(this.store.custom,{"name":"","type":"","doctype":"","attrlength":"256","attrprecision":"0","creator":"","creationtime":"","modifier":"","modifiedtime":""});
+      Object.assign(this.store.custom,{"name":"","type":"","doctype":"","reftype":"","attrlength":"256","attrprecision":"0","creator":"","creationtime":"","modifier":"","modifiedtime":""});
       this.store.precisionNULL = true;
       this.store.lengthNull = false;
       this.setState({selectOneValue: this.store.datatypeVale, selectTwoValue: this.store.instancefileValue});
@@ -97,7 +97,7 @@ class CustomListAddOrEdit extends Component {
       this.props.onChangeType(value.code);
       this.store.custom[field] = value.code;
     }
-    if (field == 'doctype') {
+    if (field == 'reftype') {
       this.setState({selectTwoValue: value});
       this.store.custom[field] = value.code;
     }
@@ -179,12 +179,12 @@ class CustomListAddOrEdit extends Component {
             <button className="btn btn-primary" onClick={this.onSubmit}>保存</button>
           </div>
         </div>
-        <div className="currency-content" style={{'paddingBottom':'130px'}}>
+        <div className="currency-content" style={{'paddingBottom':'150px'}}>
           <div className="currency-title">
             {title[this.state.flag]}
           </div>
           <Form inline className="currency-form">
-            <Col md={6} sm={12} xs={12}>
+            <Col md={6} sm={12} xs={12} className="custom-m30">
               <FormGroup className="custom-formgroup" controlId="name" validationState={this.state.validation.name}>
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} xs={4}>
                   名称：
@@ -198,7 +198,7 @@ class CustomListAddOrEdit extends Component {
                 </Col>
               </FormGroup>
             </Col>
-            <Col md={6} sm={12} xs={12}>
+            <Col md={6} sm={12} xs={12} className="custom-m30">
               <FormGroup className="custom-formgroup" controlId="attrlength">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} sm={4} xs={4}>
                   输入长度：
@@ -226,7 +226,7 @@ class CustomListAddOrEdit extends Component {
           </Form>
 
           <Form inline className="currency-form">
-            <Col md={6} sm={12} xs={12}>
+            <Col md={6} sm={12} xs={12} className="custom-m30">
               <FormGroup className="custom-formgroup" controlId="type">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} xs={4}>
                   数据类型：
@@ -246,7 +246,7 @@ class CustomListAddOrEdit extends Component {
                 </Col>
               </FormGroup>
             </Col>
-            <Col md={6} sm={12} xs={12}>
+            <Col md={6} sm={12} xs={12} className="custom-m30">
               {this.store.precisionNULL == true ? '' :
                 <FormGroup className="custom-formgroup" controlId="attrprecision">
                   <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} sm={4} xs={4}>
@@ -266,9 +266,9 @@ class CustomListAddOrEdit extends Component {
             </Col>
           </Form>
 
-          <Form inline className="currency-form" style={{'borderBottom': '1px dashed #E4E4E4','paddingBottom': '60px'}}>
-            <Col md={6} sm={12} xs={12}>
-              <FormGroup className="custom-formgroup" controlId="doctype">
+          <Form inline className="currency-form custom-doctype">
+            <Col md={6} sm={12} xs={12} className="custom-m30">
+              <FormGroup className="custom-formgroup" controlId="reftype">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} xs={4}>
                   引用档案：
                 </Col>
@@ -277,7 +277,7 @@ class CustomListAddOrEdit extends Component {
                     className="currency-ref"
                     name="form-field-name"
                     value={this.state.selectTwoValue}
-                    onChange={this.updateChangeValue.bind(this, 'doctype')}
+                    onChange={this.updateChangeValue.bind(this, 'reftype')}
                     options={this.store.instanceFiles}
                     clearable={this.state.clearable}
                     searchable={this.state.searchable}
@@ -287,12 +287,10 @@ class CustomListAddOrEdit extends Component {
                 </Col>
               </FormGroup>
             </Col>
-            <Col md={6} sm={6} xs={6}>
-            </Col>
           </Form>
 
           <Form inline className="currency-form">
-            <Col md={6} sm={12} xs={12}>
+            <Col md={6} sm={12} xs={12} className="custom-m30">
               <FormGroup className="custom-formgroup" controlId="creator">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} xs={4}>
                   创建人：
@@ -309,7 +307,7 @@ class CustomListAddOrEdit extends Component {
                 </Col>
               </FormGroup>
             </Col>
-            <Col md={6} sm={12} xs={12}>
+            <Col md={6} sm={12} xs={12} className="custom-m30">
               <FormGroup className="custom-formgroup" controlId="modifier">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} sm={4} xs={4}>
                   最后修改人：
@@ -327,7 +325,7 @@ class CustomListAddOrEdit extends Component {
           </Form>
 
           <Form inline className="currency-form">
-            <Col md={6} sm={12} xs={12}>
+            <Col md={6} sm={12} xs={12} className="custom-m30">
               <FormGroup className="custom-formgroup" controlId="formInlineName">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} xs={4}>
                   创建时间：
@@ -352,7 +350,7 @@ class CustomListAddOrEdit extends Component {
                 </Col>
               </FormGroup>
             </Col>
-            <Col md={6} sm={12} xs={12}>
+            <Col md={6} sm={12} xs={12} className="custom-m30">
               <FormGroup className="custom-formgroup" controlId="formInlineEmail">
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} sm={4} xs={4}>
                   最后修改时间：

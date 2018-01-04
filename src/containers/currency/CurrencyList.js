@@ -249,7 +249,7 @@ export default class CurrencyList extends Component {
                         </Col>
                     </Form>
 
-                    <Form inline className="currency-form">
+                    <Form inline className="currency-form" style={{'paddingBottom':'55px'}}>
                         <Col xs={6} style={{'display': 'block'}}>
                             <FormGroup style={{"width":'100%','marginBottom': '15px'}} controlId="category">
                                 <Col xs={6} componentClass={ControlLabel} className="text-right currency-lh">
@@ -290,9 +290,9 @@ export default class CurrencyList extends Component {
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <Col sm={6} xs={12}>
+                        <Col md={6} sm={12} xs={12} className="currency-left">
                             <FormGroup style={{"width":'100%','marginBottom': '20px'}} controlId="pricerount">
-                                <Col  md={4} sm={3} xs={6} componentClass={ControlLabel} className="text-right currency-lh">
+                                <Col md={4} sm={3} xs={6} componentClass={ControlLabel} className="text-right currency-lh">
                                     单价进价:
                                 </Col>
                                 <Col md={4} sm={6} xs={6}>
@@ -333,7 +333,7 @@ export default class CurrencyList extends Component {
                                 </Col>
                             </FormGroup>
                         </Col>
-                        <Col sm={6} xs={12}>
+                        <Col md={6} sm={12} xs={12} className="currency-left">
                             <FormGroup style={{"width":'100%','marginBottom': '15px'}} controlId="moneyrount">
                                 <Col md={4} sm={3} xs={6} componentClass={ControlLabel} className="text-right currency-lh">
                                     金额进价:

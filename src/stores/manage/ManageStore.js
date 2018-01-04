@@ -1,5 +1,5 @@
 /*
-* 管控模式 store
+* 分级管理 store
 * dangwei@yonyou.com
 */
 import fetch from 'isomorphic-fetch';
@@ -35,9 +35,14 @@ class ManageStore {
   @observable
   docTypeList = {"id":null,"docid":"","docname":"","isshare":"","ismc":"","ts":null};  // 管控中的每一条数据
   @observable
-  selectedData = []; // 存储保存的数据
+  selectedData = [];        // 存储保存的数据
   @observable
-  selectedDataId = ''; // 编辑时数据的id
+  selectedDataId = '';      // 编辑时数据的id
+  @observable
+  seletedDataDepth = '';   // 编辑时数据展示的层次数
+  @observable
+  parentDataSource = []; // 父节点数据
+
   
 
   // 查询接口

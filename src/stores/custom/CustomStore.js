@@ -26,7 +26,7 @@ class CustomStore {
   @observable
   customs = [];
   @observable
-  custom = {"name":"","type":"","doctype":"","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":moment().format("YYYY-MM-DD HH:mm:ss")};
+  custom = {"name":"","type":"","reftype":"","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":moment().format("YYYY-MM-DD HH:mm:ss")};
   @observable
   tableDataTitle = '暂无数据';
   @observable
@@ -49,6 +49,8 @@ class CustomStore {
   instanceFiles = [{'code':'adminorg','name':'行政组织'},{ 'code':'staff','name':'员工'},{'code':'supplier','name':'供应商'},{'code':'supplierbkAccount','name':'供应商银行账号'},{'code':'customer','name':'客户'},{'code':'customerbkAccount','name':'客户银行账号'},{'code':'materials','name':'物料'},{'code':'project','name':'项目'}]; // 引用档案
   @observable
   instancefileValue = {'code':'adminorg','name':'行政组织'};  // 引用档案的默认value
+  @observable
+  defaultDoctype = '';  // 默认的doctype
 
 
 

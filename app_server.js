@@ -10,17 +10,17 @@ var port = 5001;
 var ip = '127.0.0.1';
 
 /* 配置反向代理 start */
-const context = [`/basedoc-ext/bd/attr/extendFields`,
-                 `/basedoc-ext/bd/attr/extendField/`,
-                 `/basedoc-ext/bd/attr/extendField`,
-                  `/basedoc-ext/bd/attr/doccustoms`,
+const context = [`/ext/bd/attr/extendFields`,
+                 `/ext/bd/attr/extendField/`,
+                 `/ext/bd/attr/extendField`,
+                  `/ext/bd/attr/doccustoms`,
                   `/basedoc-mc/manage/save`,
                   `/basedoc-mc/manage/listorgsettings`
                 ]
 const options = {
-  target: 'http://127.0.0.1:8180',      // 币种
+  //target: 'http://127.0.0.1:8180',      // 币种
   //target: 'http://10.6.254.170:8180',   // 自定义项
-  //target: 'http://10.11.64.78:8080',      // 管控模式
+  target: 'http://10.11.64.78:8080',      // 管控模式
   changeOrigin: true
 }
 const apiProxy = proxy(options)

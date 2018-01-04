@@ -773,8 +773,8 @@ input::-ms-reveal {
   padding: 4px 22px;
 }
 .btn.btn-primary-red:hover {
-  border-color: #E14C46;
-  background-color: #E14C46;
+  border-color: #D93127;
+  background-color: #D93127;
 }
 .btn.btn-primary-red:focus {
   border-color: #E14C46;
@@ -1036,6 +1036,74 @@ input::-ms-reveal {
   background: url(../images/input-date.png) no-repeat 95% center;
   cursor: pointer;
 }
+/* bootstrap模态框组件 start */
+.modal.fade .modal-dialog {
+  animation: fallUpIn 0.4s forwards;
+}
+.modal-dialog {
+  position: absolute;
+  width: auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+}
+@-moz-keyframes fallUpIn {
+  0% {
+    -webkit-transform: translate(0, -75%);
+    -ms-transform: translate(0, -75%);
+    -o-transform: translate(0, -75%);
+    transform: translate(0, -75%);
+  }
+  100% {
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+  }
+}
+@-webkit-keyframes fallUpIn {
+  0% {
+    -webkit-transform: translate(0, -75%);
+    -ms-transform: translate(0, -75%);
+    -o-transform: translate(0, -75%);
+    transform: translate(0, -75%);
+  }
+  100% {
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+  }
+}
+@-o-keyframes fallUpIn {
+  0% {
+    -webkit-transform: translate(0, -75%);
+    -ms-transform: translate(0, -75%);
+    -o-transform: translate(0, -75%);
+    transform: translate(0, -75%);
+  }
+  100% {
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+  }
+}
+@keyframes fallUpIn {
+  0% {
+    -webkit-transform: translate(0, -75%);
+    -ms-transform: translate(0, -75%);
+    -o-transform: translate(0, -75%);
+    transform: translate(0, -75%);
+  }
+  100% {
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+  }
+}
+/* bootstrap模态框组件 end */
 .database-container .head {
   height: 34px;
   line-height: 34px;
@@ -1143,6 +1211,12 @@ input::-ms-reveal {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: all .3s ease;
+}
+.btn-custom:hover {
+  background: #00B39E;
+  border: 1px solid #00B39E;
+  color: #fff;
 }
 .custom-pc {
   margin: 10px auto;
@@ -1246,6 +1320,8 @@ input::-ms-reveal {
 }
 .manage-content {
   width: 100%;
+  max-height: 260px;
+  overflow: auto;
 }
 .manage-content table {
   margin-bottom: 0;
@@ -1322,14 +1398,28 @@ input::-ms-reveal {
   left: 3px;
   border-radius: 50%;
 }
+.manage-fulltree {
+  text-align: center;
+  margin: 30px auto;
+  font-size: 16px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333333;
+}
 @media (min-width: 320px) {
   .custom-col-5 {
     width: 100%;
+  }
+  .custom-m30 {
+    padding-bottom: 6px;
   }
 }
 @media (min-width: 640px) {
   .custom-col-5 {
     width: 50%;
+  }
+  .custom-m30 {
+    padding-bottom: 6px;
   }
 }
 /* 小屏幕（平板，大于等于 768px） */
@@ -1337,8 +1427,19 @@ input::-ms-reveal {
   .custom-col-5 {
     width: 33%;
   }
-  .col-sm-12 {
-    margin-bottom: 3px;
+  .currency-left {
+    margin-left: -7px;
+  }
+  .custom-doctype {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .custom-m30 {
+    padding-bottom: 6px;
+  }
+  .modal-dialog {
+    width: 600px;
+    margin: 0 auto;
   }
 }
 /* 中等屏幕（桌面显示器，大于等于 992px） */
@@ -1346,10 +1447,18 @@ input::-ms-reveal {
   .custom-col-5 {
     width: 25%;
   }
+  .custom-doctype {
+    border-bottom: 1px dashed #E4E4E4;
+    padding-bottom: 60px;
+  }
 }
 /* 大屏幕（大桌面显示器，大于等于 1200px） */
 @media (min-width: 1200px) {
   .custom-col-5 {
     width: 20%;
+  }
+  .custom-doctype {
+    border-bottom: 1px dashed #E4E4E4;
+    padding-bottom: 60px;
   }
 }

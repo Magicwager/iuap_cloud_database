@@ -149,7 +149,7 @@ class Currency extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluid" style={{'paddingBottom':'30px'}}>
                 <div className={this.store.page == 1 ? 'database-container' :'hidden'}>
                     <div className="head">
                         <div className="head-l fl">

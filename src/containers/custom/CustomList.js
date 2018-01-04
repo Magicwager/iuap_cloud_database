@@ -36,6 +36,7 @@ class CustomList extends React.Component {
 
     // 自定义下的查询类型
     let queryType = this.props.routeParams.id;
+    this.store.defaultDoctype = queryType;
 
     // 初始化查询
     _this.store.getCustomList({startIndex:1, itemPerPage: itemPerPage, queryType: queryType}, (data) => {
@@ -73,7 +74,7 @@ class CustomList extends React.Component {
   // 新增、编辑
   handleAdd(index, flag) {
     if (flag === 'add') {
-      Object.assign(this.store.custom,{"name":"","type":"string","doctype":"adminorg","attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""});
+      Object.assign(this.store.custom,{"name":"","type":"string","reftype":"adminorg","doctype":this.store.defaultDoctype,"attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""});
       Object.assign(this.store.custom, {'attrlength': '256', 'attrprecision': '0'});
       this.store.precisionNULL = true;
       this.store.lengthNull = false;
@@ -82,7 +83,7 @@ class CustomList extends React.Component {
     }
     if (flag === 'edit') {
       let currentData = this.store.customs[index];
-      Object.assign(this.store.custom,{"id":currentData.id,"name":currentData.name,"type":currentData.type,"doctype":currentData.doctype,"attrlength":currentData.attrlength,"attrprecision":currentData.attrprecision,"creator":currentData.creator,"creationtime":moment(currentData.creationtime).format("YYYY-MM-DD"),"modifier":currentData.modifier,"modifiedtime":moment(currentData.modifiedtime).format("YYYY-MM-DD")});
+      Object.assign(this.store.custom,{"id":currentData.id,"name":currentData.name,"type":currentData.type,"reftype":currentData.reftype,"attrlength":currentData.attrlength,"attrprecision":currentData.attrprecision,"creator":currentData.creator,"creationtime":moment(currentData.creationtime).format("YYYY-MM-DD"),"modifier":currentData.modifier,"modifiedtime":moment(currentData.modifiedtime).format("YYYY-MM-DD")});
       this.onChangeDoctype(currentData.doctype);
       this.onChangeType(currentData.type);
       this.onChangeTypeName(currentData.type);
@@ -215,7 +216,7 @@ class CustomList extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid" style={{'paddingBottom':'30px'}}>
         <div className={this.store.page=='1'?'database-container':'hidden'}>
           <div className="head">
             <div className="head-r fr">
@@ -223,7 +224,7 @@ class CustomList extends React.Component {
               <button className="btn btn-primary">配置显示</button>
             </div>
           </div>
-          <div className="currency-content">
+          <div className="currency-content" style={{'paddingBottom':'0'}}>
             <div className="currency-grid">
               <table className="table" style={{'borderTop': 'none', 'borderLeft': 'none', 'borderRight':'none'}}>
                 <thead>
@@ -247,7 +248,7 @@ class CustomList extends React.Component {
                       (<tr key={'custom-'+index}>
                         <td title={value.name}>{value.name}</td>
                         <td title={value.type}>{value.type}</td>
-                        <td title={value.doctype}>{value.doctype}</td>
+                        <td title={value.reftype}>{value.reftype}</td>
                         <td title={value.attrlength}>{value.attrlength}</td>
                         <td title={value.attrprecision}>{value.attrprecision}</td>
                         <td title={value.creator}>{value.creator}</td>
