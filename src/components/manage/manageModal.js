@@ -6,6 +6,7 @@ import React, {Component} from 'react'
 import {Modal, Button} from 'react-bootstrap'
 import {observer} from 'mobx-react'
 import {Checkbox, Radio} from 'tinper-bee';
+import {Scrollbars} from 'react-custom-scrollbars';
 
 import GlobalStore from '../../stores/GlobalStore';
 import ManageStore from '../../stores/manage/ManageStore';
@@ -109,32 +110,39 @@ class ManageModal extends Component {
                   <th colSpan={2}>管理范围</th>
                 </tr>
                 </thead>
-                <tbody>
-                {
-                  this.store.docTypes.length > 0 ?
-                    this.store.docTypes.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>
-                            <div className="manage-checkbox">
-                              <Checkbox colors="dark"
-                                        checked={item.ismc == '1' ? true : false}
-                                        onChange={this.handleChange.bind(this, item.docid, index)}> {item.docname}</Checkbox>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="manage-checkbox" onClick={this.handleCheck.bind(this, item.docid, index)}>
-                              <div className={item.isshare == '1' ? "manage-radio-checked":"manage-radio"}></div>
-                              <span>共享下级</span>
-                            </div>
-                          </td>
-                        </tr>)
-                    }):
-                    (<tr className="active">
-                      <td colSpan={2} style={{'textAlign': 'center'}}>暂无数据</td>
-                    </tr>) }
-                </tbody>
               </table>
+              <Scrollbars
+                autoHeight
+                autoHeightMin={100}
+                autoHeightMax={220}>
+                <table className="table" style={{'borderBottom':'none'}}>
+                  <tbody>
+                  {
+                    this.store.docTypes.length > 0 ?
+                      this.store.docTypes.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>
+                              <div className="manage-checkbox">
+                                <Checkbox colors="dark"
+                                          checked={item.ismc == '1' ? true : false}
+                                          onChange={this.handleChange.bind(this, item.docid, index)}> {item.docname}</Checkbox>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="manage-checkbox" onClick={this.handleCheck.bind(this, item.docid, index)}>
+                                <div className={item.isshare == '1' ? "manage-radio-checked":"manage-radio"}></div>
+                                <span>共享下级</span>
+                              </div>
+                            </td>
+                          </tr>)
+                      }) :
+                      (<tr className="active">
+                        <td colSpan={2} style={{'textAlign': 'center'}}>暂无数据</td>
+                      </tr>) }
+                  </tbody>
+                </table>
+              </Scrollbars>
             </div>
           </Modal.Body>
           <Modal.Footer style={{'borderTop':'none'}}>
