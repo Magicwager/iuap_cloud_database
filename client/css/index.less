@@ -254,8 +254,9 @@ input::-ms-reveal{display:none;}
 
 // 表格
 .currency-grid {
-  position: relative;
-  overflow-x: auto;
+  //position: relative;
+  //overflow-x: auto;
+  .w;
   table {
     .mb0;
     color: @fontColorLevel1;
@@ -494,16 +495,20 @@ input::-ms-reveal{display:none;}
   }
 }
 
+
+
 /* bootstrap模态框组件 start */
-.modal.fade .modal-dialog {
-  animation: fallUpIn 0.4s forwards;
+.manage-modal {
+  .modal-dialog {
+    position: absolute;
+    width: auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+  }
 }
-.modal-dialog {
-  position: absolute;
-  width: auto;
-  left: 0;
-  right: 0;
-  top: 50%;
+.manage-modal.modal.fade .modal-dialog {
+  animation: fallUpIn 0.4s forwards;
 }
 @-moz-keyframes fallUpIn {
   0% {
@@ -798,7 +803,7 @@ input::-ms-reveal{display:none;}
   }
 }
 
-// 分级管控配置界面表格
+// 分级管理配置界面表格
 .manage-content {
   .w;
   border-top: 1px solid @borderColor;
@@ -851,7 +856,6 @@ input::-ms-reveal{display:none;}
   }
 }
 
-
 .manage-radio {
   width: 16px;
   height: 16px;
@@ -895,8 +899,7 @@ input::-ms-reveal{display:none;}
 .manage-fulltree {
   .tc;
   margin: 30px auto;
-  .f16;
-  .fb;
+  .f14;
   color: @fontColorLevel1;
 }
 
@@ -935,9 +938,11 @@ input::-ms-reveal{display:none;}
   .custom-m30 {
     padding-bottom: 6px;
   }
-  .modal-dialog {
-    width: 600px;
-    margin: 0 auto;
+  .manage-modal {
+    .modal-dialog {
+      width: 600px;
+      margin: 0 auto;
+    }
   }
 }
 

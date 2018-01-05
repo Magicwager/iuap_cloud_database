@@ -9,6 +9,7 @@ import {Pagination} from 'react-bootstrap';
 import CustomListAddOrEdit from '../../components/custom/CustomListAddOrEdit';
 import Utils from '../../components/utils';
 import moment from 'moment';
+import {Scrollbars} from 'react-custom-scrollbars';
 
 import GlobalStore from '../../stores/GlobalStore';
 import CustomStore from '../../stores/custom/CustomStore';
@@ -39,7 +40,7 @@ class CustomList extends React.Component {
     this.store.defaultDoctype = queryType;
 
     // 初始化查询
-    _this.store.getCustomList({startIndex:1, itemPerPage: itemPerPage, queryType: queryType}, (data) => {
+    _this.store.getCustomList({startIndex: 1, itemPerPage: itemPerPage, queryType: queryType}, (data) => {
       // 存储当前页的值
       _this.store.activePageSize = 1;
 
@@ -63,7 +64,7 @@ class CustomList extends React.Component {
     // 自定义下的查询类型
     let queryType = this.props.routeParams.id;
 
-    _this.store.getCustomList({startIndex:nextPage, itemPerPage: itemPerPage, queryType: queryType}, () => {
+    _this.store.getCustomList({startIndex: nextPage, itemPerPage: itemPerPage, queryType: queryType}, () => {
       _this.store.activePageSize = nextPage;
       _this.setState({
         activePage: nextPage
@@ -74,21 +75,43 @@ class CustomList extends React.Component {
   // 新增、编辑
   handleAdd(index, flag) {
     if (flag === 'add') {
-      Object.assign(this.store.custom,{"name":"","type":"string","reftype":"adminorg","doctype":this.store.defaultDoctype,"attrlength":"","attrprecision":"","creator":"","creationtime":"","modifier":"","modifiedtime":""});
+      Object.assign(this.store.custom, {
+        "name": "",
+        "type": "string",
+        "reftype": "adminorg",
+        "doctype": this.store.defaultDoctype,
+        "attrlength": "",
+        "attrprecision": "",
+        "creator": "",
+        "creationtime": "",
+        "modifier": "",
+        "modifiedtime": ""
+      });
       Object.assign(this.store.custom, {'attrlength': '256', 'attrprecision': '0'});
       this.store.precisionNULL = true;
       this.store.lengthNull = false;
-      Object.assign(this.store.instancefileValue, {'code':'adminorg','name':'行政组织'});
-      Object.assign(this.store.datatypeVale, {'code':'string','name':'字符串'});
+      Object.assign(this.store.instancefileValue, {'code': 'adminorg', 'name': '行政组织'});
+      Object.assign(this.store.datatypeVale, {'code': 'string', 'name': '字符串'});
     }
     if (flag === 'edit') {
       let currentData = this.store.customs[index];
-      Object.assign(this.store.custom,{"id":currentData.id,"name":currentData.name,"type":currentData.type,"reftype":currentData.reftype,"attrlength":currentData.attrlength,"attrprecision":currentData.attrprecision,"creator":currentData.creator,"creationtime":moment(currentData.creationtime).format("YYYY-MM-DD"),"modifier":currentData.modifier,"modifiedtime":moment(currentData.modifiedtime).format("YYYY-MM-DD")});
+      Object.assign(this.store.custom, {
+        "id": currentData.id,
+        "name": currentData.name,
+        "type": currentData.type,
+        "reftype": currentData.reftype,
+        "attrlength": currentData.attrlength,
+        "attrprecision": currentData.attrprecision,
+        "creator": currentData.creator,
+        "creationtime": moment(currentData.creationtime).format("YYYY-MM-DD"),
+        "modifier": currentData.modifier,
+        "modifiedtime": moment(currentData.modifiedtime).format("YYYY-MM-DD")
+      });
       this.onChangeDoctype(currentData.doctype);
       this.onChangeType(currentData.type);
       this.onChangeTypeName(currentData.type);
     }
-    
+
     this.refs.customcard.show({index, store: this.store, flag});
     this.store.page = 2;
   }
@@ -97,28 +120,28 @@ class CustomList extends React.Component {
   onChangeTypeName(param) {
     switch (param) {
       case 'string':
-        return Object.assign(this.store.datatypeVale, {'code':'string','name':'字符串'});
+        return Object.assign(this.store.datatypeVale, {'code': 'string', 'name': '字符串'});
         break;
       case 'integer':
-        return Object.assign(this.store.datatypeVale, {'code':'integer','name':'整数'});
+        return Object.assign(this.store.datatypeVale, {'code': 'integer', 'name': '整数'});
         break;
       case 'double':
-        return Object.assign(this.store.datatypeVale, {'code':'double','name':'数值'});
+        return Object.assign(this.store.datatypeVale, {'code': 'double', 'name': '数值'});
         break;
       case 'boolean':
-        return Object.assign(this.store.datatypeVale, {'code':'boolean','name':'布尔类型'});
+        return Object.assign(this.store.datatypeVale, {'code': 'boolean', 'name': '布尔类型'});
         break;
       case 'date':
-        return Object.assign(this.store.datatypeVale, {'code':'date','name':'日期'});
+        return Object.assign(this.store.datatypeVale, {'code': 'date', 'name': '日期'});
         break;
       case 'datetime':
-        return Object.assign(this.store.datatypeVale, {'code':'datetime','name':'日期时间'});
+        return Object.assign(this.store.datatypeVale, {'code': 'datetime', 'name': '日期时间'});
         break;
       case 'ref':
-        return Object.assign(this.store.datatypeVale, {'code':'ref','name':'自定义档案'});
+        return Object.assign(this.store.datatypeVale, {'code': 'ref', 'name': '自定义档案'});
         break;
       case 'list':
-        return Object.assign(this.store.datatypeVale, {'code':'list','name':'基本档案'});
+        return Object.assign(this.store.datatypeVale, {'code': 'list', 'name': '基本档案'});
         break;
       default:
         break;
@@ -129,28 +152,28 @@ class CustomList extends React.Component {
   onChangeDoctype(param) {
     switch (param) {
       case "adminorg":
-        return Object.assign(this.store.instancefileValue,{'code':'adminorg','name':'行政组织'});
+        return Object.assign(this.store.instancefileValue, {'code': 'adminorg', 'name': '行政组织'});
         break;
       case "staff":
-        return Object.assign(this.store.instancefileValue,{ 'code':'staff','name':'员工'});
+        return Object.assign(this.store.instancefileValue, {'code': 'staff', 'name': '员工'});
         break;
       case "supplier":
-        return Object.assign(this.store.instancefileValue,{'code':'supplier','name':'供应商'});
+        return Object.assign(this.store.instancefileValue, {'code': 'supplier', 'name': '供应商'});
         break;
       case "supplierbkAccount":
-        return Object.assign(this.store.instancefileValue,{'code':'supplierbkAccount','name':'供应商银行账号'});
+        return Object.assign(this.store.instancefileValue, {'code': 'supplierbkAccount', 'name': '供应商银行账号'});
         break;
       case "customer":
-        return Object.assign(this.store.instancefileValue,{'code':'customer','name':'客户'});
+        return Object.assign(this.store.instancefileValue, {'code': 'customer', 'name': '客户'});
         break;
       case "customerbkAccount":
-        return Object.assign(this.store.instancefileValue,{'code':'customerbkAccount','name':'客户银行账号'});
+        return Object.assign(this.store.instancefileValue, {'code': 'customerbkAccount', 'name': '客户银行账号'});
         break;
       case "materials":
-        return Object.assign(this.store.instancefileValue,{'code':'materials','name':'物料'});
+        return Object.assign(this.store.instancefileValue, {'code': 'materials', 'name': '物料'});
         break;
       case "project":
-        return Object.assign(this.store.instancefileValue,{'code':'project','name':'项目'});
+        return Object.assign(this.store.instancefileValue, {'code': 'project', 'name': '项目'});
         break;
       default:
         break;
@@ -204,10 +227,11 @@ class CustomList extends React.Component {
         break;
     }
   }
-  
+
   // 删除
   doDelete(index, event) {
-    GlobalStore.showCancelModel('确定要删除这条信息吗？', () => { },() => {
+    GlobalStore.showCancelModel('确定要删除这条信息吗？', () => {
+    }, () => {
       this.store.handleDelete(index, () => {
         this.handlePagination(this.store.activePageSize, event);
       });
@@ -226,45 +250,55 @@ class CustomList extends React.Component {
           </div>
           <div className="currency-content" style={{'paddingBottom':'0'}}>
             <div className="currency-grid">
-              <table className="table" style={{'borderTop': 'none', 'borderLeft': 'none', 'borderRight':'none'}}>
-                <thead>
-                <tr>
-                  <th style={{'width':'9%'}}>名称</th>
-                  <th style={{'width':'9%'}}>数据类型</th>
-                  <th style={{'width':'9%'}}>引用档案</th>
-                  <th style={{'width':'9%'}}>输入长度</th>
-                  <th style={{'width':'9%'}}>精度</th>
-                  <th style={{'width':'9%'}}>创建人</th>
-                  <th style={{'width':'9%'}}>创建日期</th>
-                  <th style={{'width':'9%'}}>最后修改人</th>
-                  <th style={{'width':'9%'}}>最后修改日期</th>
-                  <th style={{'width':'19%'}}>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                  this.store.customs.length > 0 ?
-                    this.store.customs.map((value, index) =>
-                      (<tr key={'custom-'+index}>
-                        <td title={value.name}>{value.name}</td>
-                        <td title={value.type}>{value.type}</td>
-                        <td title={value.reftype}>{value.reftype}</td>
-                        <td title={value.attrlength}>{value.attrlength}</td>
-                        <td title={value.attrprecision}>{value.attrprecision}</td>
-                        <td title={value.creator}>{value.creator}</td>
-                        <td title={Utils.formatDate(value.creationtime)}>{Utils.formatDate(value.creationtime)}</td>
-                        <td title={value.modifier}>{value.modifier}</td>
-                        <td title={Utils.formatDate(value.modifiedtime)}>{Utils.formatDate(value.modifiedtime)}</td>
-                        <td>
-                          <button className="btn btn-operate mr10" onClick={this.doDelete.bind(this, index)}>删除</button>
-                          <button className="btn btn-operate" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑</button>
-                        </td>
-                      </tr>)
-                    )
-                    : (<tr><td colSpan="10" style={{textAlign:"center"}}>{this.state.isHasData}</td></tr>)
-                }
-                </tbody>
-              </table>
+              <Scrollbars
+                universal
+                autoHeight
+                autoHeightMin={100}
+                autoHeightMax={450}>
+                <table className="table" style={{'borderTop': 'none', 'borderLeft': 'none', 'borderRight':'none'}}>
+                  <thead>
+                  <tr>
+                    <th style={{'width':'9%'}}>名称</th>
+                    <th style={{'width':'9%'}}>数据类型</th>
+                    <th style={{'width':'9%'}}>引用档案</th>
+                    <th style={{'width':'9%'}}>输入长度</th>
+                    <th style={{'width':'9%'}}>精度</th>
+                    <th style={{'width':'9%'}}>创建人</th>
+                    <th style={{'width':'9%'}}>创建日期</th>
+                    <th style={{'width':'9%'}}>最后修改人</th>
+                    <th style={{'width':'9%'}}>最后修改日期</th>
+                    <th style={{'width':'19%'}}>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {
+                    this.store.customs.length > 0 ?
+                      this.store.customs.map((value, index) =>
+                        (<tr key={'custom-'+index}>
+                          <td title={value.name}>{value.name}</td>
+                          <td title={value.type}>{value.type}</td>
+                          <td title={value.reftype}>{value.reftype}</td>
+                          <td title={value.attrlength}>{value.attrlength}</td>
+                          <td title={value.attrprecision}>{value.attrprecision}</td>
+                          <td title={value.creator}>{value.creator}</td>
+                          <td title={Utils.formatDate(value.creationtime)}>{Utils.formatDate(value.creationtime)}</td>
+                          <td title={value.modifier}>{value.modifier}</td>
+                          <td title={Utils.formatDate(value.modifiedtime)}>{Utils.formatDate(value.modifiedtime)}</td>
+                          <td>
+                            <button className="btn btn-operate mr10" onClick={this.doDelete.bind(this, index)}>删除
+                            </button>
+                            <button className="btn btn-operate" onClick={this.handleAdd.bind(this, index, 'edit')}>编辑
+                            </button>
+                          </td>
+                        </tr>)
+                      )
+                      : (<tr>
+                      <td colSpan="10" style={{textAlign:"center"}}>{this.state.isHasData}</td>
+                    </tr>)
+                  }
+                  </tbody>
+                </table>
+              </Scrollbars>
             </div>
             <div className='database-pagination'>
               {this.store.customs.length > 0 ?
@@ -279,17 +313,17 @@ class CustomList extends React.Component {
                   maxButtons={5}
                   activePage={this.state.activePage}
                   onSelect={this.handlePagination}
-                />:''}
+                /> : ''}
             </div>
           </div>
         </div>
         <div className={this.store.page == 2 ? '':'hidden'}>
           <CustomListAddOrEdit
-             ref='customcard'
-             store={this.store}
-             handlePagination={this.handlePagination}
-             onChangeType={this.onChangeType}
-             onChangeDoctype={this.onChangeDoctype}
+            ref='customcard'
+            store={this.store}
+            handlePagination={this.handlePagination}
+            onChangeType={this.onChangeType}
+            onChangeDoctype={this.onChangeDoctype}
           />
         </div>
       </div>

@@ -98,7 +98,7 @@ class ManageModal extends Component {
 
     return (
       <div>
-        <Modal {...this.props} show={_this.state.isShow} onHide={_this.close}>
+        <Modal {...this.props} show={_this.state.isShow} onHide={_this.close} className="manage-modal">
           <Modal.Header closeButton>
             <Modal.Title className='manage-title'>基础数据管理配置</Modal.Title>
           </Modal.Header>

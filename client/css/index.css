@@ -797,8 +797,7 @@ input::-ms-reveal {
   background-color: #fff;
 }
 .currency-grid {
-  position: relative;
-  overflow-x: auto;
+  width: 100%;
 }
 .currency-grid table {
   margin-bottom: 0;
@@ -1037,15 +1036,15 @@ input::-ms-reveal {
   cursor: pointer;
 }
 /* bootstrap模态框组件 start */
-.modal.fade .modal-dialog {
-  animation: fallUpIn 0.4s forwards;
-}
-.modal-dialog {
+.manage-modal .modal-dialog {
   position: absolute;
   width: auto;
   left: 0;
   right: 0;
   top: 50%;
+}
+.manage-modal.modal.fade .modal-dialog {
+  animation: fallUpIn 0.4s forwards;
 }
 @-moz-keyframes fallUpIn {
   0% {
@@ -1405,9 +1404,8 @@ input::-ms-reveal {
 .manage-fulltree {
   text-align: center;
   margin: 30px auto;
-  font-size: 16px;
-  font-size: 1.6rem;
-  font-weight: bold;
+  font-size: 14px;
+  font-size: 1.4rem;
   color: #333333;
 }
 @media (min-width: 320px) {
@@ -1441,7 +1439,7 @@ input::-ms-reveal {
   .custom-m30 {
     padding-bottom: 6px;
   }
-  .modal-dialog {
+  .manage-modal .modal-dialog {
     width: 600px;
     margin: 0 auto;
   }
