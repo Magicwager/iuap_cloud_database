@@ -48,47 +48,49 @@ class Manage extends React.Component {
     });
   }
 
-  // 获取父类节点
-  getParent = (pid, elems) => {
-    if (!elems) {
-      return;
-    }
-    for (var i = 0, len = elems.length; i < len; i++) {
-      var elem = elems[i];
-      if (elem.id == pid) {
-        return elem;
-      } else {
-        return getParent(pid, elem.children);
-      }
-    }
-  }
-
-  // 转换tree型数据
-  convert = (data) => {
-    var result = [];
-    for (var i = 0, len = data.length; i < len; i++) {
-      var item = data[i];
-      if (item.parentid == "") {
-        result.push(item);
-      } else {
-        var pid = item.parentid;
-        var elem = this.getParent(pid, result);
-        if (elem) {
-          elem.children ? elem.children.push(item) : (elem.children = [item]);
-        }
-      }
-    }
-    return result;
-  }
 
   // 查询接口封装
   initTreeData() {
     let _this = this;
     _this.store.parentDataSource = [];
     _this.store.doGetManageData((data) => {
+
+      let isInArray = (arrays, current)=> {
+        const isIn = arrays.find((prod, i) => {
+          if (prod.id === current.parentid) {
+            return true;
+          }
+          return false;
+        });
+        return isIn;
+      }
+
+      let convert = root => {
+        var resultRoot = []
+        root.map((val)=> {
+          val.children = null
+        })
+        for (var i = 0; i < root.length; i++) {
+          var ri = root[i];
+          if (ri.parentid == '' || ri.parentid == null || (!isInArray(root, ri))) {
+            resultRoot.push(ri);
+          } else {
+            for (let j = 0; j < root.length; j++) {
+              let rj = root[j];
+              if (rj.id == ri.parentid) {
+                rj.children = !rj.children ? [] : rj.children;
+                rj.children.push(ri);
+                break;
+              }
+            }
+          }
+        }
+        return resultRoot;
+      }
+
       console.log('未处理数据', data.data);
-      _this.store.parentDataSource = _this.convert(data.data);
-      console.log('已处理数据', _this.convert(data.data));
+      _this.store.parentDataSource = convert(data.data);
+      console.log('已处理数据', convert(data.data));
     })
     .then(() => {
         var orgchart
@@ -98,7 +100,7 @@ class Manage extends React.Component {
             orgchart = new OrgChart({
               'chartContainer': '#chart-container' + item.id,
               'data': item,
-              'depth': 2,
+              'depth': 3,
               'nodeContent': 'title',
               'nodeID': 'id',
               'createNode': function (node, data) {

@@ -64,8 +64,8 @@ class ManageStore {
     }
 
     return (
-      //fetch('http://127.0.0.1/webManage/getBillType', opt)
-      fetch(Config.manage.query, opt)
+      fetch('http://127.0.0.1/webManage/getBillType', opt)
+      //fetch(Config.manage.query, opt)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -112,8 +112,8 @@ class ManageStore {
       //credentials: "include"
     }
 
-    return fetch(Config.manage.addSave, opt)
-    //return fetch('http://127.0.0.1/webManage/save', opt)
+    //return fetch(Config.manage.addSave, opt)
+    return fetch('http://127.0.0.1/webManage/save', opt)
       .then(response => {
         _this.globalStore.hideWait();
         return response.ok ? response.json() : {}
@@ -121,7 +121,7 @@ class ManageStore {
       .then(data => data)
   }
 
-  // 保存之后的再次查询接口
+/*  // 保存之后的再次查询接口
   doAgainGetManageData(callback) {
     let _this = this;
     let opt = {
@@ -151,7 +151,7 @@ class ManageStore {
         _this.globalStore.showError('数据请求失败,错误信息:' + err.toString());
       })
     )
-  }
+  }*/
 
 }
 

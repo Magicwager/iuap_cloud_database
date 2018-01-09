@@ -73,6 +73,7 @@ class ManageModal extends Component {
         }
       }
       else {
+        $("[data-toggle='popover']").popover();
         return false;
       }
     });
@@ -113,7 +114,6 @@ class ManageModal extends Component {
               </table>
               <Scrollbars
                 autoHeight
-                autoHeightMin={100}
                 autoHeightMax={220}>
                 <table className="table" style={{'borderBottom':'none'}}>
                   <tbody>
@@ -132,7 +132,12 @@ class ManageModal extends Component {
                             <td>
                               <div className="manage-checkbox" onClick={this.handleCheck.bind(this, item.docid, index)}>
                                 <div className={item.isshare == '1' ? "manage-radio-checked":"manage-radio"}></div>
-                                <span>共享下级</span>
+                                {
+                                  // <span data-toggle="tooltip"
+                                  //       data-placement="right"
+                                  //       data-original-title="请先选择组织">共享下级</span>
+                                }
+                                <span data-container="body" data-toggle="popover" data-placement="right" data-content="请选择组织">共享下级</span>
                               </div>
                             </td>
                           </tr>)
