@@ -36,8 +36,10 @@ class ManageModal extends Component {
   show(param) {
     let {paramData} = param;
     this.setState({isShow: true});
-    Object.assign(this.store.paramData, paramData)
+    Object.assign(this.store.paramData, paramData);
     Object.assign(this.store.docTypes, paramData.docTypes);
+    console.log('打开时', paramData.docTypes);
+    console.log('打开时2', this.store.docTypes.slice());
     this.store.selectedDataId = paramData.id;
   }
 
@@ -82,12 +84,23 @@ class ManageModal extends Component {
   // 保存
   handleSubmit() {
     let _this = this;
+    //console.log(_this.store.docTypes.slice());
+    const selData = _this.store.docTypes.slice();
+
     _this.store.doSave()
     .then(data => {
       if (data.flag) {
         GlobalStore.showInfo("保存成功");
-        this.close();
-        this.props.initTreeData();
+        _this.close();
+        //this.props.initTreeData();
+        // 保存刷新节点内容
+        selData.map((item, index) => {
+          if(item.ismc == '1') {
+            console.log('保存');
+            _this.props.changeIcon();
+          }
+        });
+        //_this.props.changeIcon();
       } else {
         GlobalStore.showError(data.msg);
       }

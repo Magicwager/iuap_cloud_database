@@ -41,7 +41,11 @@ class ManageStore {
   @observable
   seletedDataDepth = '';   // 编辑时数据展示的层次数
   @observable
-  parentDataSource = []; // 父节点数据
+  parentDataSource = [];   // 父节点数据
+  @observable
+  onClickDataSave = '';    // 点击配置节点时保存的dom结构
+  @observable
+  selectHasIconData = true; // 选择配置的管控图标显示
 
   
 
@@ -96,9 +100,9 @@ class ManageStore {
       "docTypes": this.docTypes.slice()
     }
 
-    console.log(Array.isArray(this.docTypes.slice()))
-    console.log(this.docTypes.slice())
-    console.log('修改之后的数据', param);
+    //console.log(Array.isArray(this.docTypes.slice()))
+    //console.log(this.docTypes.slice())
+    //console.log('修改之后的数据', param);
 
     let opt = {
       method: 'post',
@@ -106,7 +110,7 @@ class ManageStore {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         //'Cache-Control': 'no-cache',
-        // 'mode': "no-cors",
+         //'mode': "no-cors",
       },
       body: JSON.stringify(param),
       //credentials: "include"

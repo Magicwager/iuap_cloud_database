@@ -19,7 +19,6 @@ class Manage extends React.Component {
     this.state = {
       isShow: false,   // 配置界面显示
     }
-
     this.initTreeData = this.initTreeData.bind(this);
   }
 
@@ -33,6 +32,7 @@ class Manage extends React.Component {
     // 点击配置按钮
     $('body').delegate('.second-menu', 'click', function () {
       var _thisData = $(this).parent()[0];
+      _this.store.onClickDataSave = $(this).parent().find('.second-menu-icon');
       var paramData = _thisData.getAttribute('data-source');
       if (typeof paramData === 'string') {
         paramData = JSON.parse(paramData)
@@ -48,6 +48,11 @@ class Manage extends React.Component {
     });
   }
 
+  // 改变是否管控图标
+  changeIcon = () => {
+    let _this = this;
+    $(_this.store.onClickDataSave).removeClass('hidden');
+  }
 
   // 查询接口封装
   initTreeData() {
@@ -88,9 +93,9 @@ class Manage extends React.Component {
         return resultRoot;
       }
 
-      console.log('未处理数据', data.data);
+      //console.log('未处理数据', data.data);
       _this.store.parentDataSource = convert(data.data);
-      console.log('已处理数据', convert(data.data));
+      //console.log('已处理数据', convert(data.data));
     })
     .then(() => {
         var orgchart
@@ -107,6 +112,8 @@ class Manage extends React.Component {
                 var str;
                 data.existsetting == true ? str = "<i class='cl cl-guanli second-menu-icon'></i>" : str = "<i class='cl cl-guanli second-menu-icon hidden'></i>";
                 $(node).append(str + '<div class="second-menu">配置</div>');
+
+
               }
             })
 
@@ -126,7 +133,7 @@ class Manage extends React.Component {
               return (<div key={index} style={{'display':'inline-block'}} id={"chart-container"+ value.id}></div>)
             }) : (<div className="manage-fulltree">暂无数据</div>)}
         </div>
-        <ManageModal ref="managecard" initTreeData={this.initTreeData}/>
+        <ManageModal ref="managecard" initTreeData={this.initTreeData} changeIcon={this.changeIcon}/>
       </div>
     )
   }
