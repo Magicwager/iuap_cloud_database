@@ -37,7 +37,7 @@ class Manage extends React.Component {
       if (typeof paramData === 'string') {
         paramData = JSON.parse(paramData)
       }
-      console.log('编辑时的数据', paramData);
+      //console.log('编辑时的数据', paramData);
       _this.refs.managecard.show({paramData});
     });
   }
@@ -48,10 +48,29 @@ class Manage extends React.Component {
     });
   }
 
-  // 改变是否管控图标
+  // 删除管控图标
   changeIcon = () => {
     let _this = this;
-    $(_this.store.onClickDataSave).removeClass('hidden');
+    if($(_this.store.onClickDataSave).hasClass('hidden')) {
+      $(_this.store.onClickDataSave).removeClass('hidden');
+    }
+    else {
+      return;
+    }
+  }
+
+  // 增加管控图标
+  addIcon = () => {
+    let _this = this;
+    if(!$(_this.store.onClickDataSave).is('.hidden')) {
+      $(_this.store.onClickDataSave).addClass('hidden');
+    }
+  }
+
+  // 改变管控节点数据
+  chanageIconData = (param) => {
+    let _this = this;
+    $(_this.store.onClickDataSave).parent().attr('data-source', JSON.stringify(param));
   }
 
   // 查询接口封装
@@ -106,14 +125,14 @@ class Manage extends React.Component {
               'chartContainer': '#chart-container' + item.id,
               'data': item,
               'depth': 3,
+              'pan': true,
+              //'zoom': true,
               'nodeContent': 'title',
               'nodeID': 'id',
               'createNode': function (node, data) {
                 var str;
                 data.existsetting == true ? str = "<i class='cl cl-guanli second-menu-icon'></i>" : str = "<i class='cl cl-guanli second-menu-icon hidden'></i>";
                 $(node).append(str + '<div class="second-menu">配置</div>');
-
-
               }
             })
 
@@ -130,10 +149,16 @@ class Manage extends React.Component {
         <div className='chart-container'>
           {this.store.parentDataSource.length > 0 ?
             this.store.parentDataSource.map((value, index) => {
-              return (<div key={index} style={{'display':'inline-block'}} id={"chart-container"+ value.id}></div>)
+              return (<div key={index} style={{'display':'inline-block','height':'100%'}} id={"chart-container"+ value.id}></div>)
             }) : (<div className="manage-fulltree">暂无数据</div>)}
         </div>
-        <ManageModal ref="managecard" initTreeData={this.initTreeData} changeIcon={this.changeIcon}/>
+        <ManageModal
+          ref="managecard"
+          initTreeData={this.initTreeData}
+          changeIcon={this.changeIcon}
+          addIcon={this.addIcon}
+          chanageIconData={this.chanageIconData}
+        />
       </div>
     )
   }

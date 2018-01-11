@@ -38,8 +38,6 @@ class ManageModal extends Component {
     this.setState({isShow: true});
     Object.assign(this.store.paramData, paramData);
     Object.assign(this.store.docTypes, paramData.docTypes);
-    console.log('打开时', paramData.docTypes);
-    console.log('打开时2', this.store.docTypes.slice());
     this.store.selectedDataId = paramData.id;
   }
 
@@ -75,7 +73,6 @@ class ManageModal extends Component {
         }
       }
       else {
-        $("[data-toggle='popover']").popover();
         return false;
       }
     });
@@ -84,23 +81,35 @@ class ManageModal extends Component {
   // 保存
   handleSubmit() {
     let _this = this;
-    //console.log(_this.store.docTypes.slice());
     const selData = _this.store.docTypes.slice();
+    _this.store.paramData.docTypes = selData;
 
     _this.store.doSave()
     .then(data => {
       if (data.flag) {
         GlobalStore.showInfo("保存成功");
         _this.close();
-        //this.props.initTreeData();
-        // 保存刷新节点内容
+        // 添加
+        var dd = [];
+        // 全部取消
+        var tt = [];
         selData.map((item, index) => {
           if(item.ismc == '1') {
-            console.log('保存');
-            _this.props.changeIcon();
+            dd.push(item.ismc);
+          }
+          if(item.ismc == '0') {
+            tt.push(item.ismc);
           }
         });
-        //_this.props.changeIcon();
+
+        if(dd.length > 0) {
+          _this.props.changeIcon();
+        }
+        if(tt.length == selData.length) {
+          _this.props.addIcon();
+        }
+        _this.props.chanageIconData(_this.store.paramData);
+
       } else {
         GlobalStore.showError(data.msg);
       }
@@ -145,12 +154,7 @@ class ManageModal extends Component {
                             <td>
                               <div className="manage-checkbox" onClick={this.handleCheck.bind(this, item.docid, index)}>
                                 <div className={item.isshare == '1' ? "manage-radio-checked":"manage-radio"}></div>
-                                {
-                                  // <span data-toggle="tooltip"
-                                  //       data-placement="right"
-                                  //       data-original-title="请先选择组织">共享下级</span>
-                                }
-                                <span data-container="body" data-toggle="popover" data-placement="right" data-content="请选择组织">共享下级</span>
+                                <span>共享下级</span>
                               </div>
                             </td>
                           </tr>)
