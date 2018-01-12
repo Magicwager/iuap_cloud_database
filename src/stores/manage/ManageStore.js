@@ -55,15 +55,15 @@ class ManageStore {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        //'Cache-Control': 'no-cache',
-        //'mode': "no-cors",
+        'Cache-Control': 'no-cache',
+        'mode': "no-cors",
       },
-      //credentials: "include"
+      credentials: "include"
     }
 
     return (
-      fetch('http://127.0.0.1/webManage/getBillType', opt)
-      //fetch(Config.manage.query, opt)
+      //fetch('http://127.0.0.1/webManage/getBillType', opt)
+      fetch(Config.manage.query, opt)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -99,15 +99,15 @@ class ManageStore {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        //'Cache-Control': 'no-cache',
-        //'mode': "no-cors",
+        'Cache-Control': 'no-cache',
+        'mode': "no-cors",
       },
       body: JSON.stringify(param),
-      //credentials: "include"
+      credentials: "include"
     }
 
-    return fetch('http://127.0.0.1/webManage/save', opt)
-    //return fetch(Config.manage.addSave, opt)
+    //return fetch('http://127.0.0.1/webManage/save', opt)
+    return fetch(Config.manage.addSave, opt)
       .then(response => {
         _this.globalStore.hideWait();
         return response.ok ? response.json() : {}

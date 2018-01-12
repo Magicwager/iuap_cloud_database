@@ -38,7 +38,9 @@ class Manage extends React.Component {
       if (typeof paramData === 'string') {
         paramData = JSON.parse(paramData)
       }
+
       //console.log('编辑时的数据', paramData);
+
       _this.refs.managecard.show({paramData});
     });
   }

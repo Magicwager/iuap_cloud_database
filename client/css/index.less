@@ -749,23 +749,21 @@ input::-ms-reveal{display:none;}
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.fa {
-  width: 17px;
-  height: 17px;
-}
-.fa-chevron-down {
-  background: url(../images/cl-add.png) no-repeat; // 替换字体图标
-}
-.fa-chevron-up {
-  background: url(../images/cl-reduce.png) no-repeat; // 替换字体图标
-}
 .fa-chevron-up:before {
   //content: "\e637";
   content: " ";
+  width: 17px;
+  height: 17px;
+  display: block;
+  background: url(../images/cl-reduce.png) no-repeat; // 替换字体图标
 }
 .fa-chevron-down:before {
   //content: "\e601";
   content: " ";
+  width: 17px;
+  height: 17px;
+  display: block;
+  background: url(../images/cl-add.png) no-repeat; // 替换字体图标
 }
 .second-menu-icon {
   .pa;
