@@ -5,6 +5,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {observer} from 'mobx-react';
+import {Scrollbars} from 'react-custom-scrollbars';
 
 import OrgChart from '../../components/OrgChart.js';
 import ManageModal from '../../components/manage/ManageModal';
@@ -51,7 +52,7 @@ class Manage extends React.Component {
   // 删除管控图标
   changeIcon = () => {
     let _this = this;
-    if($(_this.store.onClickDataSave).hasClass('hidden')) {
+    if ($(_this.store.onClickDataSave).hasClass('hidden')) {
       $(_this.store.onClickDataSave).removeClass('hidden');
     }
     else {
@@ -62,7 +63,7 @@ class Manage extends React.Component {
   // 增加管控图标
   addIcon = () => {
     let _this = this;
-    if(!$(_this.store.onClickDataSave).is('.hidden')) {
+    if (!$(_this.store.onClickDataSave).is('.hidden')) {
       $(_this.store.onClickDataSave).addClass('hidden');
     }
   }
@@ -125,8 +126,6 @@ class Manage extends React.Component {
               'chartContainer': '#chart-container' + item.id,
               'data': item,
               'depth': 3,
-              'pan': true,
-              //'zoom': true,
               'nodeContent': 'title',
               'nodeID': 'id',
               'createNode': function (node, data) {
@@ -147,10 +146,17 @@ class Manage extends React.Component {
     return (
       <div className="container-fluid" style={{'height': '100%'}}>
         <div className='chart-container'>
-          {this.store.parentDataSource.length > 0 ?
-            this.store.parentDataSource.map((value, index) => {
-              return (<div key={index} style={{'display':'inline-block','height':'100%'}} id={"chart-container"+ value.id}></div>)
-            }) : (<div className="manage-fulltree">暂无数据</div>)}
+          <Scrollbars
+            universal={true}
+            autoHide={true}
+            style={{ 'width':'100%','height':'100%','maxHeight':'100%' }}
+          >
+            {this.store.parentDataSource.length > 0 ?
+              this.store.parentDataSource.map((value, index) => {
+                return (<div key={index} style={{'display':'inline-block','height':'100%'}}
+                             id={"chart-container"+ value.id}></div>)
+              }) : (<div className="manage-fulltree">暂无数据</div>)}
+          </Scrollbars>
         </div>
         <ManageModal
           ref="managecard"

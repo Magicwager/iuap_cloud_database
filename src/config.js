@@ -28,6 +28,6 @@ let Config = {
     query: `${serverURL03}/manage/listorgsettings`,           // 获取所有行政组织管控设置
     addSave: `${serverURL03}/manage/save`,                    // 添加管控
   }
-};
+}
 
 export default Config;

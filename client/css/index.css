@@ -1271,11 +1271,21 @@ input::-ms-reveal {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.fa {
+  width: 17px;
+  height: 17px;
+}
+.fa-chevron-down {
+  background: url(../images/cl-add.png) no-repeat;
+}
+.fa-chevron-up {
+  background: url(../images/cl-reduce.png) no-repeat;
+}
 .fa-chevron-up:before {
-  content: "\e637";
+  content: " ";
 }
 .fa-chevron-down:before {
-  content: "\e601";
+  content: " ";
 }
 .second-menu-icon {
   position: absolute;
@@ -1284,10 +1294,10 @@ input::-ms-reveal {
   display: inline-block;
   color: #00CB7C;
   font-size: 23px;
-  transition: all 0.3s ease-in;
+  transition: all 0.3s ease-out;
 }
 .second-menu-icon:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 .second-menu {
   position: absolute;

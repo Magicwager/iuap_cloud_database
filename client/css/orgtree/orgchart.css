@@ -328,18 +328,18 @@
 
 .orgchart .node .edge {
   box-sizing: border-box;
-  font-size: 15px;
-  color: rgba(68, 157, 68, 0.6);
+  /*font-size: 15px;*/
+  /*color: rgba(68, 157, 68, 0.6);*/
   cursor: default;
   transition: .2s;
   -webkit-transition: .2s;
-  //color: rgba(74,81,93, .6);
-  width: 15px;
-  height: 15px;
-  line-height: 15px;
+  /*color: rgba(74,81,93, .6);*/
+  width: 17px;
+  height: 17px;
+  line-height: 17px;
   position: absolute;
   left: 50%;
-  margin-left: -12px;
+  margin-left: -13px;
 }
 
 .orgchart.noncollapsable .node .edge {
@@ -347,8 +347,7 @@
 }
 
 .orgchart .edge:hover {
-  color: #449d44;
-  //color: #4A515D;
+  /*color: #449d44;*/
   cursor: pointer;
 }
 
