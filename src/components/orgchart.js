@@ -351,7 +351,7 @@ export default class OrgChart {
       }
     } else {
       Array.from(node.querySelectorAll(':scope > .edge')).forEach((el) => {
-        //el.classList.remove('fa-chevron-up', 'fa-chevron-down', 'fa-chevron-right', 'fa-chevron-left');  /*add小图标上下加减号*/
+        el.classList.remove('fa-chevron-up', 'fa-chevron-down', 'fa-chevron-right', 'fa-chevron-left');  /*add小图标上下加减号*/
       });
     }
   }
@@ -1349,6 +1349,10 @@ export default class OrgChart {
 
       // construct the content of node
       let nodeDiv = document.createElement('div');
+      
+      // 新增加方法
+      
+      
 
       delete nodeData.children;
       nodeDiv.dataset.source = JSON.stringify(nodeData);
@@ -1414,7 +1418,6 @@ export default class OrgChart {
       }
 
       // 新增方法
-      //that._hoverNode.bind(that);
       nodeDiv.addEventListener('mouseenter', that._hoverNode.bind(that));
       nodeDiv.addEventListener('mouseleave', that._hoverNode.bind(that));
       nodeDiv.addEventListener('click', that._dispatchClickEvent.bind(that));

@@ -128,6 +128,7 @@ class Manage extends React.Component {
               'chartContainer': '#chart-container' + item.id,
               'data': item,
               'depth': 3,
+              'pan': true,
               'nodeContent': 'title',
               'nodeID': 'id',
               'createNode': function (node, data) {
@@ -162,7 +163,6 @@ class Manage extends React.Component {
         </div>
         <ManageModal
           ref="managecard"
-          initTreeData={this.initTreeData}
           changeIcon={this.changeIcon}
           addIcon={this.addIcon}
           chanageIconData={this.chanageIconData}

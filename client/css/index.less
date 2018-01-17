@@ -470,13 +470,20 @@ input::-ms-reveal{display:none;}
       border: 1px solid @btnDefaultBorder;
       .br4;
       color: @fontColorLevel2;
+      &:hover {
+        border: 1px solid @borderHoverGreen;
+        color: @borderHoverGreen;
+      }
     }
     li:not(:first-child)>a {margin-left: 9px;}
     li>span {font-weight: 700;}
     li.active > a {
       border: none;
       background-color: transparent;
-      color: #000000;
+      color: @fontColorLevel1;
+      &:hover {
+        color: @borderHoverGreen;
+      }
     }
   }
 }
@@ -653,6 +660,7 @@ input::-ms-reveal{display:none;}
   width: 198px;
   height: 260px;
   margin: 0 auto;
+  .pr;
   .cusom-t {
     width: 100%;
     height: 120px;
@@ -706,7 +714,6 @@ input::-ms-reveal{display:none;}
   height: auto;
   text-align: center;
   .custom-col-5 {
-    //width: 20%;
     height: 260px;
     .fl;
     margin: 0 auto;
@@ -719,12 +726,26 @@ input::-ms-reveal{display:none;}
   left: 50%;
   transform: translate(-50%);
   bottom: 28px;
+  padding: 5px 10px;
 }
 .custom-btop {
   .pa;
   left: 50%;
   transform: translate(-50%);
   bottom: 11px;
+  padding: 5px 10px;
+}
+.custom-bomRight {
+  .pa;
+  bottom: 28px;
+  right: 20px;
+  padding: 5px 10px;
+}
+.custom-bomLeft {
+  .pa;
+  bottom: 28px;
+  left: 20px;
+  padding: 5px 10px;
 }
 .custom-pc1 {
   margin: 10px auto;
@@ -737,11 +758,73 @@ input::-ms-reveal{display:none;}
 }
 .custom-formgroup {
   width: 100%;
+  height: 36px;
   margin-bottom: 30px;
+}
+.viewmore-modal {
+  .modal-dialog {
+    width: 803px!important;
+    height: 500px;
+    .modal-content {
+      height: 100%;
+      .modal-body {
+        min-height: 370px;
+      }
+    }
+  }
+}
+// 自定义项查看更多
+.viewmore {
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+  .tc;
+  background: #F7F7F7;
+  border: 1px solid #ECECEC;
+  border-radius: 4px;
+  .fl;
+  .mr10;
+  .mb10;
+  box-sizing: border-box;
+  .f12;
+  color: @fontColorLevel2;
+  .pointer;
+  a {color: @fontColorLevel2;}
+  &:hover {
+    background: #E6F8F6;
+  }
+}
+.viewmore-green {
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+  .tc;
+  background-color: #E9EDFC;
+  color: #445596;
+  border: 1px solid #A5B3E7;
+  border-radius: 4px;
+  .fl;
+  .mr10;
+  .mb10;
+  box-sizing: border-box;
+  .f12;
+  //color: @fontColorLevel2;
+  .pointer;
+  a {color: @fontColorLevel2;}
+  &:hover {
+    background: #E6F8F6;
+  }
+}
+.custom-add {
+  width: 46px;
+  height: 46px;
+  .fl;
+  background: url(../images/custom-add.jpg) no-repeat;
+  .pointer;
 }
 
 
-/*分级管控*/
+/*分级管理*/
 .fa {
   font-family:"cl" !important;
   font-size:16px;

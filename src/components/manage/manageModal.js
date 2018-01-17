@@ -152,7 +152,7 @@ class ManageModal extends Component {
                               </div>
                             </td>
                             <td>
-                              <div className="manage-checkbox" onClick={this.handleCheck.bind(this, item.docid, index)}>
+                              <div className={this.store.docTypes[index].ismc=='1'?"manage-checkbox":'hidden'} onClick={this.handleCheck.bind(this, item.docid, index)}>
                                 <div className={item.isshare == '1' ? "manage-radio-checked":"manage-radio"}></div>
                                 <span>共享下级</span>
                               </div>

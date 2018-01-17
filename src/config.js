@@ -1,7 +1,7 @@
 // 不同的环境对应不同的接口
 const serverURL01 = '/bd';             // 币种
 const serverURL02 = '/ext';            // 自定义项
-const serverURL03 = '/basedoc-mc';     // 管控模式
+const serverURL03 = '/basedoc-mc';     // 分级管理
 
 // 基础数据
 let Config = {
@@ -22,8 +22,9 @@ let Config = {
     edit: `${serverURL02}/bd/attr/extendField/`,              // 编辑
     delete: `${serverURL02}/bd/attr/extendField/`,            // 删除
     queryDocs: `${serverURL02}/bd/attr/doccustoms`,           // 查询所有的自定义项目
+    viewMoreSave:`${serverURL02}/bd/attr/doccustom`,          // 员工档案新增保存
   },
-  // 管控模式
+  // 分级管理
   manage: {
     query: `${serverURL03}/manage/listorgsettings`,           // 获取所有行政组织管控设置
     addSave: `${serverURL03}/manage/save`,                    // 添加管控

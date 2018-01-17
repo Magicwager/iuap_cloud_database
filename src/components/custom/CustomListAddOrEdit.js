@@ -176,7 +176,7 @@ class CustomListAddOrEdit extends Component {
         <div className="head">
           <div className="head-r fr">
             <button className="btn btn-default mr15" onClick={this.close}>取消</button>
-            <button className="btn btn-primary" onClick={this.onSubmit}>保存</button>
+            <button className="btn btn-primary mr10" onClick={this.onSubmit}>保存</button>
           </div>
         </div>
         <div className="currency-content" style={{'paddingBottom':'150px'}}>

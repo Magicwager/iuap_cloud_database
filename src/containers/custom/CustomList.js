@@ -34,6 +34,8 @@ class CustomList extends React.Component {
   componentWillMount() {
     const itemPerPage = this.store.pageNumber;
     let _this = this;
+    _this.mounted = true;
+
 
     // 自定义下的查询类型
     let queryType = this.props.routeParams.id;
@@ -43,17 +45,24 @@ class CustomList extends React.Component {
     _this.store.getCustomList({startIndex: 1, itemPerPage: itemPerPage, queryType: queryType}, (data) => {
       // 存储当前页的值
       _this.store.activePageSize = 1;
-
-      _this.setState({
-        totalPage: data.totalPages,
-        activePage: 1
-      });
+      if(_this.mounted) {
+        _this.setState({
+          totalPage: data.totalPages,
+          activePage: 1
+        });
+      }
     });
 
   }
 
   componentDidMount() {
     document.title = "自定义项";
+
+  }
+
+  componentWillUnmount() {
+    let _this = this;
+    _this.mounted = false;
   }
 
   // 分页
@@ -245,16 +254,15 @@ class CustomList extends React.Component {
           <div className="head">
             <div className="head-r fr">
               <button className="btn btn-primary mr15" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
-              <button className="btn btn-primary">配置显示</button>
+              <button className="btn btn-primary mr10">配置显示</button>
             </div>
           </div>
           <div className="currency-content" style={{'paddingBottom':'0'}}>
-            <div className="currency-grid">
+            <div className="currency-grid" style={{'height': '450px'}}>
               <Scrollbars
-                universal
                 autoHeight
-                autoHeightMin={100}
-                autoHeightMax={450}>
+                autoHeightMax={450}
+                universal={true}>
                 <table className="table" style={{'borderTop': 'none', 'borderLeft': 'none', 'borderRight':'none'}}>
                   <thead>
                   <tr>

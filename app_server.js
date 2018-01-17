@@ -14,13 +14,15 @@ const context = [`/ext/bd/attr/extendFields`,
                  `/ext/bd/attr/extendField/`,
                  `/ext/bd/attr/extendField`,
                   `/ext/bd/attr/doccustoms`,
+                  `/ext/bd/metaData/relation/doctypeId`,
+                  `/ext/bd/attr/doccustom`,
                   `/basedoc-mc/manage/save`,
                   `/basedoc-mc/manage/listorgsettings`
                 ]
 const options = {
-  //target: 'http://127.0.0.1:8180',        // 币种
+  target: 'http://127.0.0.1:8080',        // 币种
   //target: 'http://10.6.254.170:8180',     // 自定义项
-  target: 'http://10.11.64.78:8080',        // 分级管理
+  //target: 'http://10.11.64.78:8080',        // 分级管理
   changeOrigin: true
 }
 const apiProxy = proxy(options)

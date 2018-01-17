@@ -1011,6 +1011,11 @@ input::-ms-reveal {
   border-radius: 4px;
   color: #666666;
 }
+.database-pagination .pagination li > a:hover,
+.database-pagination .pagination li > span:hover {
+  border: 1px solid #00B39E;
+  color: #00B39E;
+}
 .database-pagination .pagination li:not(:first-child) > a {
   margin-left: 9px;
 }
@@ -1020,7 +1025,10 @@ input::-ms-reveal {
 .database-pagination .pagination li.active > a {
   border: none;
   background-color: transparent;
-  color: #000000;
+  color: #333333;
+}
+.database-pagination .pagination li.active > a:hover {
+  color: #00B39E;
 }
 .v-table-inputdate {
   display: inline-block;
@@ -1180,6 +1188,7 @@ input::-ms-reveal {
   width: 198px;
   height: 260px;
   margin: 0 auto;
+  position: relative;
 }
 .custom-co .cusom-t {
   width: 100%;
@@ -1243,12 +1252,26 @@ input::-ms-reveal {
   left: 50%;
   transform: translate(-50%);
   bottom: 28px;
+  padding: 5px 10px;
 }
 .custom-btop {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
   bottom: 11px;
+  padding: 5px 10px;
+}
+.custom-bomRight {
+  position: absolute;
+  bottom: 28px;
+  right: 20px;
+  padding: 5px 10px;
+}
+.custom-bomLeft {
+  position: absolute;
+  bottom: 28px;
+  left: 20px;
+  padding: 5px 10px;
 }
 .custom-pc1 {
   margin: 10px auto;
@@ -1261,9 +1284,73 @@ input::-ms-reveal {
 }
 .custom-formgroup {
   width: 100%;
+  height: 36px;
   margin-bottom: 30px;
 }
-/*分级管控*/
+.viewmore-modal .modal-dialog {
+  width: 803px!important;
+  height: 500px;
+}
+.viewmore-modal .modal-dialog .modal-content {
+  height: 100%;
+}
+.viewmore-modal .modal-dialog .modal-content .modal-body {
+  min-height: 370px;
+}
+.viewmore {
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background: #F7F7F7;
+  border: 1px solid #ECECEC;
+  border-radius: 4px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-size: 1.2rem;
+  color: #666666;
+  cursor: pointer;
+}
+.viewmore a {
+  color: #666666;
+}
+.viewmore:hover {
+  background: #E6F8F6;
+}
+.viewmore-green {
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #E9EDFC;
+  color: #445596;
+  border: 1px solid #A5B3E7;
+  border-radius: 4px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.viewmore-green a {
+  color: #666666;
+}
+.viewmore-green:hover {
+  background: #E6F8F6;
+}
+.custom-add {
+  width: 46px;
+  height: 46px;
+  float: left;
+  background: url(../images/custom-add.jpg) no-repeat;
+  cursor: pointer;
+}
+/*分级管理*/
 .fa {
   font-family: "cl" !important;
   font-size: 16px;
