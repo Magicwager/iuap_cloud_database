@@ -22,7 +22,9 @@ let Config = {
     edit: `${serverURL02}/bd/attr/extendField/`,              // 编辑
     delete: `${serverURL02}/bd/attr/extendField/`,            // 删除
     queryDocs: `${serverURL02}/bd/attr/doccustoms`,           // 查询所有的自定义项目
-    viewMoreSave:`${serverURL02}/bd/attr/doccustom`,          // 员工档案新增保存
+    viewMoreSave:`${serverURL02}/bd/attr/doccustom`,          // 档案新增
+    viewMoreEdit:`${serverURL02}/bd/attr/doccustom/`,         // 档案编辑
+    queryEntitiy: `${serverURL02}/bd/dataType/entity`         // 引用档案接口
   },
   // 分级管理
   manage: {

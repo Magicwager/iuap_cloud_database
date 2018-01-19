@@ -37,6 +37,10 @@ class CustomListAddOrEdit extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.store.queryEntitiy();
+  }
+
   // 展示
   show(param) {
     let {index, flag} = param;
@@ -146,7 +150,7 @@ class CustomListAddOrEdit extends Component {
 
     // 保存校验
     if (this.store.custom.name == '') {
-      this.refs.name.innerHTML = '不能为空！';
+      this.refs.name.innerHTML = '名称不能为空！';
       this.setState(Object.assign(this.state.validation, {name: 'error'}))
       return false;
     }
@@ -155,14 +159,14 @@ class CustomListAddOrEdit extends Component {
       .then(data => {
         if (data.status) {
           GlobalStore.showInfo("保存成功");
-          if (this.state.page == 'add') {
+          if (this.state.flag == 'add') {
             this.props.handlePagination(1, event);
           } else {
             this.props.handlePagination(this.store.activePageSize, event);
           }
           this.close();
         } else {
-          GlobalStore.showError("保存失败");
+          GlobalStore.showError(data.msg);
         }
       });
   }
@@ -187,7 +191,7 @@ class CustomListAddOrEdit extends Component {
             <Col md={6} sm={12} xs={12} className="custom-m30">
               <FormGroup className="custom-formgroup" controlId="name" validationState={this.state.validation.name}>
                 <Col componentClass={ControlLabel} className="text-right currency-lh" md={4} mdOffset={1} sm={4} xs={4}>
-                  名称：
+                  <span className="currency-bishu">*</span>名称：
                 </Col>
                 <Col md={6} sm={6} xs={6}>
                   <div className="pr" style={{'width':'260px'}}>

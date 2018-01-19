@@ -774,7 +774,24 @@ input::-ms-reveal{display:none;}
   }
 }
 // 自定义项查看更多
+.viewmore-eidticon, .viewmore-green-eidticon {
+  width: 18px;
+  height: 50px;
+  display: block;
+  .pa;
+  top: 0;
+  left: -18px;
+  transition: all ease .3s;
+}
+.viewmore-eidticon {
+  background-color: #97D9EF;
+}
+.viewmore-green-eidticon {
+  background-color: #A5B3E7;
+}
 .viewmore {
+  .pr;
+  overflow: hidden;
   width: 100px;
   height: 50px;
   line-height: 50px;
@@ -792,9 +809,14 @@ input::-ms-reveal{display:none;}
   a {color: @fontColorLevel2;}
   &:hover {
     background: #E6F8F6;
+    .viewmore-eidticon {
+      left: 0;
+    }
   }
 }
 .viewmore-green {
+  .pr;
+  overflow: hidden;
   width: 100px;
   height: 50px;
   line-height: 50px;
@@ -808,13 +830,16 @@ input::-ms-reveal{display:none;}
   .mb10;
   box-sizing: border-box;
   .f12;
-  //color: @fontColorLevel2;
   .pointer;
   a {color: @fontColorLevel2;}
   &:hover {
-    background: #E6F8F6;
+    background-color: #E9EDFC;
+    .viewmore-green-eidticon {
+      left: 0;
+    }
   }
 }
+
 .custom-add {
   width: 46px;
   height: 46px;

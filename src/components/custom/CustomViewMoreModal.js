@@ -18,14 +18,13 @@ class CustomViewMoreModal extends Component {
     super(props);
     this.store = new CustomStore();
     this.state = {
-      isShow: false,
-      viewMoreData: [],
-      extendFlag: 0,
-      id:''
+      isShow: false,   // 弹框是否显示
+      extendFlag: 0,   // 加号是否显示
+      id:'',           // 当前数据的id
+      name:'',        // 当前数据的name字段
     }
 
     this.close = this.close.bind(this);
-    this.openCard = this.openCard.bind(this);
     this.addData = this.addData.bind(this);
   }
 
@@ -33,9 +32,9 @@ class CustomViewMoreModal extends Component {
   show(param) {
     this.setState({
       isShow: true,
-      viewMoreData: param.param,
       extendFlag: param.extendFlag,
-      id: param.id
+      id: param.id,
+      name: param.name
     });
     this.store.queryViewMoreData = param.param;
   }
@@ -48,17 +47,33 @@ class CustomViewMoreModal extends Component {
     this.props.refreshPage();
   }
 
-  // 打开新增卡片
-  openCard() {
-    this.close();
-    this.refs.staffAdd.show({});
+  // 新增、编辑
+  handleAdd(flag, index) {
+    this.setState({isShow: false});
+    if(flag=='add') {this.refs.staffAdd.show({flag})}
+    if(flag=='edit') {
+      const queryViewMoreData = this.store.queryViewMoreData.slice()[index];
+      Object.assign(this.store.selectedEditData, queryViewMoreData);
+      this.store.selectedEditIndex = index;
+      this.refs.staffAdd.show({'name':queryViewMoreData.name,'doctype':queryViewMoreData.doctype,'id':queryViewMoreData.id,flag})}
   }
 
   // 拼接数据
   addData(param) {
-    const addData = JSON.parse(param);
+    const addData = JSON.parse(param.saveData);
     this.setState({isShow: true});
-    this.store.queryViewMoreData.push(addData);
+    // 新增
+    if(param.flag == 'add') {
+      this.store.queryViewMoreData.push(addData);
+    }
+    // 编辑
+    if(param.flag == 'edit') {
+      //const selectedEditData = this.store.selectedEditData;
+      // const index = this.store.queryViewMoreData.slice().findIndex(function(value,index) {
+      //   return value.id == selectedEditData.id
+      // });
+      this.store.queryViewMoreData.splice(this.store.selectedEditIndex, 1, addData);
+    }
   }
 
 
@@ -70,7 +85,7 @@ class CustomViewMoreModal extends Component {
       <div>
         <Modal {...this.props} show={_this.state.isShow} onHide={_this.close} className="viewmore-modal manage-modal">
           <Modal.Header closeButton>
-            <Modal.Title className='manage-title'>员工</Modal.Title>
+            <Modal.Title className='manage-title'>{_this.state.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Scrollbars
@@ -80,10 +95,11 @@ class CustomViewMoreModal extends Component {
                 <div className="row clearfix" style={{'height':'350px'}}>
                   {queryViewMoreData.map((item, index) => {
                     return (<div key={'view'+index} className={item.extendStatus == 0 ?"viewmore":"viewmore-green"}>
+                      <span onClick={_this.handleAdd.bind(this, 'edit', index)} className={item.extendStatus == 0 ? 'cl cl-pen viewmore-eidticon':'cl cl-pen viewmore-green-eidticon'}></span>
                       <Link to={"/customlist/"+item.doctype}>{item.name}</Link>
                     </div>)
                   })}
-                  {_this.state.extendFlag == 0 ?  <div className="custom-add" onClick={_this.openCard}></div>:''}
+                  {_this.state.extendFlag == 0 ? <div className="custom-add" onClick={_this.handleAdd.bind(this, 'add')}></div>:''}
                 </div>
               </Scrollbars>
           </Modal.Body>
@@ -92,7 +108,12 @@ class CustomViewMoreModal extends Component {
           </Modal.Footer>
         </Modal>
 
-        <StaffAddModal ref='staffAdd' id={_this.state.id} addData={_this.addData} queryViewMoreData={this.store.queryViewMoreData}/>
+        <StaffAddModal
+          ref='staffAdd'
+          id={_this.state.id}
+          addData={_this.addData}
+          queryViewMoreData={_this.store.queryViewMoreData}
+        />
 
       </div>
     )

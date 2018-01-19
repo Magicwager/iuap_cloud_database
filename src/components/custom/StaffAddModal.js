@@ -8,6 +8,7 @@ import {Modal, Form, FormGroup, FormControl, ControlLabel, Col, Button, Checkbox
 
 import GlobalStore from '../../stores/GlobalStore';
 import CustomStore from '../../stores/custom/CustomStore';
+let title = {'add': '新增', 'edit': '编辑'}
 
 @observer
 class StaffAddModal extends Component {
@@ -27,9 +28,17 @@ class StaffAddModal extends Component {
   show(param) {
     this.setState({
       isShow: true,
-      viewMoreData: param.param
+      flag: param.flag
     });
-    this.store.staffViewSaveData.parentid = this.props.id;
+    //console.log('编辑', param)
+    //console.log('编辑', this.props.id)
+    if(param.flag == 'add') {
+      Object.assign(this.store.staffViewSaveData,{'parentid':this.props.id,'name':'','doctype':'','extendStatus':1})
+    }
+    if(param.flag == 'edit') {
+      Object.assign(this.store.staffViewSaveData,{'parentid':this.props.id,'name':param.name,'doctype':param.doctype,'extendStatus':1})
+      this.store.selectedEditId = param.id;
+    }
   }
 
   // 关闭
@@ -37,13 +46,27 @@ class StaffAddModal extends Component {
     this.setState({
       isShow: false
     });
-    Object.assign(this.store.staffViewSaveData, {'parentid':'','name':'','doctype':''});
+    Object.assign(this.store.staffViewSaveData, {'parentid': '', 'name': '', 'doctype': ''});
   }
 
+
+  // 改变输入框
   handleChange(field, e) {
     let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
     this.refs[field].innerHTML = '';
     this.store.staffViewSaveData[field] = val;
+    if(field=='name') {
+      let reg = /^[\-0-9a-zA-Z_\u4e00-\u9fff]{1,}$/;
+      if(!reg.test($.trim(val))) {
+        this.refs[field].innerHTML = '100位以内的中文、字母、数字、下划线、短横';
+      }
+    }
+    if(field=='doctype') {
+      let reg = /^[0-9a-zA-Z_\-]{1,}$/;
+      if(!reg.test($.trim(val))) {
+        this.refs[field].innerHTML = '字母、数字、下划线、短横';
+      }
+    }
   }
 
   // 保存
@@ -60,32 +83,36 @@ class StaffAddModal extends Component {
       return false;
     }
 
-    // 校验
-    let queryViewMore = this.props.queryViewMoreData.slice();
-    for (var i = 0, len = queryViewMore.length; i < len; i++) {
-      var val = this.store.staffViewSaveData.name;
-      var type =  this.store.staffViewSaveData.doctype;
-      if (queryViewMore[i].name == val) {
-        this.refs.name.innerHTML = "档案名称已存在！";
-        return false;
-      }
-      if (queryViewMore[i].doctype == type) {
-        this.refs.doctype.innerHTML = "档案编码已存在！";
-        return false;
+    if(this.state.flag == 'add') {
+      // 校验
+      let queryViewMore = this.props.queryViewMoreData.slice();
+      for (var i = 0, len = queryViewMore.length; i < len; i++) {
+        var val = this.store.staffViewSaveData.name;
+        var type =  this.store.staffViewSaveData.doctype;
+        if (queryViewMore[i].name == val) {
+          this.refs.name.innerHTML = "档案名称已存在！";
+          return false;
+        }
+        if (queryViewMore[i].doctype == type) {
+          this.refs.doctype.innerHTML = "档案编码已存在！";
+          return false;
+        }
       }
     }
 
 
-    this.store.viewMoreSave()
-    .then(data => {
-      if (data.status) {
-        GlobalStore.showInfo("保存成功");
-        this.props.addData(JSON.stringify(this.store.staffViewSaveData));
-        this.close();
-      } else {
-        GlobalStore.showError(data.data);
-      }
-    });
+    this.store.viewMoreSave(this.state.flag)
+      .then(data => {
+        if (data.status) {
+          GlobalStore.showInfo("保存成功");
+          const saveData = JSON.stringify(this.store.staffViewSaveData);
+          const flag = this.state.flag;
+          this.props.addData({saveData,flag});
+          this.close();
+        } else {
+          GlobalStore.showError(data.data);
+        }
+      });
   }
   
   render() {
@@ -96,7 +123,7 @@ class StaffAddModal extends Component {
       <div>
         <Modal {...this.props} show={_this.state.isShow} onHide={_this.close} className="manage-modal">
           <Modal.Header closeButton>
-            <Modal.Title className='manage-title'>新增</Modal.Title>
+            <Modal.Title className='manage-title'>{title[this.state.flag]}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form className="currency-form">
@@ -107,8 +134,8 @@ class StaffAddModal extends Component {
                 <Col md={6} sm={6} xs={6}>
                   <div className="pr" style={{'width':'260px'}}>
                     <FormControl autoComplete='off' className="currency-ref" type="text" placeholder="名称"
-                      value={staffViewSaveData.name}
-                      onChange={_this.handleChange.bind(this, 'name')}
+                                 value={staffViewSaveData.name}
+                                 onChange={_this.handleChange.bind(this, 'name')}
                     />
                     <div ref="name" style={{'top':'40px','left':'0'}} className="currency-error"></div>
                   </div>
@@ -122,7 +149,7 @@ class StaffAddModal extends Component {
                 <Col md={6} sm={6} xs={6}>
                   <div className="pr" style={{'width':'260px'}}>
                     <FormControl autoComplete='off' className="currency-ref" type="text" placeholder="编码"
-                                 value={staffViewSaveData.code}
+                                 value={staffViewSaveData.doctype}
                                  onChange={_this.handleChange.bind(this, 'doctype')}
                     />
                     <div ref="doctype" style={{'top':'40px','left':'0'}} className="currency-error"></div>

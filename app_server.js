@@ -16,6 +16,8 @@ const context = [`/ext/bd/attr/extendFields`,
                   `/ext/bd/attr/doccustoms`,
                   `/ext/bd/metaData/relation/doctypeId`,
                   `/ext/bd/attr/doccustom`,
+                  `/ext/bd/attr/doccustom/`,
+                  `/ext/bd/dataType/entity`,
                   `/basedoc-mc/manage/save`,
                   `/basedoc-mc/manage/listorgsettings`
                 ]

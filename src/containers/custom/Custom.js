@@ -14,6 +14,7 @@ class Custom extends React.Component {
     super(props);
     this.store = new CustomStore();
     this.state = {}
+
     this.handleClick = this.handleClick.bind(this);
     this.handleTransform = this.handleTransform.bind(this);
     this.refreshPage = this.refreshPage.bind(this);
@@ -25,9 +26,9 @@ class Custom extends React.Component {
   }
 
   // 查看更多按钮
-  handleClick(param1, param2, param3) {
+  handleClick(param1, param2, param3, param4) {
     let _this = this;
-    _this.refs.viewMore.show({param:param1.slice(),extendFlag:param2,id:param3});
+    _this.refs.viewMore.show({param:param1.slice(),extendFlag:param2,id:param3,name:param4});
   }
 
   // 转换配置显示
@@ -62,7 +63,7 @@ class Custom extends React.Component {
                   <Link to={"/customlist/"+item.doctype} className={item.subDoccustom.length ==1 ? 'btn-custom custom-pc1':"btn-custom custom-pc"}>{item.name}</Link>
 
                   {item.subDoccustom.length >= 2 ?
-                    <button onClick={this.handleClick.bind(this, item.subDoccustom, item.extendFlag, item.id)} className="btn btn-default custom-bomRight">查看更多</button>
+                    <button onClick={this.handleClick.bind(this, item.subDoccustom, item.extendFlag, item.id, item.name)} className="btn btn-default custom-bomRight">查看更多</button>
                      :item.subDoccustom.map((value, index) => {
                       return ( <Link key={index} to={"/customlist/"+value.doctype}
                                      className="btn-custom custom-pt1">{value.name}</Link>)
@@ -74,7 +75,9 @@ class Custom extends React.Component {
               </div>)
           })}
         </div>
+
         <CustomViewMoreModal ref='viewMore' refreshPage={this.refreshPage}/>
+
       </div>
     )
   }

@@ -100,7 +100,7 @@ class CustomList extends React.Component {
       this.store.precisionNULL = true;
       this.store.lengthNull = false;
       Object.assign(this.store.instancefileValue, {'code': 'adminorg', 'name': '行政组织'});
-      Object.assign(this.store.datatypeVale, {'code': 'string', 'name': '字符串'});
+      Object.assign(this.store.datatypeVale, {'code': '1', 'name': '字符串'});
     }
     if (flag === 'edit') {
       let currentData = this.store.customs[index];
@@ -128,29 +128,29 @@ class CustomList extends React.Component {
   // 数据类型转换事件
   onChangeTypeName(param) {
     switch (param) {
-      case 'string':
-        return Object.assign(this.store.datatypeVale, {'code': 'string', 'name': '字符串'});
+      case '1':
+        return Object.assign(this.store.datatypeVale, {'code': '1', 'name': '字符串'});
         break;
-      case 'integer':
-        return Object.assign(this.store.datatypeVale, {'code': 'integer', 'name': '整数'});
+      case '4':
+        return Object.assign(this.store.datatypeVale, {'code': '4', 'name': '整数'});
         break;
-      case 'double':
-        return Object.assign(this.store.datatypeVale, {'code': 'double', 'name': '数值'});
+      case '31':
+        return Object.assign(this.store.datatypeVale, {'code': '31', 'name': '数值'});
         break;
-      case 'boolean':
-        return Object.assign(this.store.datatypeVale, {'code': 'boolean', 'name': '布尔类型'});
+      case '32':
+        return Object.assign(this.store.datatypeVale, {'code': '32', 'name': '布尔类型'});
         break;
-      case 'date':
-        return Object.assign(this.store.datatypeVale, {'code': 'date', 'name': '日期'});
+      case '33':
+        return Object.assign(this.store.datatypeVale, {'code': '33', 'name': '日期'});
         break;
-      case 'datetime':
-        return Object.assign(this.store.datatypeVale, {'code': 'datetime', 'name': '日期时间'});
+      case '34':
+        return Object.assign(this.store.datatypeVale, {'code': '34', 'name': '日期时间'});
         break;
-      case 'ref':
-        return Object.assign(this.store.datatypeVale, {'code': 'ref', 'name': '自定义档案'});
+      case '201':
+        return Object.assign(this.store.datatypeVale, {'code': '201', 'name': '自定义档案'});
         break;
-      case 'list':
-        return Object.assign(this.store.datatypeVale, {'code': 'list', 'name': '基本档案'});
+      case '201':
+        return Object.assign(this.store.datatypeVale, {'code': '201', 'name': '基本档案'});
         break;
       default:
         break;

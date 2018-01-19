@@ -32,9 +32,9 @@ class CustomStore {
   @observable
   page = 1;     // 显示当前页
   @observable
-  dataTypes = [{'code':'string','name':'字符串'},{'code':'integer','name':'整数'},{'code':'double','name':'数值'},{'code':'boolean','name':'布尔类型'},{'code':'date','name':'日期'},{'code':'datetime','name':'日期时间'},{'code':'ref','name':'自定义档案'},{'code':'list','name':'基本档案'}]; // 数据类型
+  dataTypes = [{'code':'1','name':'字符串'},{'code':'4','name':'整数'},{'code':'31','name':'数值'},{'code':'32','name':'布尔类型'},{'code':'33','name':'日期'},{'code':'34','name':'日期时间'},{'code':'201','name':'自定义档案'},{'code':'201','name':'基本档案'}]; // 数据类型
   @observable
-  datatypeVale = {'code': 'string', 'name': '字符串'};  // 数据类型的默认value
+  datatypeVale = {'code': '1', 'name': '字符串'};  // 数据类型的默认value
   @observable
   pageNumber = 10;    // 每一页显示的数据条数
   @observable
@@ -57,6 +57,15 @@ class CustomStore {
   extendFlag = 0;  // 员工查看更多是否显示  0: 显示 ， 1: 隐藏
   @observable
   staffViewSaveData = {'parentid':'','name':'','doctype':'','extendStatus':1};  // 员工档案新增保存数据
+  @observable
+  queryEntitiyData = [];  // 引用档案数据
+  @observable
+  selectedEditData = {}; // 记录档案选中编辑的数据
+  @observable
+  selectedEditId='';// 记录编辑的id
+  @observable
+  selectedEditIndex = ''; // 记录编辑的index
+  
 
 
   // 查询所有的自定义项目 接口
@@ -268,32 +277,100 @@ class CustomStore {
     })
   }
 
-  // 员工档案新增保存接口
+  // 档案新增、编辑接口
   @action
-  viewMoreSave() {
+  viewMoreSave(flag) {
     let _this = this;
     _this.globalStore.showWait();
 
-    let option = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Cache-Control': 'no-cache',
-        'userId': '2c179f11b41643fcb61508d86b798910',  // 新增接口使用
-        'tenantId': 'owzp1n95',                        // 新增接口使用
-        'sysId': 'all',                                // 新增接口使用
-      },
-      body: JSON.stringify(_this.staffViewSaveData),
-      credentials: "include"
-    }
+    if(flag == 'add') {
+      console.log(_this.staffViewSaveData)
+      let option = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache',
+          'userId': '2c179f11b41643fcb61508d86b798910',  // 新增接口使用
+          'tenantId': 'owzp1n95',                        // 新增接口使用
+          'sysId': 'all',                                // 新增接口使用
+        },
+        body: JSON.stringify(_this.staffViewSaveData),
+        credentials: "include"
+      }
 
-    return fetch(Config.custom.viewMoreSave, option)
+      return fetch(Config.custom.viewMoreSave, option)
       .then(response => {
         _this.globalStore.hideWait();
-          return response.ok ? response.json() : {}
-       })
-        .then(data => data)
+        return response.ok ? response.json() : {}
+      })
+      .then(data => data)
+    }
+
+    if(flag == 'edit') {
+      let param =  Object.assign(_this.staffViewSaveData, {'id': this.selectedEditId});
+      let option = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache',
+          'userId': '2c179f11b41643fcb61508d86b798910',  // 新增接口使用
+          'tenantId': 'owzp1n95',                        // 新增接口使用
+          'sysId': 'all',                                // 新增接口使用
+        },
+        body: JSON.stringify(param),
+        credentials: "include"
+      }
+      return fetch(Config.custom.viewMoreEdit +`${param.id}`, option)
+      .then(response => {
+        _this.globalStore.hideWait();
+        return response.ok ? response.json() : {}
+      })
+      .then(data => data)
+    }
+  }
+
+  // 引用档案查询接口
+  @action
+  queryEntitiy() {
+    let _this = this;
+    _this.globalStore.showWait();
+
+   //let param = { };
+
+    let opt = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cache-Control': 'no-cache',
+        'mode': "no-cors",
+        'tenantId': 'owzp1n95',                        // 查询接口使用
+      },
+      //body: JSON.stringify(param),
+      //credentials: "include"
+    }
+
+    return (
+      fetch(Config.custom.queryEntitiy, opt)
+      .then(response => {
+        _this.globalStore.hideWait();
+        return response.ok ? response.json() : {}
+      })
+      .then(data => {
+        if (data.status) {
+          //_this.queryEntitiyData.replace(data.data);
+          console.log('引用档案', data.data);
+          //callback(data.data);
+        }
+        else {
+          _this.globalStore.showError(!data.msg ? "查询失败" : data.msg);
+        }
+      }).catch(function (err) {
+        _this.globalStore.hideWait();
+        _this.globalStore.showError('数据请求失败,错误信息:' + err.toString());
+      })
+    )
   }
 }
 
