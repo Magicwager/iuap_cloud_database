@@ -200,8 +200,9 @@
   transition: .5s;
   cursor: default;
   z-index: 20;
-  background: rgba(9,44,66,0.08);
-  border: 1px solid #CED8DE;
+  background: rgba(225,76,70,0.10);
+  border-color: rgba(225,76,70,0.10);
+  box-shadow: 0 0 6px #FDF6F6;
 }
 
 .orgchart .node.focused {
@@ -459,8 +460,8 @@
 }
 
 .orgchart .node {
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  -webkit-transition: all ease-in 0.3s;
+  transition: all ease-in 0.3s;
   top: 0;
   left: 0;
 }

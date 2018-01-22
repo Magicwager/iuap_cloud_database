@@ -50,6 +50,7 @@ class ManageModal extends Component {
 
   // 是否管控
   handleChange(docid, index, e) {
+    this.refs['message'+docid].style.display = 'none';
     if (e == true) {
       Object.assign(this.store.docTypes[index], {'ismc': '1'});
       Object.assign(this.store.docTypeList, this.store.docTypes[index]);
@@ -65,6 +66,7 @@ class ManageModal extends Component {
       isChecked: !this.state.isChecked
     }, () => {
       if (this.store.docTypes[index].ismc == '1') {
+        this.refs['message'+docid].style.display = 'none';
         if (this.state.isChecked == true) {
           Object.assign(this.store.docTypes[index], {'isshare': '1'});
         }
@@ -73,6 +75,7 @@ class ManageModal extends Component {
         }
       }
       else {
+        this.refs['message'+docid].style.display = 'block';
         return false;
       }
     });
@@ -121,7 +124,7 @@ class ManageModal extends Component {
 
     return (
       <div>
-        <Modal {...this.props} show={_this.state.isShow} onHide={_this.close} className="manage-modal">
+        <Modal show={_this.state.isShow} onHide={_this.close} className="manage-modal">
           <Modal.Header closeButton>
             <Modal.Title className='manage-title'>基础数据管理配置</Modal.Title>
           </Modal.Header>
@@ -140,21 +143,22 @@ class ManageModal extends Component {
                 <table className="table" style={{'borderBottom':'none'}}>
                   <tbody>
                   {
-                    this.store.docTypes.length > 0 ?
-                      this.store.docTypes.map((item, index) => {
+                    _this.store.docTypes.length > 0 ?
+                      _this.store.docTypes.map((item, index) => {
                         return (
                           <tr key={index}>
                             <td>
                               <div className="manage-checkbox">
                                 <Checkbox colors="dark"
                                           checked={item.ismc == '1' ? true : false}
-                                          onChange={this.handleChange.bind(this, item.docid, index)}> {item.docname}</Checkbox>
+                                          onChange={_this.handleChange.bind(this, item.docid, index)}> {item.docname}</Checkbox>
                               </div>
                             </td>
                             <td>
-                              <div className={this.store.docTypes[index].ismc=='1'?"manage-checkbox":'hidden'} onClick={this.handleCheck.bind(this, item.docid, index)}>
+                              <div className="manage-checkbox" onClick={_this.handleCheck.bind(this, item.docid, index)}>
                                 <div className={item.isshare == '1' ? "manage-radio-checked":"manage-radio"}></div>
                                 <span>共享下级</span>
+                                <span className='manage-message' ref={'message' +item.docid} style={{'display': 'none'}}> 请先选择{item.docname}</span>
                               </div>
                             </td>
                           </tr>)
@@ -168,8 +172,8 @@ class ManageModal extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer style={{'borderTop':'none'}}>
-            <button className="btn btn-primary-red mr10" onClick={_this.handleSubmit}>保存</button>
-            <button className="btn btn-default-red" onClick={_this.close}>取消</button>
+            <button className="btn btn-primary mr10" onClick={_this.handleSubmit} style={{'padding':'4px 20px'}}>保存</button>
+            <button className="btn btn-twoDefault" onClick={_this.close} style={{'padding':'4px 20px'}}>取消</button>
           </Modal.Footer>
         </Modal>
       </div>

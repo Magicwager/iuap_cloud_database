@@ -34,11 +34,11 @@ class Custom extends React.Component {
   // 转换配置显示
   handleTransform(param) {
     if(param && param.length == 0) {
-      return (<button className="btn btn-primary custom-bto">配置显示</button>)
+      return (<button className="btn btn-gray custom-bto">配置显示</button>)
     } else if(param && param.length == 1) {
-      return (<button className="btn btn-primary custom-btop">配置显示</button>)
+      return (<button className="btn btn-gray custom-btop">配置显示</button>)
     } else {
-     return (<button className="btn btn-primary custom-bomLeft">配置显示</button>)
+     return (<button className="btn btn-gray custom-bomLeft">配置显示</button>)
     }
   }
 

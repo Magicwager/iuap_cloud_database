@@ -159,8 +159,8 @@ class StaffAddModal extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer style={{'borderTop':'none','marginBottom':'20px'}}>
-            <button className="btn btn-default-red mr15" onClick={_this.close}>取消</button>
-            <button className="btn btn-primary-red mr30" onClick={_this.onSubmit}>保存</button>
+            <button className="btn btn-primary mr15" onClick={_this.onSubmit}>保存</button>
+            <button className="btn btn-default mr30" onClick={_this.close}>取消</button>
           </Modal.Footer>
         </Modal>
       </div>

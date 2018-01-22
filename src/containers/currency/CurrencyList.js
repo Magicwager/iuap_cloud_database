@@ -45,12 +45,12 @@ export default class CurrencyList extends Component {
     // 取消
     close() {
         this.store.page = 1;
+        Object.assign(this.store.currency,{code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0});
         if (this.state.flag == 'add') {
-            Object.assign(this.store.currency,{code:'',name:'',sign:'',pricedigit:6,moneydigit:2,pricerount:5,moneyrount:5,description:'',isdefault:0});
-            this.setState({selectValue:' ',selectOneValue:this.store.pricerount,selectTwoValue: this.store.moneyrount})
+          this.setState({selectValue:' ',selectOneValue:this.store.pricerount,selectTwoValue: this.store.moneyrount})
         }
         if (this.state.flag == 'edit') {
-            this.setState({selectOneValue:this.store.pricerount,selectTwoValue: this.store.moneyrount})
+          this.setState({selectOneValue:this.store.pricerount,selectTwoValue: this.store.moneyrount})
         }
         this.refs.message.innerHTML = '';
         this.refs.pricedigit.innerHTML = '';
@@ -79,6 +79,12 @@ export default class CurrencyList extends Component {
         else {
             this.setState(Object.assign(this.state.validation, {moneydigit: null}))
         }
+    }
+
+    // 描述文本框
+    handleDesc(field, e) {
+      let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
+      this.store.currency[field] = val;
     }
 
     // 卡片展示
@@ -122,6 +128,8 @@ export default class CurrencyList extends Component {
         }
 
 
+
+
         this.store.handleSubmit(this.state.flag)
             .then(data =>{
                 if (data.status) {
@@ -152,7 +160,6 @@ export default class CurrencyList extends Component {
 
     // 币种参照
     updateValue (newValue) {
-        console.log(newValue)
         this.setState({
             selectValue: newValue,
         });
@@ -187,7 +194,7 @@ export default class CurrencyList extends Component {
                 <div className="head">
                     <div className="head-r fr">
                         <button className="btn btn-default mr15" onClick={this.close.bind(this)}>取消</button>
-                        <button className="btn btn-primary" onClick={this.handleSubmit.bind(this)}>保存</button>
+                        <button className="btn btn-primary mr10" onClick={this.handleSubmit.bind(this)}>保存</button>
                     </div>
                 </div>
                 <div className="currency-content container-fluid">
@@ -218,7 +225,7 @@ export default class CurrencyList extends Component {
                                                     name="form-field-name"
                                                     value={this.state.selectValue}
                                                     onChange={this.updateValue.bind(this)}
-                                                    options={this.store.refJsonData}
+                                                    options={this.store.refJsonData.slice()}
                                                     clearable={false}
                                                     deleteRemoves={false}
                                                     backspaceRemoves={false}
@@ -301,7 +308,7 @@ export default class CurrencyList extends Component {
                                         name="form-field-name"
                                         value={this.state.selectOneValue}
                                         onChange={this.updateChangeValue.bind(this, 'pricerount')}
-                                        options={this.store.pricerounts}
+                                        options={this.store.pricerounts.slice()}
                                         clearable={this.state.clearable}
                                         valueKey="price"
                                         labelKey="name"
@@ -344,7 +351,7 @@ export default class CurrencyList extends Component {
                                      name="form-field-name"
                                      value={this.state.selectTwoValue}
                                      onChange={this.updateChangeValue.bind(this, 'moneyrount')}
-                                     options={this.store.pricerounts}
+                                     options={this.store.pricerounts.slice()}
                                      clearable={this.state.clearable}
                                      valueKey="price"
                                      labelKey="name"
@@ -364,7 +371,7 @@ export default class CurrencyList extends Component {
                             </FormGroup>
                         </Col>
                         <Col xs={6} className="col-xs-pull-3">
-                            <FormControl style={{'width':'100%'}} onChange={this.handleChange.bind(this, "description")}
+                            <FormControl style={{'width':'100%'}} onChange={this.handleDesc.bind(this, "description")}
                                          value={currency.description}
                                          componentClass="textarea"
                             />

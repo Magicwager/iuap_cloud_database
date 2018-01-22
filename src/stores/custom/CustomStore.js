@@ -337,8 +337,6 @@ class CustomStore {
     let _this = this;
     _this.globalStore.showWait();
 
-   //let param = { };
-
     let opt = {
       method: 'post',
       headers: {

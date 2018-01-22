@@ -254,7 +254,7 @@ class CustomList extends React.Component {
           <div className="head">
             <div className="head-r fr">
               <button className="btn btn-primary mr15" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
-              <button className="btn btn-primary mr10">配置显示</button>
+              <button className="btn btn-default mr10">配置显示</button>
             </div>
           </div>
           <div className="currency-content" style={{'paddingBottom':'0'}}>

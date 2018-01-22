@@ -29,7 +29,7 @@ class Currency extends React.Component {
     }
 
     componentDidMount() {
-        //document.title="币种";
+        document.title="币种";
         // 初始化查询列表
         this.store.getCurrencyLst();
     }
@@ -166,7 +166,7 @@ class Currency extends React.Component {
                             </div>
                         </div>
                         <div className="head-r fr">
-                            <button className="btn btn-primary" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
+                            <button className="btn btn-primary mr10" onClick={this.handleAdd.bind(this, -1, 'add')}>添加</button>
                         </div>
                     </div>
 

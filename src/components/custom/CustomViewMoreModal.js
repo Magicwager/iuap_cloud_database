@@ -83,7 +83,7 @@ class CustomViewMoreModal extends Component {
     
     return (
       <div>
-        <Modal {...this.props} show={_this.state.isShow} onHide={_this.close} className="viewmore-modal manage-modal">
+        <Modal show={_this.state.isShow} onHide={_this.close} className="viewmore-modal manage-modal">
           <Modal.Header closeButton>
             <Modal.Title className='manage-title'>{_this.state.name}</Modal.Title>
           </Modal.Header>
@@ -104,7 +104,7 @@ class CustomViewMoreModal extends Component {
               </Scrollbars>
           </Modal.Body>
           <Modal.Footer style={{'borderTop':'none'}}>
-            <button className="btn btn-default-red mr30" onClick={_this.close}>取消</button>
+            <button className="btn btn-default mr30" onClick={_this.close}>取消</button>
           </Modal.Footer>
         </Modal>
 

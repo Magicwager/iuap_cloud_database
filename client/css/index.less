@@ -15,6 +15,10 @@
 @backColor: #E6E9E9;                // 主内容区大背景色
 @lightBackColor:#FAFBFC;
 @btnRedColor: #E14C46;              // 红色按钮
+@btnRedHoverColor: #D23D37;         // 红色按钮hover
+@btnRedFocusColor: #B2332E;         // 红色按钮Focus
+@btnGrayColor: #E6E9EC;             // 灰色
+@btnGrayHoverColor: #ECEFF0;        // 灰色hover色
 
 // 文字
 @fontColorLevel1: #333333;          // 一级标题文字色
@@ -40,10 +44,10 @@
 @inputBorderFocus: #00B39E;         // input 获取焦点时的边框色
 
 // 按钮 input
-@btnDefaultBorder: #D9D9D9;         // btn-default按钮边框色
-@btnPrimaryColor: #00B39E;          // 边框及背景色（基本绿）
-@btnPrimaryHover: #009886;          // btn-primary按钮背景色hover
-@btnPrimaryFocus: #008676;          // btn-primary按钮背景色focus
+@btnDefaultBorder: #D6D8DC;         // btn-default按钮边框色
+@btnPrimaryColor: #E14C46;          // 边框及背景色（基本绿）
+@btnPrimaryHover: #D23D37;          // btn-primary按钮背景色hover
+@btnPrimaryFocus: #B2332E;          // btn-primary按钮背景色focus
 
 // 列表 li options 等
 @listHoverBackColor: #eee;       // 列表 drop-menu等 列表项hover时背景色
@@ -196,13 +200,14 @@ input::-ms-reveal{display:none;}
   box-sizing: border-box;
   color: @fontColorLevel2;
   &:hover {
-    color: @btnPrimaryColor;
-    border-color: @btnPrimaryColor;
+    background: rgba(9,44,66,0.04);
+    color: @fontColorLevel2;
+    border-color: rgba(78,89,104,0.25);
   }
   &:focus {
-    color: @btnPrimaryFocus;
-    border-color: @btnPrimaryFocus;
-    .fff;
+    background: rgba(225,76,70,0.10);
+    border: 1px solid rgba(225,76,70,0.05);
+    color: @btnRedColor;
   }
 }
 .btn.btn-operate {       // 表格操作列按钮
@@ -220,48 +225,45 @@ input::-ms-reveal{display:none;}
     border-color: #D1D1D1;
   }
 }
-.btn.btn-primary-red {   // 首要按钮  红色
-  border-color: @btnRedColor;
-  background-color: @btnRedColor;
-  box-sizing: border-box;
-  color: #fff;
-  padding: 4px 22px;
-  &:hover {
-    border-color: @mainRed;
-    background-color: @mainRed;
-  }
-  &:focus {
-    border-color: @btnRedColor;
-    background-color: @btnRedColor;
-  }
-}
-.btn.btn-default-red {  // 默认按钮 红色
-  border-color: @btnDefaultBorder;
+// 默认按钮2
+.btn.btn-twoDefault {
+  border: none;
   .fff;
   box-sizing: border-box;
   color: @fontColorLevel2;
   padding: 4px 22px;
   &:hover {
-    color: @btnRedColor;
-    border-color: @btnRedColor;
+    background: rgba(9,44,66,0.08);
   }
   &:focus {
     color: @btnRedColor;
-    border-color: @btnRedColor;
-    .fff;
+    //border-color: @btnRedColor;
+    background: rgba(225,76,70,0.10);
+    //border: 3px solid rgba(225,76,70,0.05);
+  }
+}
+.btn.btn-gray {
+  border-color: @btnGrayColor;
+  background-color: @btnGrayColor;
+  box-sizing: border-box;
+  &:hover {
+    border-color: @btnGrayHoverColor;
+    background-color: @btnGrayHoverColor;
+  }
+  &:focus {
+    border-color: @btnGrayHoverColor;
+    background-color: @btnGrayHoverColor;
   }
 }
 
 // 表格
 .currency-grid {
-  //position: relative;
-  //overflow-x: auto;
   .w;
   table {
     .mb0;
     color: @fontColorLevel1;
     .fff;
-    border: 1px solid @borderColor;
+    border: 1px solid @borderHoverColor;
     border-collapse: inherit;
     thead {
       tr {
@@ -304,7 +306,7 @@ input::-ms-reveal{display:none;}
         }
         &:hover {
           td {.b0;}
-          background-color: rgba(0,179,158,0.10);
+          background: rgba(193,76,71,0.06);
         }
       }
     }
@@ -364,7 +366,7 @@ input::-ms-reveal{display:none;}
   height: 32px;
 }
 .Select.is-open > .Select-control {
-  border-color: @btnPrimaryColor!important;
+  border-color:@inputBorderFocus!important;
 }
 .Select-clear-zone {
   display: none!important;
@@ -374,7 +376,7 @@ input::-ms-reveal{display:none;}
   outline-offset: 0!important;
 }
 .Select.is-focused:not(.is-open) > .Select-control {
-  border-color: @btnPrimaryColor!important;
+  border-color: @inputBorderFocus!important;
   box-shadow: none!important;
   background: #fff;
   outline: 0!important;
@@ -439,7 +441,7 @@ input::-ms-reveal{display:none;}
 .Select.is-open > .Select-control {
   border-bottom-right-radius: 4px!important;
   border-bottom-left-radius: 4px!important;
-  border-color:  @btnPrimaryColor!important;
+  border-color: @inputBorderFocus!important;
 }
 .Select.is-open.is-focused>.Select-control .Select-value .Select-value-label {
   color: #999!important;
@@ -466,24 +468,24 @@ input::-ms-reveal{display:none;}
   margin: 20px auto;
   .pagination {
     li>a, li>span {
-      .fff;
-      border: 1px solid @btnDefaultBorder;
-      .br4;
+      border: none;
+      .br3;
       color: @fontColorLevel2;
+      background: rgba(9,30,66,0.04);
       &:hover {
-        border: 1px solid @borderHoverGreen;
-        color: @borderHoverGreen;
+        background: rgba(9,44,66,0.08);
+      }
+    }
+    li.disabled{
+      a,span {
+        background: rgba(9,44,66,0.04);
       }
     }
     li:not(:first-child)>a {margin-left: 9px;}
     li>span {font-weight: 700;}
     li.active > a {
-      border: none;
-      background-color: transparent;
-      color: @fontColorLevel1;
-      &:hover {
-        color: @borderHoverGreen;
-      }
+      background: #FCEDEC;
+      color: #E14C46;
     }
   }
 }
@@ -681,11 +683,11 @@ input::-ms-reveal{display:none;}
 }
 .btn-custom {
   background: #FFFFFF;
-  border: 1px solid #00B39E;
+  border: 1px solid @btnRedColor;
   border-radius: 4px;
   display: inline-block;
   font-size: 14px;
-  color: #00B39E;
+  color: @btnRedColor;
   width: 158px;
   height: 32px;
   .tc;
@@ -695,8 +697,8 @@ input::-ms-reveal{display:none;}
   padding: 0;
   transition: all .3s ease;
   &:hover {
-    background: #00B39E;
-    border: 1px solid #00B39E;
+    background: @btnRedColor;
+    border: 1px solid @btnRedColor;
     color: #fff;
   }
 }
@@ -784,7 +786,7 @@ input::-ms-reveal{display:none;}
   transition: all ease .3s;
 }
 .viewmore-eidticon {
-  background-color: #97D9EF;
+  background: rgba(225,76,70,0.15);
 }
 .viewmore-green-eidticon {
   background-color: #A5B3E7;
@@ -808,7 +810,8 @@ input::-ms-reveal{display:none;}
   .pointer;
   a {color: @fontColorLevel2;}
   &:hover {
-    background: #E6F8F6;
+    background: rgba(225,76,70,0.10);
+    border-color: rgba(225,76,70,0.15);
     .viewmore-eidticon {
       left: 0;
     }
@@ -821,9 +824,9 @@ input::-ms-reveal{display:none;}
   height: 50px;
   line-height: 50px;
   .tc;
-  background-color: #E9EDFC;
-  color: #445596;
-  border: 1px solid #A5B3E7;
+  .fff;
+  color: #474D54;
+  border: 1px solid #ECECEC;
   border-radius: 4px;
   .fl;
   .mr10;
@@ -878,7 +881,7 @@ input::-ms-reveal{display:none;}
   top: 1px;
   left: 8px;
   display: inline-block;
-  color: #00CB7C;
+  color: #65656A;
   font-size: 23px;
   transition: all .3s ease-out;
   &:hover {
@@ -892,7 +895,7 @@ input::-ms-reveal{display:none;}
   transform: translateX(-50%);
   .pointer;
   font-size: 10px;
-  color: #007ACE;
+  color: #E14C46;
   letter-spacing: 0;
   opacity: 0;
 }
@@ -912,6 +915,7 @@ input::-ms-reveal{display:none;}
   color: @fontColorLevel1;
 }
 .manage-checkbox {
+  .pr;
   font-size: 12px;
   color: #474D54;
   letter-spacing: 0;
@@ -919,6 +923,13 @@ input::-ms-reveal{display:none;}
   label {
     .fn;
   }
+}
+.manage-message {
+  .pa;
+  top: 1px;
+  right: 50px;
+  .f12;
+  color: @btnRedColor;
 }
 
 // 分级管理配置界面表格

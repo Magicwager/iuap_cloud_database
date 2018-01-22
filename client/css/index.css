@@ -638,10 +638,10 @@ a {
   color: #00B39E;
 }
 a:hover {
-  color: #009886;
+  color: #D23D37;
 }
 a:focus {
-  color: #008676;
+  color: #B2332E;
 }
 ::selection {
   background: transparent;
@@ -723,32 +723,33 @@ input::-ms-reveal {
   box-shadow: none;
 }
 .btn.btn-primary {
-  border-color: #00B39E;
-  background-color: #00B39E;
+  border-color: #E14C46;
+  background-color: #E14C46;
   box-sizing: border-box;
 }
 .btn.btn-primary:hover {
-  border-color: #009886;
-  background-color: #009886;
+  border-color: #D23D37;
+  background-color: #D23D37;
 }
 .btn.btn-primary:focus {
-  border-color: #008676;
-  background-color: #008676;
+  border-color: #B2332E;
+  background-color: #B2332E;
 }
 .btn.btn-default {
-  border-color: #D9D9D9;
+  border-color: #D6D8DC;
   background-color: #fff;
   box-sizing: border-box;
   color: #666666;
 }
 .btn.btn-default:hover {
-  color: #00B39E;
-  border-color: #00B39E;
+  background: rgba(9, 44, 66, 0.04);
+  color: #666666;
+  border-color: rgba(78, 89, 104, 0.25);
 }
 .btn.btn-default:focus {
-  color: #008676;
-  border-color: #008676;
-  background-color: #fff;
+  background: rgba(225, 76, 70, 0.1);
+  border: 1px solid rgba(225, 76, 70, 0.05);
+  color: #E14C46;
 }
 .btn.btn-operate {
   color: #5E6670;
@@ -758,43 +759,39 @@ input::-ms-reveal {
   padding: 4px 21px;
 }
 .btn.btn-operate:hover {
-  color: #009886;
-  border-color: #009886;
+  color: #D23D37;
+  border-color: #D23D37;
 }
 .btn.btn-operate:focus {
   color: #5E6670;
   border-color: #D1D1D1;
 }
-.btn.btn-primary-red {
-  border-color: #E14C46;
-  background-color: #E14C46;
-  box-sizing: border-box;
-  color: #fff;
-  padding: 4px 22px;
-}
-.btn.btn-primary-red:hover {
-  border-color: #D93127;
-  background-color: #D93127;
-}
-.btn.btn-primary-red:focus {
-  border-color: #E14C46;
-  background-color: #E14C46;
-}
-.btn.btn-default-red {
-  border-color: #D9D9D9;
+.btn.btn-twoDefault {
+  border: none;
   background-color: #fff;
   box-sizing: border-box;
   color: #666666;
   padding: 4px 22px;
 }
-.btn.btn-default-red:hover {
-  color: #E14C46;
-  border-color: #E14C46;
+.btn.btn-twoDefault:hover {
+  background: rgba(9, 44, 66, 0.08);
 }
-.btn.btn-default-red:focus {
+.btn.btn-twoDefault:focus {
   color: #E14C46;
-  border-color: #E14C46;
-  background-color: #fff;
+  background: rgba(225, 76, 70, 0.1);
+}
+.btn.btn-gray {
+  border-color: #E6E9EC;
+  background-color: #E6E9EC;
+  box-sizing: border-box;
+}
+.btn.btn-gray:hover {
+  border-color: #ECEFF0;
+  background-color: #ECEFF0;
+}
+.btn.btn-gray:focus {
+  border-color: #ECEFF0;
+  background-color: #ECEFF0;
 }
 .currency-grid {
   width: 100%;
@@ -803,7 +800,7 @@ input::-ms-reveal {
   margin-bottom: 0;
   color: #333333;
   background-color: #fff;
-  border: 1px solid #E6E6E6;
+  border: 1px solid #D3D3D3;
   border-collapse: inherit;
 }
 .currency-grid table thead tr {
@@ -846,7 +843,7 @@ input::-ms-reveal {
   max-width: 200px;
 }
 .currency-grid table tbody tr:hover {
-  background-color: rgba(0, 179, 158, 0.1);
+  background: rgba(193, 76, 71, 0.06);
 }
 .currency-grid table tbody tr:hover td {
   border: 0;
@@ -1006,15 +1003,18 @@ input::-ms-reveal {
 }
 .database-pagination .pagination li > a,
 .database-pagination .pagination li > span {
-  background-color: #fff;
-  border: 1px solid #D9D9D9;
-  border-radius: 4px;
+  border: none;
+  border-radius: 3px;
   color: #666666;
+  background: rgba(9, 30, 66, 0.04);
 }
 .database-pagination .pagination li > a:hover,
 .database-pagination .pagination li > span:hover {
-  border: 1px solid #00B39E;
-  color: #00B39E;
+  background: rgba(9, 44, 66, 0.08);
+}
+.database-pagination .pagination li.disabled a,
+.database-pagination .pagination li.disabled span {
+  background: rgba(9, 44, 66, 0.04);
 }
 .database-pagination .pagination li:not(:first-child) > a {
   margin-left: 9px;
@@ -1023,12 +1023,8 @@ input::-ms-reveal {
   font-weight: 700;
 }
 .database-pagination .pagination li.active > a {
-  border: none;
-  background-color: transparent;
-  color: #333333;
-}
-.database-pagination .pagination li.active > a:hover {
-  color: #00B39E;
+  background: #FCEDEC;
+  color: #E14C46;
 }
 .v-table-inputdate {
   display: inline-block;
@@ -1207,11 +1203,11 @@ input::-ms-reveal {
 }
 .btn-custom {
   background: #FFFFFF;
-  border: 1px solid #00B39E;
+  border: 1px solid #E14C46;
   border-radius: 4px;
   display: inline-block;
   font-size: 14px;
-  color: #00B39E;
+  color: #E14C46;
   width: 158px;
   height: 32px;
   text-align: center;
@@ -1222,8 +1218,8 @@ input::-ms-reveal {
   transition: all .3s ease;
 }
 .btn-custom:hover {
-  background: #00B39E;
-  border: 1px solid #00B39E;
+  background: #E14C46;
+  border: 1px solid #E14C46;
   color: #fff;
 }
 .custom-pc {
@@ -1308,7 +1304,7 @@ input::-ms-reveal {
   transition: all ease .3s;
 }
 .viewmore-eidticon {
-  background-color: #97D9EF;
+  background: rgba(225, 76, 70, 0.15);
 }
 .viewmore-green-eidticon {
   background-color: #A5B3E7;
@@ -1336,7 +1332,8 @@ input::-ms-reveal {
   color: #666666;
 }
 .viewmore:hover {
-  background: #E6F8F6;
+  background: rgba(225, 76, 70, 0.1);
+  border-color: rgba(225, 76, 70, 0.15);
 }
 .viewmore:hover .viewmore-eidticon {
   left: 0;
@@ -1348,9 +1345,9 @@ input::-ms-reveal {
   height: 50px;
   line-height: 50px;
   text-align: center;
-  background-color: #E9EDFC;
-  color: #445596;
-  border: 1px solid #A5B3E7;
+  background-color: #fff;
+  color: #474D54;
+  border: 1px solid #ECECEC;
   border-radius: 4px;
   float: left;
   margin-right: 10px;
@@ -1403,7 +1400,7 @@ input::-ms-reveal {
   top: 1px;
   left: 8px;
   display: inline-block;
-  color: #00CB7C;
+  color: #65656A;
   font-size: 23px;
   transition: all 0.3s ease-out;
 }
@@ -1417,7 +1414,7 @@ input::-ms-reveal {
   transform: translateX(-50%);
   cursor: pointer;
   font-size: 10px;
-  color: #007ACE;
+  color: #E14C46;
   letter-spacing: 0;
   opacity: 0;
 }
@@ -1430,6 +1427,7 @@ input::-ms-reveal {
   color: #333333;
 }
 .manage-checkbox {
+  position: relative;
   font-size: 12px;
   color: #474D54;
   letter-spacing: 0;
@@ -1437,6 +1435,14 @@ input::-ms-reveal {
 }
 .manage-checkbox label {
   font-weight: normal;
+}
+.manage-message {
+  position: absolute;
+  top: 1px;
+  right: 50px;
+  font-size: 12px;
+  font-size: 1.2rem;
+  color: #E14C46;
 }
 .manage-content {
   width: 100%;

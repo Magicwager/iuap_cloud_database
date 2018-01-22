@@ -21,6 +21,9 @@ class Manage extends React.Component {
       isShow: false,   // 配置界面显示
     }
     this.initTreeData = this.initTreeData.bind(this);
+    this.addIcon = this.addIcon.bind(this);
+    this.changeIcon = this.changeIcon.bind(this);
+    this.chanageIconData = this.chanageIconData.bind(this);
   }
 
   componentDidMount() {
@@ -52,7 +55,7 @@ class Manage extends React.Component {
   }
 
   // 删除管控图标
-  changeIcon = () => {
+  changeIcon() {
     let _this = this;
     if ($(_this.store.onClickDataSave).hasClass('hidden')) {
       $(_this.store.onClickDataSave).removeClass('hidden');
@@ -63,7 +66,7 @@ class Manage extends React.Component {
   }
 
   // 增加管控图标
-  addIcon = () => {
+  addIcon() {
     let _this = this;
     if (!$(_this.store.onClickDataSave).is('.hidden')) {
       $(_this.store.onClickDataSave).addClass('hidden');
@@ -71,7 +74,7 @@ class Manage extends React.Component {
   }
 
   // 改变管控节点数据
-  chanageIconData = (param) => {
+  chanageIconData(param) {
     let _this = this;
     $(_this.store.onClickDataSave).parent().attr('data-source', JSON.stringify(param));
   }
@@ -114,13 +117,11 @@ class Manage extends React.Component {
         }
         return resultRoot;
       }
-
-      //console.log('未处理数据', data.data);
+      
       _this.store.parentDataSource = convert(data.data);
-      //console.log('已处理数据', convert(data.data));
     })
     .then(() => {
-        var orgchart
+        let orgchart
         _this.store.parentDataSource.map((item, index) => {
           return (
 
@@ -146,6 +147,8 @@ class Manage extends React.Component {
   }
 
   render() {
+    let _this = this;
+
     return (
       <div className="container-fluid" style={{'height': '100%'}}>
         <div className='chart-container'>
@@ -154,8 +157,8 @@ class Manage extends React.Component {
             autoHide={true}
             style={{ 'width':'100%','height':'100%','maxHeight':'100%' }}
           >
-            {this.store.parentDataSource.length > 0 ?
-              this.store.parentDataSource.map((value, index) => {
+            {_this.store.parentDataSource.length > 0 ?
+              _this.store.parentDataSource.map((value, index) => {
                 return (<div key={index} style={{'display':'inline-block','height':'100%'}}
                              id={"chart-container"+ value.id}></div>)
               }) : (<div className="manage-fulltree">暂无数据</div>)}
@@ -163,9 +166,9 @@ class Manage extends React.Component {
         </div>
         <ManageModal
           ref="managecard"
-          changeIcon={this.changeIcon}
-          addIcon={this.addIcon}
-          chanageIconData={this.chanageIconData}
+          changeIcon={_this.changeIcon}
+          addIcon={_this.addIcon}
+          chanageIconData={_this.chanageIconData}
         />
       </div>
     )
