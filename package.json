@@ -41,6 +41,7 @@
     "rc-tree": "^1.4.7",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.10",
+    "react-cookies": "^0.1.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-datepicker": "^0.46.0",
     "react-dom": "^15.5.4",

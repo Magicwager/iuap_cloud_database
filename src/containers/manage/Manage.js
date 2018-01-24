@@ -41,9 +41,6 @@ class Manage extends React.Component {
       if (typeof paramData === 'string') {
         paramData = JSON.parse(paramData)
       }
-
-      //console.log('编辑时的数据', paramData);
-
       _this.refs.managecard.show({paramData});
     });
   }
@@ -133,7 +130,7 @@ class Manage extends React.Component {
               'nodeContent': 'title',
               'nodeID': 'id',
               'createNode': function (node, data) {
-                var str;
+                let str;
                 data.existsetting == true ? str = "<i class='cl cl-guanli second-menu-icon'></i>" : str = "<i class='cl cl-guanli second-menu-icon hidden'></i>";
                 $(node).append(str + '<div class="second-menu">配置</div>');
               }
@@ -161,7 +158,7 @@ class Manage extends React.Component {
               _this.store.parentDataSource.map((value, index) => {
                 return (<div key={index} style={{'display':'inline-block','height':'100%'}}
                              id={"chart-container"+ value.id}></div>)
-              }) : (<div className="manage-fulltree">暂无数据</div>)}
+              }) : (<div className="manage-fulltree"></div>)}
           </Scrollbars>
         </div>
         <ManageModal

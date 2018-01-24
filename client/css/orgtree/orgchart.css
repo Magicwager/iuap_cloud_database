@@ -202,7 +202,7 @@
   z-index: 20;
   background: rgba(225,76,70,0.10);
   border-color: rgba(225,76,70,0.10);
-  box-shadow: 0 0 6px #FDF6F6;
+  box-shadow: 0 0 7px rgba(225,76,70,0.2);
 }
 
 .orgchart .node.focused {

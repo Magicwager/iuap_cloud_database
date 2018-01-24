@@ -44,7 +44,7 @@ class Custom extends React.Component {
 
   // 刷新页面
   refreshPage() {
-    this.store.getDocs();
+    this.store.getDocsAgain();
   }
 
 
@@ -59,7 +59,7 @@ class Custom extends React.Component {
             return (
               <div key={index} className="custom-col-5">
                 <div className="custom-co">
-                  <div className="cusom-t"><img src={item.src} alt=""/></div>
+                  <div className="cusom-t"><i className={'custom-icon '+item.src}></i></div>
                   <Link to={"/customlist/"+item.doctype} className={item.subDoccustom.length ==1 ? 'btn-custom custom-pc1':"btn-custom custom-pc"}>{item.name}</Link>
 
                   {item.subDoccustom.length >= 2 ?

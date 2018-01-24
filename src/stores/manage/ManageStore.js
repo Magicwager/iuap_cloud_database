@@ -8,17 +8,6 @@ import {observable, computed, action, toJS} from 'mobx';
 import Config from '../../config';
 import GlobalStore from '../GlobalStore';
 
-//解决浏览器缓存
-function timestamp(url) {
-  var getTimestamp = new Date().getTime();
-  if (url.indexOf("?") > -1) {
-    url = url + "×tamp=" + getTimestamp
-  } else {
-    url = url + "?timestamp=" + getTimestamp
-  }
-  return url;
-}
-
 
 class ManageStore {
   globalStore= GlobalStore;
@@ -55,15 +44,17 @@ class ManageStore {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        //'Cache-Control': 'no-cache',
-        //'mode': "no-cors",
+        'Cache-Control': 'no-cache',
+        'mode': "no-cors",
+        'bd_tenantId': Config.cookieParam.tenantid,
+        'bd_sysId': Config.cookieParam.sysid,
       },
-     // credentials: "include"
+      credentials: "include"
     }
   
     return (
-      fetch('http://127.0.0.1/webManage/getBillType', opt)
-      //fetch(Config.manage.query, opt)
+      //fetch('http://127.0.0.1/webManage/getBillType', opt)
+      fetch(Config.manage.query, opt)
         .then(response => {
           _this.globalStore.hideWait();
           return response.ok ? response.json() : {}
@@ -99,15 +90,17 @@ class ManageStore {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        //'Cache-Control': 'no-cache',
-        //'mode': "no-cors",
+        'Cache-Control': 'no-cache',
+        'mode': "no-cors",
+        'bd_tenantId': Config.cookieParam.tenantid,
+        'bd_sysId': Config.cookieParam.sysid,
       },
       body: JSON.stringify(param),
-      //credentials: "include"
+      credentials: "include"
     }
 
-    return fetch('http://127.0.0.1/webManage/save', opt)
-    //return fetch(Config.manage.addSave, opt)
+    //return fetch('http://127.0.0.1/webManage/save', opt)
+    return fetch(Config.manage.addSave, opt)
       .then(response => {
         _this.globalStore.hideWait();
         return response.ok ? response.json() : {}

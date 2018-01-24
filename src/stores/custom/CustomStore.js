@@ -81,8 +81,10 @@ class CustomStore {
         'Accept': 'application/json',
         'Cache-Control': 'no-cache',
         'mode': "no-cors",
-        'tenantId': 'owzp1n95',                        // 查询接口使用
-        'sysId': 'all',                                // 查询接口使用
+        //'bd_tenantId': Config.cookieParam.tenantid,
+        //'bd_sysId': Config.cookieParam.sysid,
+        'tenantId': 'owzp1n95',                        // 新增接口使用
+        'sysId': 'all',                                // 新增接口使用
       },
       credentials: "include"
     }
@@ -98,22 +100,83 @@ class CustomStore {
 
           data.data.map((item, index) => {
             if (item.doctype == 'adminorg') {
-              Object.assign(item, {'src': './images/xingzhengzuzhi.png'});
+              Object.assign(item, {'src': 'cl cl-administrative'});
             }
             if (item.doctype == 'customer') {
-              Object.assign(item, {'src': './images/kehu.png',});
+              Object.assign(item, {'src': 'cl cl-customer',});
             }
             if (item.doctype == 'materials') {
-              Object.assign(item, {'src': './images/wuliao.png',});
+              Object.assign(item, {'src': 'cl cl-materiel',});
             }
             if (item.doctype == 'project') {
-              Object.assign(item, {'src': './images/xiangmu.png'});
+              Object.assign(item, {'src': 'cl cl-xiangmu'});
             }
             if (item.doctype == 'staff') {
-              Object.assign(item, {'src': './images/yuangong.png'});
+              Object.assign(item, {'src': 'cl cl-yuangong'});
             }
             if (item.doctype == 'supplier') {
-              Object.assign(item, {'src': './images/gongyingsahng.png'});
+              Object.assign(item, {'src': 'cl cl-gongyingshang2'});
+            }
+          });
+
+          _this.docustoms.replace(data.data);
+        }
+        else {
+          _this.globalStore.showError(!data.msg ? "数据查询失败" : data.msg);
+        }
+      }).catch(function (err) {
+        _this.globalStore.hideWait();
+        _this.globalStore.showError('数据请求失败,错误信息:' + err.toString());
+      })
+    )
+  }
+
+  // 查询所有的自定义项目接口  查看更多时刷新数据
+  @action
+  getDocsAgain() {
+    let _this = this;
+
+    let opt = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cache-Control': 'no-cache',
+        'mode': "no-cors",
+        //'bd_tenantId': Config.cookieParam.tenantid,
+        //'bd_sysId': Config.cookieParam.sysid,
+        'tenantId': 'owzp1n95',                        // 新增接口使用
+        'sysId': 'all',                                // 新增接口使用
+      },
+      credentials: "include"
+    }
+
+    return (
+      fetch(timestamp(Config.custom.queryDocs), opt)
+      .then(response => {
+        return response.ok ? response.json() : {}
+      })
+      .then(data => {
+        if (data.status) {
+
+          data.data.map((item, index) => {
+            if (item.doctype == 'adminorg') {
+              Object.assign(item, {'src': 'cl cl-administrative'});
+            }
+            if (item.doctype == 'customer') {
+              Object.assign(item, {'src': 'cl cl-customer',});
+            }
+            if (item.doctype == 'materials') {
+              Object.assign(item, {'src': 'cl cl-materiel',});
+            }
+            if (item.doctype == 'project') {
+              Object.assign(item, {'src': 'cl cl-xiangmu'});
+            }
+            if (item.doctype == 'staff') {
+              Object.assign(item, {'src': 'cl cl-yuangong'});
+            }
+            if (item.doctype == 'supplier') {
+              Object.assign(item, {'src': 'cl cl-gongyingshang2'});
             }
           });
 

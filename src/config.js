@@ -1,3 +1,9 @@
+import cookie from 'react-cookies'
+
+// 获取cookie值
+const sysid = cookie.load('bd_sysId');
+const tanantid = cookie.load('bd_tenantId');
+
 // 不同的环境对应不同的接口
 const serverURL01 = '/bd';             // 币种
 const serverURL02 = '/ext';            // 自定义项
@@ -30,6 +36,11 @@ let Config = {
   manage: {
     query: `${serverURL03}/manage/listorgsettings`,           // 获取所有行政组织管控设置
     addSave: `${serverURL03}/manage/save`,                    // 添加管控
+  },
+  // 获取cookie
+  cookieParam:{
+    sysid: sysid,
+    tenantid: tanantid
   }
 }
 

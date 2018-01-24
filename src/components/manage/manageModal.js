@@ -157,8 +157,10 @@ class ManageModal extends Component {
                             <td>
                               <div className="manage-checkbox" onClick={_this.handleCheck.bind(this, item.docid, index)}>
                                 <div className={item.isshare == '1' ? "manage-radio-checked":"manage-radio"}></div>
-                                <span>共享下级</span>
-                                <span className='manage-message' ref={'message' +item.docid} style={{'display': 'none'}}> 请先选择{item.docname}</span>
+                                <div className="manage-shareless">
+                                  <span>共享下级</span>
+                                  <span className='manage-message' ref={'message' +item.docid}> 请先选择{item.docname}</span>
+                                </div>
                               </div>
                             </td>
                           </tr>)

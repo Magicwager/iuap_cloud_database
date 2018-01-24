@@ -781,8 +781,8 @@ input::-ms-reveal {
   background: rgba(225, 76, 70, 0.1);
 }
 .btn.btn-gray {
-  border-color: #E6E9EC;
-  background-color: #E6E9EC;
+  border-color: #D3D9DD;
+  background-color: #D3D9DD;
   box-sizing: border-box;
 }
 .btn.btn-gray:hover {
@@ -1187,18 +1187,25 @@ input::-ms-reveal {
   position: relative;
 }
 .custom-co .cusom-t {
+  position: relative;
   width: 100%;
   height: 120px;
-  background: #F7F7F7;
+  background: url(../images/custom-default.png) #F7F7F7 center center no-repeat;
   line-height: 120px;
   text-align: center;
 }
-.custom-co .cusom-t img {
-  transition: transform .6s;
-  -ms-transform-origin: center;
-  transform-origin: center;
+.custom-co .cusom-t .custom-icon {
+  position: absolute;
+  top: 10px;
+  right: 53px;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  font-size: 52px;
+  color: #757F8C;
+  transition: all ease-out 0.3s;
 }
-.custom-co .cusom-t:hover img {
+.custom-co .cusom-t .custom-icon:hover {
   transform: scale(1.1);
 }
 .btn-custom {
@@ -1305,9 +1312,11 @@ input::-ms-reveal {
 }
 .viewmore-eidticon {
   background: rgba(225, 76, 70, 0.15);
+  color: rgba(225, 76, 70, 0.8);
 }
 .viewmore-green-eidticon {
-  background-color: #A5B3E7;
+  background: rgba(9, 44, 66, 0.04);
+  color: rgba(71, 77, 84, 0.8);
 }
 .viewmore {
   position: relative;
@@ -1361,7 +1370,8 @@ input::-ms-reveal {
   color: #666666;
 }
 .viewmore-green:hover {
-  background-color: #E9EDFC;
+  background: rgba(9, 44, 66, 0.04);
+  border: 1px solid rgba(78, 89, 104, 0.25);
 }
 .viewmore-green:hover .viewmore-green-eidticon {
   left: 0;
@@ -1438,11 +1448,13 @@ input::-ms-reveal {
 }
 .manage-message {
   position: absolute;
-  top: 1px;
-  right: 50px;
+  top: 0;
+  left: 65px;
   font-size: 12px;
   font-size: 1.2rem;
   color: #E14C46;
+  display: none;
+  transition: all ease-in-out 0.3s;
 }
 .manage-content {
   width: 100%;
@@ -1529,11 +1541,13 @@ input::-ms-reveal {
   border-radius: 50%;
 }
 .manage-fulltree {
-  text-align: center;
-  margin: 30px auto;
-  font-size: 14px;
-  font-size: 1.4rem;
-  color: #333333;
+  width: 100%;
+  height: 100%;
+  background: url(../images/manage-default.png) no-repeat center center;
+}
+.manage-shareless {
+  position: relative;
+  display: inline-block;
 }
 @media (min-width: 320px) {
   .custom-col-5 {
