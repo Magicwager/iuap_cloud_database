@@ -179,6 +179,12 @@ export default class CurrencyList extends Component {
         }
     }
 
+    // 描述文本框
+    handleDesc(field, e) {
+      let val = e.target.type == 'checkbox' ? e.target.checked : e.target.value;
+      this.store.currency[field] = val;
+    }
+
     render() {
         let currency = this.store.currency;
         
@@ -364,7 +370,7 @@ export default class CurrencyList extends Component {
                             </FormGroup>
                         </Col>
                         <Col xs={6} className="col-xs-pull-3">
-                            <FormControl style={{'width':'100%'}} onChange={this.handleChange.bind(this, "description")}
+                            <FormControl style={{'width':'100%'}} onChange={this.handleDesc.bind(this, "description")}
                                          value={currency.description}
                                          componentClass="textarea"
                             />
