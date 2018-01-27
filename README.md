@@ -20,13 +20,15 @@ npm run publish
 
 <pre>
 ROOT
+|-- client
 |-- src
-|   |-- client
-|   |-- common
-|   |   |-- components
-|   |   |-- containers
-|   |   `-- stores
-|   `-- server
+|   |-- components
+|   |-- containers
+|   |-- stores
+|   |-- config.js 
+|   `-- index.js
+|
+|-- server
 |-- static
 `-- test
 </pre>
