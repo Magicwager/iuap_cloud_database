@@ -1,6 +1,6 @@
 module.exports = {
     publishConfig: {
-        command: "mvn --settings C:/Users/Dangwei/.maven/apache-maven-3.5.0/conf/settings.xml",
+        command: "mvn",
         repositoryId: "iUAP-Snapshots",
         repositoryURL: "http://172.16.51.12:8081/nexus/content/repositories/iUAP-Snapshots/",
         artifactId: "iuap_currency_fe",
